@@ -1,0 +1,117 @@
+# N-gramas, Collocations, TF-IDF e Análise de Tópicos
+
+```{r}
+if (!"tidyverse" %in% installed.packages()) {
+  install.packages("tidyverse")
+}
+library(tidyverse)
+if (!"quanteda" %in% installed.packages()) {
+  install.packages("quanteda")
+}
+library(quanteda)
+if (!"quanteda.textstats" %in% installed.packages()) {
+  install.packages("quanteda.textstats")
+}
+library(quanteda.textstats)
+```
+
+## N-gramas
+
+Na aula anterior, vimos como criar um corpus a partir de dados de texto e como separar o texto em palavras ou partes de palavras.
+
+Por mais que palavras isoladas possuam significados interessantes, o significado de um texto é mais do que a soma das palavras que o compõem. Por exemplo, a expressão "teto de vidro" tem um significado diferente da soma dos significados de "teto", "de" e "vidro".
+
+Os *n-gramas* consistem em sequências contíguas de "n" palavras. Por exemplo, na frase "eu tenho um sonho":
+
+-   Unigramas: "eu", "tenho", "um", "sonho"
+-   Bigramas: "eu tenho", "tenho um", "um sonho"
+-   Trigramas: "eu tenho um", "tenho um sonho"
+
+Vantagens de utilizar n-gramas:
+
+-   Capturam expressões e frases comuns que podem ter significados específicos.
+-   Adicionam mais contexto ao modelo, o que pode melhorar a precisão em tarefas como classificação de texto ou análise de sentimentos.
+-   Identificam negações, como "não gosto", que podem alterar o significado de uma frase.
+
+Desvantagens de utilizar n-gramas:
+
+-   Há um retorno decrescente. Como há muitas combinações possíveis de palavras, os dados podem ficar esparsos (muitos casos raros).
+
+```{r}
+read_csv("data/dados_sessoes.csv") |>
+  corpus()
+```
+
+
+### Dicionários
+
+Dicionários são listas pré-definidas de palavras ou expressões associadas a categorias específicas. Por exemplo, um dicionário de sentimentos pode conter palavras como "feliz", "triste", "raiva" associadas a categorias de sentimento.
+
+## Collocations
+
+Collocations são combinações de palavras que coocorrem com mais frequência do que seria esperado por acaso. Por exemplo, "distrito federal" é uma collocation comum em português, enquanto "distrito superior" não é.
+
+> Intuição:
+>
+> -   Em um corpus com 1000 palavras
+> -   "distrito" aparece 50 vezes
+> -   "federal" aparece 30 vezes
+> -   "distrito federal" aparece 20 vezes
+> -   A frequência esperada de "distrito federal" por acaso seria (50/1000) \* (30/1000) = 1.5 vezes. Portanto, "distrito federal" é uma collocation, pois ocorre muito mais frequentemente do que o esperado por acaso.
+
+## TF-IDF
+
+Até agora, falamos sobre a frequência de palavras em um texto (TF, do inglês *term-frequency*).
+
+Em certas análises, é importante considerar o quão comum ou rara uma palavra é em um corpus.
+
+Por exemplo, a palavra "presidente" é mencionada por todos os discursos. Porém, palavras como "macroeconomia" e "transfobia" são particulares de determinados partidos e ideologias.
+
+TF-IDF (Term Frequency-Inverse Document Frequency) é uma métrica de importância de termos que considera:
+
+-   TF (Term Frequency): A frequência de uma palavra (ou n-grama) em um documento.
+
+    Por exemplo, se a palavra "sonho" aparece 5 vezes em um documento com 100 palavras, a TF seria 5/100 = 0.05.
+
+-   IDF (Inverse Document Frequency): Uma medida de quão comum ou rara uma palavra é em um corpus.
+
+    É calculada como $log(N/n)$, onde $N$ é o número total de documentos e $n$ é o número de documentos que contêm a palavra.
+
+    Por exemplo, se temos 1000 documentos e a palavra "sonho" aparece em 100 deles, a IDF seria log(1000/100) = log(10) ≈ 1.
+
+O TF-IDF é calculado multiplicando a TF pela IDF. No exemplo acima, o TF-IDF para a palavra "sonho" seria 0.05 \* 1 = 0.05.
+
+## Análise de tópicos
+
+Em diversos cenários estamos analizando um conjunto de documentos e queremos identificar os temas ou tópicos principais presentes nesses documentos. Por exemplo, quais temas foram discutidos no plenário em 2025?
+
+A *análise de tópicos* é uma técnica de modelagem de texto que permite descobrir automaticamente os tópicos subjacentes em um conjunto de documentos.
+
+A análise de tópicos é considerada uma técnica de aprendizado não-supervisionado. Os dados são apresentados e o modelo tenta encontrar padrões e estruturas subjacentes sem rótulos ou categorias pré-definidas.
+
+O objetivo é identificar grupos de palavras que frequentemente coocorrem em documentos, sugerindo a presença de um tópico.
+
+Latent Dirichlet allocation (LDA) é um dos métodos mais populares para análise de tópicos. Ele assume que:
+
+-   cada documento é uma mistura de vários tópicos
+-   cada tópico é uma distribuição de palavras
+
+```{r}
+if (!"topicmodels" %in% installed.packages()) {
+  install.packages("topicmodels")
+}
+# sudo apt-get install libgsl-dev
+library(topicmodels)
+```
+
+#### Análise guiada de tópicos
+
+TODO: comentar análise de tópicos temporais, estruturados
+
+TODO: comentar modelos de tópicos contextualizados
+
+## Exemplo: Analise de n-gramas e Tópicos dos Discursos do Plenário da Câmara dos Deputados
+
+TODO: carregar dados dos discursos, criar um corpus, criar uma matriz de documentos e termos, calcular n-gramas, collocations, TF-IDF e análise de tópicos.
+
+

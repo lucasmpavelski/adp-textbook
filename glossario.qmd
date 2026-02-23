@@ -1,0 +1,37 @@
+# Glossário {.unnumbered}
+
+## Introdução
+
+ADP
+:   Análise de Discurso Político
+
+PLN (NLP)
+:   Processamento de Linguagem Natural (Natural Language Processing)
+
+## Aula 1
+
+R
+:   linguagem de programação utilizada para análise de dados
+
+RStudio
+:   ambiente de desenvolvimento integrado (IDE) para R
+
+Tidyverse
+:   coleção de pacotes R para ciência de dados
+
+<!-- ## Aula 2 -->
+
+<!-- -   Corpus: conjunto de textos -->
+<!-- -   Morfema: menor unidade de significado em uma língua -->
+<!-- -   Lemma: forma canônica de uma palavra -->
+<!-- -   Stemming: processo de reduzir palavras à sua raiz -->
+<!-- -   Token: unidade básica de texto (palavra, símbolo, etc) -->
+<!-- -   Stopwords: palavras comuns que são frequentemente removidas em análises de texto -->
+
+<!-- ## Aula 3 -->
+
+<!-- -   n-gramas: sequências contíguas de "n" palavras (bigramas, trigramas) -->
+<!-- -   Collocations: combinações de palavras que coocorrem com mais frequência do que seria esperado por acaso -->
+<!-- -   TF-IDF: Term Frequency-Inverse Document Frequency, métrica de importância de termos -->
+<!-- -   Análise de tópicos: técnica para identificar temas ou tópicos em um conjunto de documentos -->
+<!-- -   LDA (Latent Dirichlet Allocation): modelo de análise de tópicos -->

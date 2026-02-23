@@ -1,0 +1,5 @@
+# Aula 7: Modelos Discursivos e RAG
+
+## Modelos discursivos
+
+## Retrieval Augmented Generation (RAG)

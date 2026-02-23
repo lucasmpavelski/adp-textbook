@@ -1,0 +1,83 @@
+# Apêndice {.unnumbered}
+
+#### Expressões regulares
+
+-   Expressões regulares são padrões utilizados para buscar e manipular texto
+-   Permitem encontrar palavras, frases ou padrões específicos em um texto
+
+A biblioteca `stringr` do R é uma das mais utilizadas para trabalhar com expressões regulares.
+
+```{r}
+if (!"stringr" %in% installed.packages()) {
+  install.packages("stringr")
+}
+library(stringr)
+```
+
+A função `str_detect()` é utilizada para verificar se um padrão específico está presente em uma string.
+
+Exemplo de expressão regular para encontrar textos que contém qualquer palavra iniciando com "brasil":
+
+```{r}
+discursos <- c(
+  "o Brasil é um país maravilhoso",
+  "a economia do Japão está crescendo",
+  "o futebol argentino é famoso",
+  "brasileiras são conhecidas por sua alegria",
+  "o clima no Brasil é tropical",
+  "brasileiros são apaixonados por futebol"
+)
+
+contem_brasil <- str_detect(discursos, "brasil.*")
+print(discursos[contem_brasil])
+```
+
+-   o ponto `.` significa "qualquer caractere" e o asterisco `*` significa "zero ou mais vezes". Portanto, a expressão regular `brasil.*` corresponde a qualquer string que contenha a palavra "brasil" seguida de zero ou mais caracteres, ou seja, qualquer string que contenha a palavra "brasil" em qualquer posição.
+
+Para encontrar o padrão "Brasil" (com B maiúsculo) ou "brasil" podemos utilizar:
+
+```{r}
+contem_brasil <- str_detect(discursos, "brasil.*|Brasil.*")
+print(discursos[contem_brasil])
+```
+
+`<re1>|<re2>` vai detectar a expressão `re1` ou `re2`. Ou, de forma mais concisa:
+
+```{r}
+contem_brasil <- str_detect(discursos, "[Bb]rasil.*")
+print(discursos[contem_brasil])
+```
+
+-   Os colchetes `[]` indicam um conjunto de caracteres. Portanto, a expressão regular `[Bb]rasil.*` corresponde a qualquer string que contenha "Brasil" com B maiúsculo ou "brasil" com b minúsculo, seguida de zero ou mais caracteres.
+
+Podemos procurar por discursos que começam com "brasil" ou "Brasil" utilizando o símbolo `^` para indicar o início da string:
+
+```{r}
+discursos <- c(
+  "Brasil é um país maravilhoso",
+  "a economia do Japão está crescendo",
+  "o futebol argentino é famoso",
+  "brasileiras são conhecidas por sua alegria",
+  "o clima no Brasil é tropical",
+  "brasileiros são apaixonados por futebol"
+)
+
+começam_com_brasil <- str_detect(discursos, "^[bB]rasil")
+print(discursos[começam_com_brasil])
+```
+
+De forma análioga o símbolo $`$ indica o final da string. Para encontrar discursos que terminam com "o":
+
+```{r}
+discursos <- c(
+  "Brasil é um país maravilhoso",
+  "a economia do Japão está crescendo",
+  "o futebol argentino é famoso",
+  "brasileiras são conhecidas por sua alegria",
+  "o clima no Brasil é tropical",
+  "brasileiros são apaixonados por futebol"
+)
+
+começam_com_brasil <- str_detect(discursos, "o$")
+print(discursos[começam_com_brasil])
+```

@@ -1,0 +1,5 @@
+# Aula 6: Análise de Sentimentos e Entidades Nomeadas
+
+## Análise de sentimentos
+
+## Reconhecimento de entidades nomeadas

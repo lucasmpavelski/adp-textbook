@@ -1,0 +1,99 @@
+# Prefácio {.unnumbered}
+
+![](Analise_Discurso_Politico_Brandao_Pavelski.pdf){style="width: 100%; height: 100vh"}
+
+## Objetivos do curso
+
+*Apresentar um ferramental tecnológico para auxiliar na análise de discursos políticos utilizando técnicas de Processamento de Linguagem Natural (PLN).*
+
+## Motivação
+
+-   O volume de dados textuais disponíveis cresceu exponencialmente com a digitalização da informação e o advento das redes sociais.
+-   Pesquisa quantitativa complementa a pesquisa qualitativa, permitindo análises em larga escala.
+-   Ferramentas de PLN permitem extrair insights valiosos de grandes volumes de texto.
+-   Aplicações práticas em diversas áreas, como ciência política, sociologia, marketing e saúde pública.
+-   Desenvolvimento de habilidades técnicas em análise de dados textuais, programação e modelagem estatística.
+-   Foco prático do Mestrado Profissional em Poder Legislativo.
+
+## Bibliografia
+
+> JURAFSKY, D; MARTIN, J. H. Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition with Language Models, 3rd edition, 2025.
+
+Livro-texto com referencial teórico sobre processamento de linguagem natural, linguística computacional e análise de conteúdo [@jurafsky_speech_2026].
+
+Disponível em: <https://web.stanford.edu/~jurafsky/slp3/>
+
+> O’NEILL, L et al. Quantitative discourse analysis at Scale—AI, NLP and the transformer revolution. SoDa Laboratories Working Paper Series, v. 35, n. 11, p. 18-26, 2021.
+
+Artigo apresentando NPL do estado-da-arte aplicada a estudos sociais [@oneill2021] .
+
+Disponível em: <https://ideas.repec.org/p/ajr/sodwps/2021-12.html>
+
+> SILGE, J.; ROBINSON, D. Text mining with R: a tidy approach. Bejing ; Boston: O’Reilly, 2017.
+
+Livro-texto com referencial teórico e prático sobre mineração de textos com R e biblioteca tidytext [@silge2017].
+
+Disponível em: <https://www.tidytextmining.com/>
+
+> WICKHAM, Hadley et al. R for data science. Sebastopol: O'Reilly, 2017.
+
+Livro-texto com referencial prático sobre ciência de dados com R [@wickham2023].
+
+Disponível em: <https://r4ds.hadley.nz/> (inglês) e <https://pt.r4ds.hadley.nz/> (tradução em português).
+
+> CASELI, Helena de Medeiros; NUNES, Maria das Graças Volpe. Processamento de linguagem natural: conceitos, técnicas e aplicações em português. 2024.
+
+Livro-texto com referencial teórico sobre processamento de linguagem natural em português [@processa2024].
+
+Disponível em: <https://brasileiraspln.com/livro-pln/2a-edicao/>
+
+## Programa detalhado
+
+### Aula 1 - 06/03/2026:
+
+-   Aplicações de PLN em análise de discurso político
+-   Linguagem R
+-   Operações básicas com textos em R
+
+### Aula 2 - 20/03/2026:
+
+-   Obtenção de dados textuais
+-   Dados do legislativo
+-   Morfemas, lemas e stemming
+-   Tokens e stopwords
+
+### Aula 3 - 10/04/2026:
+
+-   n-gramas
+-   Collocations
+-   TF-IDF
+-   Análise de tópicos
+
+### Aula 4 - 15/05/2026:
+
+-   Análise sintática
+-   Embeddings
+-   Similaridade de Documentos
+
+### Aula 5 - 24/04/2026:
+
+-   Classificação de textos
+-   Modelos de linguagem
+
+### Aula 6 - 22/05/2026:
+
+-   Análise de sentimentos
+-   Reconhecimento de entidades nomeadas
+
+### Aula 7 - 29/05/2026:
+
+-   Modelos discursivos
+-   Retrieval Augmented Generation (RAG)
+
+### Aula 8 - 26/06/2026:
+
+-   Apresentações finais
+
+## Avaliação
+
+A avaliação será feita com base na participação nas aulas e na apresentação final de um projeto prático de análise de discurso político utilizando técnicas de processamento de linguagem natural.

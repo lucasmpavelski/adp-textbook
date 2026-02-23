@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Laboratórios de Análise de Discurso Político"
+  author: 
+    - Francisco Brandão
+    - Lucas M Pavelski
+  date: "06/03/2026"
+  chapters:
+    - index.qmd
+    - aula1.qmd
+    - aula2.qmd
+    - aula3.qmd
+    - aula4.qmd
+    - aula5.qmd
+    - aula6.qmd
+    - aula7.qmd
+    - glossario.qmd
+    - references.qmd
+  appendices: 
+    - apendice.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+
