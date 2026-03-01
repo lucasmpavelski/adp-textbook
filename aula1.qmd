@@ -1,6 +1,10 @@
-# Linguagem R
+---
+title: "Linguagem R"
+bibliography: "references.bib"
+---
 
-Nesta aula:
+::: callout-note
+## Nesta aula
 
 -   Como utilizar a linguagem R
 
@@ -10,32 +14,26 @@ Nesta aula:
 
 -   Funções para processamento de texto
 
-## A Linguagem R
+Link para Google Colab: <https://drive.google.com/file/d/1LalxshzmyMmTyfuIaFbp7RYcoP5Qnvuo/view?usp=sharing>
+:::
 
 -   **R** é uma linguagem de programação e ambiente de software para computação estatística e gráficos
+
 -   Criada por Ross Ihaka e Robert Gentleman em 1993
+
 -   Muito utilizada em ciência de dados, estatística e análise de texto
+
 -   Possui uma grande comunidade de usuários e desenvolvedores, com muitas bibliotecas para análise de textos
 
-### Programando scripts em R:
+## Programando scripts em R:
 
-```{mermaid}
-%%| fig-width: 6.5
-flowchart LR
-  A[Entrada] --> B{{Script R}}
-  B --> C[Saída]
-```
+![](images/scripts.png){fig-align="center" width="60%"}
 
 Script R: sequência de comandos R que podem ser executados para realizar uma tarefa específica (ex: análise de sentimentos)
 
 Em PLN:
 
-```{mermaid}
-%%| fig-width: 6.5
-flowchart LR
-  A[Entrada: arquivo texto 1, texto 2, ...] --> B{{analise_sentimentos.R}}
-  B --> C[Saída: texto 1: positivo, texto 2: negativo, ...]
-```
+![](images/rscript.png){fig-align="center" width="70%"}
 
 `analise_sentimentos.R` é um arquivo contendo instruções para:
 
@@ -44,82 +42,83 @@ flowchart LR
 -   Analisar sentimentos (encontrar palavras positivas e negativas)
 -   Gerar saída (relatório, gráfico, tabela)
 
-O intepretador R é um programa que executa os comandos do script e produz a saída desejada.
+O **interpretador R (Rscript)** é um programa que executa os comandos do script e produz a saída desejada. Por exemplo, pelo terminal de comandos:
 
-### Ambientes para programar em R
+`{$ Rscript analise_sentimentos.R texto1.txt} > "Positivo"`
+
+## Ambientes para programar em R
 
 O interpretador R está disponível para download em <https://cran-r.c3sl.ufpr.br/>
 
 ```{r}
-## (utilizado apenas para exibir páginas no Google Colab)
+## (código utilizado apenas para exibir páginas no Google Colab)
 if (!requireNamespace("htmltools", quietly = TRUE)) {
   install.packages("htmltools")
 }
 htmltools::tags$iframe(src = "https://cran-r.c3sl.ufpr.br/", width = "100%", height = "315")
 ```
 
-
--   no Windows é necessário também instalar RTools, disponível em <https://cran.r-project.org/bin/windows/Rtools/>, que inclui ferramentas para auxiliar a instalação de pacotes do R.
+-   No Windows, é necessário também instalar o RTools, disponível em <https://cran.r-project.org/bin/windows/Rtools/>, que inclui ferramentas para auxiliar a instalação de pacotes do R.
 
 Podemos escrever comandos R em diversos ambientes:
 
-#### Rstudio
+### Rstudio
 
 -   Ambiente de programação integrado (IDE) instalada localmente (Windows, Mac, Linux).
 -   Possui diversas funcionalidades para facilitar a escrita e execução de código R, como editor de scripts, console interativo, visualização de gráficos e gerenciamento de pacotes.
 
-Disponível em: <https://posit.co/downloads/>
+Disponível em: <https://posit.co/downloads/>.
 
-Uma alternativa é a IDE Positron, disponível em: <https://positron.posit.co/download.html>.
+Uma alternativa é o IDE Positron, disponível em: <https://positron.posit.co/download.html>.
 
-#### Google Colab
+### Google Colab
 
 -   Ambiente online para programação em Python, mas também suporta R com algumas configurações adicionais (selecione "R" como linguagem de programação para criar um notebook R).
 -   Permite compartilhar notebooks interativos com código R e resultados.
 
-Disponível em: <https://colab.research.google.com/>
+Disponível em: <https://colab.research.google.com/>.
 
-Uma alternativa é a posit.cloud, disponível em: <https://posit.cloud>.
+Outra alternativa é a posit.cloud, disponível em: <https://posit.cloud>.
 
-#### Console R
+### Console R
 
 -   Interface de linha de comando para executar comandos R diretamente no terminal.
 -   Um comando é executado por vez (digite o comando e aperte Enter), e o resultado é exibido imediatamente.
--   Menos amigável para scripts longos, mas útil para testes rápidos e aprendizado.
+-   É um ambiente menos amigável para desenvolver scripts longos, mas útil para testes rápidos e para o aprendizado da linguagem.
 
 Acessando o console R:
 
 -   No terminal, digite `R` para iniciar o console R e `q()` para sair.
--   No Rstudio, o console R está disponível na parte inferior da interface.
+-   No RStudio, o console R está disponível na parte inferior da interface.
 -   No Google Colab, clique em "Terminal" e digite "R" para iniciar o console R.
 
-#### Scripts R
+### Scripts R
 
 -   Arquivo de texto com extensão `.R` que contém uma sequência de comandos R.
 -   Permite organizar e reutilizar código, facilitando a execução de tarefas complexas.
 
-Escrevendo um script R:
+Como escrever um script R:
 
--   No Rstudio, crie um novo script: File \> New File \> R Script. Clique em "Source" para executar o script inteiro ou selecione linhas específicas e clique em "Run" para executar apenas essas linhas.
+-   No RStudio, crie um novo script em: `File > New File > R Script`. Clique em "Source" para executar o script inteiro ou selecione linhas específicas e clique em "Run" para executar apenas essas linhas.
 
-#### Notebooks R
+### Notebooks R
 
 -   Notebooks são documentos que combinam texto explicativo, código R e resultados (gráficos, tabelas) em um formato interativo.
--   Permitem criar relatórios dinâmicos e interativos, facilitando a comunicação de resultados
+-   Permitem criar relatórios dinâmicos e interativos, facilitando a comunicação dos resultados.
 
 Para criar e executar notebooks R, você pode usar o Rstudio ou o Google Colab:
 
 -   No Rstudio, crie um novo notebook: File \> New File \> Quarto Document.
 -   No Google Colab, clique em "File" \> "New Notebook" e selecione "R" como linguagem de programação.
 
-![Exemplo de notebook R](images/exemplo-notebook.png){width="100%"}
+![](images/exemplo-notebook.png){fig-align="center" width="100%"}
 
 Notebooks possuem dois tipos de células:
 
 -   células de texto para escrever explicações e comentários
--   células de código para escrever e executar código R (botão "play" executa cada célula individualmente)
+-   células de código para escrever e executar códigos em R (o botão "play" executa cada célula individualmente).
 
-### Comandos básicos
+## Comandos básicos
 
 -   Executar cálculos
 -   Operadores relacionais e lógicos
@@ -128,7 +127,7 @@ Notebooks possuem dois tipos de células:
 -   Funções
 -   Strings (cadeias de caracteres)
 
-#### Operadores aritméticos
+### Operadores aritméticos
 
 R pode ser utilizado para cálculos básicos, por exemplo:
 
@@ -136,7 +135,7 @@ R pode ser utilizado para cálculos básicos, por exemplo:
 print(4 + 3)
 ```
 
--   `print(*)` é uma função que exibe o resultado na tela.
+-   `print(*)` é uma função que exibe o resultado de uma expressão na tela.
 
 ```{r}
 print(5 * 2 + 3)
@@ -149,10 +148,10 @@ print((6 - 1) / 2)
 Qualquer código após `#` é considerado um comentário e não é executado:
 
 ```{r}
-8 / 3     # Isto é um comentário, não será executado
+print(8 / 3)     # Isto é um comentário, não será executado
 ```
 
-#### Operadores relacionais e lógicos
+### Operadores relacionais e lógicos
 
 Operadores relacionais são utilizados para comparar valores.
 
@@ -210,7 +209,7 @@ Disjunção "ou":
 print(4 > 3 || 2 > 8)
 ```
 
--   `||` é o operador lógico "ou" (disjunção) que retorna `TRUE` se pelo menos uma das expressões for verdadeira, caso contrário retorna `FALSE`.:
+-   `||` é o operador lógico "ou" (disjunção), que retorna `TRUE` se pelo menos uma das expressões for verdadeira. Caso contrário, retorna `FALSE`.
 
 -   `TRUE  || TRUE` retorna `TRUE`
 
@@ -233,12 +232,12 @@ print(!(5 > 3))
 -   `!(FALSE)` retorna `TRUE`
 
 ```{r}
-(TRUE && FALSE) || TRUE
+print((TRUE && FALSE) || TRUE)
 ```
 
-#### Variáveis
+### Variáveis
 
-**Variáveis** guardam valores computados em memória:
+**Variáveis** são utilizadas para guardar valores na memória do computador:
 
 ```{r}
 a <- 5
@@ -262,7 +261,7 @@ b <- a * 2
 print(b)
 ```
 
-![](images/clipboard-804469905.png){fig-align="center" width="60%"}
+![](images/variaveis.png){fig-align="center" width="70%"}
 
 O valor armazenado na variável pode ser alterado:
 
@@ -281,7 +280,7 @@ q <- 4 < 3
 print(p || q)
 ```
 
-O nome da variável deve começar com uma letra e pode conter letras, números (exceto no começo), underscores (`_`) e ponto:
+O nome de uma variável deve começar com uma letra e pode conter letras, números (exceto no começo), underscores (`_`) e pontos:
 
 ```{r}
 isto_é_uma_variável <- 10
@@ -305,7 +304,7 @@ print(imc)
 print(imc_saudavel)
 ```
 
-#### Condicionais
+### Condicionais
 
 O comando `if` é utilizado para executar um bloco de código apenas se uma condição for verdadeira:
 
@@ -319,7 +318,7 @@ if (x > 5) {
 
 O comando `else` pode ser utilizado para executar um bloco de código alternativo caso a condição seja falsa:
 
-![](images/clipboard-2918243320.png){fig-align="center" width="60%"}
+![](images/imc.png){fig-align="center" width="70%"}
 
 ```{r}
 peso <- 70 # peso em kg
@@ -338,9 +337,9 @@ if (imc_saudavel) {
 }
 ```
 
-#### Funções
+### Funções
 
-Uma **função** é um trecho de código "auto-contido" que possui um nome, geralmente empregado para uso de operações comuns.
+Uma **função** é um bloco de código que possui um nome e realiza uma tarefa específica, geralmente para operações comuns que se repetem.
 
 Por exemplo, `print` é a função que usamos para exibir resultados na tela.
 
@@ -366,11 +365,11 @@ Logaritmo:
 log(100, base = 10)
 ```
 
--   100 é o primeiro *argumento*
+-   O número 100 é o primeiro argumento da função.
 
--   10 é o segundo *argumento* (nomeado como "base", por padrão é `exp(1)`, i.e, logaritmo natural)
+-   O número 10 é o segundo argumento, nomeado como base. Por padrão, a base é o número de Euler (exp(1)), calculando o logaritmo natural.
 
--   Para obter ajuda em funções execute `help(log)` ou `?log`
+-   Para obter ajuda sobre uma função, execute `help(log)` ou `?log`.
 
 Também é possível definir nossas próprias funções:
 
@@ -384,7 +383,7 @@ imc <- calcular_imc(85, 1.80)
 print(imc)
 ```
 
-![](images/clipboard-1690580466.png){fig-align="center" width="80%"}
+![](images/funcao-imc.png){fig-align="center" width="80%"}
 
 Observe a sintaxe para declarar uma função:
 
@@ -394,9 +393,9 @@ nome_da_funcao <- function(argumentos) {
 }
 ```
 
-A expressão d`return(...)` é utilizada para indicar o valor que a função deve retornar. Se não for especificada, a função retornará o resultado da última expressão avaliada.
+A expressão `return(...)` é utilizada para indicar o valor que a função deve retornar. Se `return()` não for especificado, a função retornará o resultado da última expressão avaliada em seu corpo.
 
-Note que qualquer variável criada dentro da função é local a ela, ou seja, não pode ser acessada fora da função:
+Note que qualquer variável criada dentro de uma função é uma variável **local**, ou seja, ela não pode ser acessada fora do escopo da função:
 
 ```{r, error=TRUE}
 print(altura_quadrado)
@@ -430,10 +429,11 @@ esta_congelando <- function(celsius) {
 temperatura_inverno <- 25 # Graus Fahrenheit (aprox. -3.8 °C)
 
 resultado <- esta_congelando(converter_para_celsius(temperatura_inverno))
+
 print(resultado)
 ```
 
-Em R, podemos utilizar o operador "pipe" (`|>`) para encadear funções de forma mais legível:
+Em R, podemos utilizar o *operador pipe* (`|>`) para encadear funções de forma mais legível:
 
 ```{r}
 temperatura_inverno <- 25 # Graus Fahrenheit (aprox. -3.8 °C)
@@ -447,19 +447,19 @@ print(resultado)
 
 -   No exemplo, a expressão `temperatura_inverno` é passada como primeiro argumento para a função `converter_para_celsius()`, e o resultado dessa função é então passado como primeiro argumento para a função `esta_congelando()`.
 
-O **operador pipe** (`|>`) torna o código mais legível, permitindo que as funções sejam encadeadas de maneira clara e fluida.
+O operador pipe (`|>`) torna o código mais legível, permitindo que as funções sejam encadeadas de maneira clara e fluida.
 
-#### Vetores
+### Vetores
 
-Vetores são conjuntos de vários elementos (átomos) do mesmo tipo:
+Vetores são estruturas que armazenam uma sequência de elementos do mesmo tipo:
 
 ```{r}
 vetor_num <- c(1, 2, 3, 4, 5, 6, 7)
 
-vetor_num
+print(vetor_num)
 ```
 
-Operações podem ser propagadas para todos os elementos do vetor:
+Operações aritméticas podem ser aplicadas a todos os elementos de um vetor simultaneamente:
 
 ```{r}
 vetor_num <- c(1, 2, 3)
@@ -468,7 +468,9 @@ vetor_num <- vetor_num + 5
 print(vetor_num)
 ```
 
-Sequências são criadas com a sintaxe:
+![](images/clipboard-2652716379.png){width="50%"}
+
+É possível criar sequências numéricas de forma simples:
 
 ```{r}
 vetor_seq <- 1:10
@@ -484,12 +486,21 @@ print(mean(1:100))
 print(sd(1:100))
 ```
 
-Para acessar um elemento específico do vetor, utilizamos colchetes:
+Para acessar um elemento específico do vetor, utilizamos colchetes `[]`:
 
 ```{r}
 vetor_pares <- c(2, 4, 6, 8, 10)
 
 print(vetor_pares[3])
+```
+
+Para alterar elementos do vetor também utilizamos colchetes:
+
+```{r}
+vetor_seq <- 1:10
+vetor_seq[3] <- 999
+
+print(vetor_seq)
 ```
 
 Podemos acessar múltiplos elementos do vetor:
@@ -510,16 +521,21 @@ print(elementos_maior_5)
 print(vetor_pares[vetor_pares > 5])
 ```
 
-O operador `%in%` é utilizado para verificar se os elementos de um vetor estão presentes em outro vetor:
+![](images/clipboard-2707585868.png){width="100%"}
+
+O operador `%in%` é utilizado para verificar se certos elementos estão presentes em um vetor:
 
 ```{r}
-vetor_a <- c(1, 2, 3, 4, 5)
+vetor_a <- c(2, 3, 10)
+
+print(3 %in% vetor_a)
+
 vetor_b <- c(3, 4, 5, 6, 7)
 
 print(vetor_a %in% vetor_b)
 ```
 
-#### Data frames
+### Data frames
 
 R possui vários tipos de dados, os principais são:
 
@@ -527,7 +543,7 @@ R possui vários tipos de dados, os principais são:
 -   Lógicos: `TRUE` ou `FALSE`
 -   Strings: texto entre aspas (ex: `"Olá, mundo!"`)
 
-**Data frames** são tabelas de dados, onde cada coluna é um vetor de um tipo específico e cada linha representa uma observação:
+**Data frames** são estruturas de dados tabulares, onde cada coluna é um vetor e cada linha representa uma observação.
 
 ```{r}
 df <- data.frame(
@@ -541,7 +557,7 @@ print(df)
 
 Data frames são amplamente utilizados para análise de dados, permitindo manipular e analisar conjuntos de dados tabulares.
 
-São essencialmente listas de vetores, onde cada vetor representa uma coluna da tabela. Cada coluna pode conter um tipo diferente de dados (numéricos, lógicos, strings), mas todas as colunas devem ter o mesmo número de elementos (linhas).
+Essencialmente, um data frame é uma lista de vetores de mesmo comprimento, em que cada vetor representa uma coluna. Cada coluna pode conter um tipo diferente de dado (numérico, lógico, texto etc.).
 
 Acessando colunas:
 
@@ -553,12 +569,19 @@ df <- data.frame(
 )
 
 print(df$idade)
+print(df[, "idade"])
 ```
 
 Acessando linhas:
 
 ```{r}
 print(df[1, ])
+```
+
+Acessando linha e coluna:
+
+```{r}
+print(df[1, "idade"])
 ```
 
 Para selecionar alunos com mais de 25 anos:
@@ -568,11 +591,11 @@ alunos_mais_velhos <- df[df$idade > 25, ]
 print(alunos_mais_velhos)
 ```
 
-#### Bibliotecas e pacotes
+### Bibliotecas e pacotes
 
-**Bibliotecas** são conjuntos de funções escritas por terceiros (ex: `tidyverse`).
+\*Bibliotecas\*\* (ou pacotes) são conjuntos de funções, dados e documentação que estendem as funcionalidades do R. Geralmente são escritas por outros usuários e compartilhadas com a comunidade (ex: `tidyverse`).
 
-Para instalar uma biblioteca utilizamos `install.packages(...)`.
+Para instalar uma biblioteca, utilizamos o comando `install.packages()`.
 
 ```{r}
 if (!"tidyverse" %in% installed.packages()) {
@@ -580,7 +603,7 @@ if (!"tidyverse" %in% installed.packages()) {
 }
 ```
 
-Vários pesquisadores contribuem com bibliotecas no repositório oficial do R <https://cran-r.c3sl.ufpr.br/>.
+Pesquisadores do mundo todo contribuem com bibliotecas no repositório oficial do R, <https://cran-r.c3sl.ufpr.br/>.
 
 Para acessar as funções de uma biblioteca, é necessário carregá-la com `library(...)`:
 
@@ -588,7 +611,11 @@ Para acessar as funções de uma biblioteca, é necessário carregá-la com `lib
 library(tidyverse)
 ```
 
-A `tidyverse` possui diversas funções para manipulação de data frames (equivalente a `tibble`), como `filter`, `select`, `mutate`, entre outras, que facilitam a análise de dados tabulares:
+O tidyverse é uma coleção de pacotes para ciência de dados que compartilham uma filosofia de design.
+
+Ele inclui pacotes para manipulação de dados (`dplyr`, `tidyr`), visualização (`ggplot2`) e muito mais.
+
+Suas funções para manipulação de data frames (aqui chamados de tibbles), como `filter`, `select` e `mutate`, facilitam a análise de dados tabulares:
 
 ```{r}
 alunos <- tibble(
@@ -623,11 +650,11 @@ Em resumo, vimos exemplos de funções:
 -   `select()`: seleciona colunas específicas
 -   `summarise()`: calcula estatísticas resumidas, como média, soma, etc
 
-Existem várias funções para manipulação de data frames incluídas na `tidiverse`. Um resumo visual dessas funções está disponível em <https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf>.
+Existem várias outras funções para manipulação de data frames incluídas no `tidyverse`. Um resumo visual dessas funções está disponível em <https://nyu-cdsc.github.io/learningr/assets/data-transformation.pdf>.
 
-#### Strings (cadeias de caracteres)
+### Strings (cadeias de caracteres)
 
-**String** é o tipo de dados para textos. Aspas simples ou duplas indicam que o conteúdo deve ser interpretado como texto:
+**String** é o tipo de dado utilizado para representar textos. Em R, strings são definidas com aspas simples ou duplas:
 
 ```{r}
 texto <- "Olá, mundo!"
@@ -635,7 +662,7 @@ texto <- "Olá, mundo!"
 print(texto)
 ```
 
-A biblioteca `stringr` (incluída como parte da `tidyverse`) possui diversas funções para manipulação de strings (todas começam com `str_`):
+A biblioteca `stringr` (parte do `tidyverse`) possui diversas funções para a manipulação de strings (todas começam com o prefixo `str_`):
 
 ```{r}
 a <- "olá"
@@ -645,7 +672,7 @@ a_b_concatenados <- str_c(a, b, sep = " ")
 print(a_b_concatenados)
 ```
 
--   "concatenar" significa unir duas ou mais strings em uma única string. A função `str_c` do pacote `stringr` é usada para concatenar strings, e o argumento `sep` especifica o separador entre as strings concatenadas (neste caso, um espaço).
+-   Concatenar significa unir duas ou mais strings. A função str_c do pacote stringr é usada para esta finalidade, e o argumento `sep` especifica o caractere separador a ser inserido entre as strings (neste caso, um espaço).
 
 ```{r}
 num_palavras <- str_length("quantos caracteres tem esta frase?")
@@ -653,7 +680,7 @@ num_palavras <- str_length("quantos caracteres tem esta frase?")
 print(num_palavras)
 ```
 
--   `str_length` é uma função do pacote `stringr` que retorna o número de caracteres em uma string, incluindo espaços e pontuação.
+-   A função `str_length` retorna o número de caracteres em uma string, incluindo espaços e pontuação.
 
 ```{r}
 contem_texto <- str_detect("este texto contém palavras", "texto")
@@ -661,9 +688,9 @@ contem_texto <- str_detect("este texto contém palavras", "texto")
 print(contem_texto)
 ```
 
--   `str_detect` é uma função do pacote `stringr` que verifica se uma string contém um padrão específico. Retorna `TRUE` se o padrão for encontrado e `FALSE` caso contrário.
+-   A função `str_detect` verifica se uma string contém um padrão de texto. Ela retorna TRUE se o padrão for encontrado e FALSE caso contrário.
 
-Todas as funções do pacote `stringr` são projetadas para trabalhar com vetores de strings, o que significa que você pode aplicar essas funções a um vetor de textos e obter resultados para cada elemento do vetor.
+As funções do pacote `stringr` são vetorizadas, o que significa que elas podem ser aplicadas diretamente a um vetor de textos, retornando um resultado para cada elemento.
 
 ```{r}
 discursos <- c(
@@ -674,6 +701,7 @@ discursos <- c(
 contem_texto <- str_detect(discursos, "palavra-chave")
 
 print(contem_texto)
+print(discursos[contem_texto])
 ```
 
 ## Exemplo: Análise de Sentimentos com R
@@ -717,7 +745,7 @@ print(palavras_positivas)
 print(palavras_negativas)
 ```
 
-Função para analisar o sentimento de um vetor de palavras:
+Criando uma função para analisar o sentimento de um texto:
 
 ```{r}
 analisar_sentimento <- function(palavras) {
@@ -757,12 +785,12 @@ print(df_contagem)
 
 ## Para saber mais
 
-As três primeiras partes do livro R for Data Science [@wickham2023] é uma ótima introdução à linguagem R e manipulação de dados com a biblioteca `tidyverse`.
+As três primeiras partes do livro *R for Data Science* [@wickham2023] são uma ótima introdução à linguagem R e à manipulação de dados com a biblioteca `tidyverse`.
 
 ## Atividade prática
 
 1.  Crie um vetor de textos contendo pelo menos 5 frases de discursos políticos.
 2.  Crie um data frame com esses textos.
 3.  Defina 3 vetores com palavras representando temas políticos (ex: economia, saúde, educação).
-4.  Crie uma função que analise se um texto contém mais palavras relacionadas a um tema e retorne o tema predominante.
+4.  Crie uma função que analise um texto, identifique a qual tema ele mais se relaciona e retorne o tema predominante.
 5.  Aplique a função de análise de temas a cada texto e crie uma nova coluna no data frame indicando o tema predominante em cada texto.

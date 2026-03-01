@@ -12,11 +12,6 @@ book:
     - index.qmd
     - aula1.qmd
     - aula2.qmd
-    - aula3.qmd
-    - aula4.qmd
-    - aula5.qmd
-    - aula6.qmd
-    - aula7.qmd
     - glossario.qmd
     - references.qmd
   appendices: 
