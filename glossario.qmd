@@ -19,6 +19,32 @@ RStudio
 Tidyverse
 :   coleção de pacotes R para ciência de dados
 
+Variável
+:   nome para um valor armazenado em memória, que pode ser alterado
+
+Condicional
+:   estrutura de código que executa ou não um bloco, de acordo com uma expressão lógica
+
+Função
+:   um trecho de código que possui um nome, geralmente para uso de operações comuns
+
+`|>` operador pipe
+:   utilizado para encadear chamadas de funções (o resultado é passado como argumento para a próxima função)
+
+Vetor
+:   coleção ou sequência de um ou mais valores do mesmo tipo
+
+Data Frame
+:   estrutura de dado para armazenar tabelas com linhas e colunas
+
+Biblioteca
+:   coleção de funções, pode ser instalada e compartilhada em repositórios na Internet
+
+String
+:   cadeia de caracteres, tipo de dado utilizado para representar texto
+
+
+
 <!-- ## Aula 2 -->
 
 <!-- -   Corpus: conjunto de textos -->

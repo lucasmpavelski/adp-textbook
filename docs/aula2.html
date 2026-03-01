@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Aula 2: palavras, morfemas e tokens – Laboratórios de Análise de Discurso Político</title>
+<title>2&nbsp; Palavras, morfemas e tokens – Laboratórios de Análise de Discurso Político</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -138,7 +138,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./aula2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 2: palavras, morfemas e tokens</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./aula2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Palavras, morfemas e tokens</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -166,19 +166,19 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Prefácio</span></a>
+ <span class="menu-text">Introdução</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aula 1: Linguagem R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linguagem R</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula2.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 2: palavras, morfemas e tokens</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Palavras, morfemas e tokens</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -196,19 +196,19 @@ div.csl-indent {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Aula 5: Classificação de Textos e Modelos de Linguagem</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Classificação de Textos e Modelos de Linguagem</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Aula 6: Análise de Sentimentos e Entidades Nomeadas</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Análise de Sentimentos e Entidades Nomeadas</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Aula 7: Modelos Discursivos e RAG</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Modelos Discursivos e RAG</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -234,8 +234,8 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apendice.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Apêndice</span></a>
+  <a href="./apendice_regex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expressões regulares</span></a>
   </div>
 </li>
       </ul>
@@ -275,7 +275,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Aula 2: palavras, morfemas e tokens</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Palavras, morfemas e tokens</span></h1>
 </div>
 
 
@@ -294,20 +294,15 @@ div.csl-indent {
 
 <section id="obtendo-dados-textuais" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="obtendo-dados-textuais"><span class="header-section-number">2.1</span> Obtendo dados textuais</h2>
-<ul>
-<li><em>Obtenção de dados textuais</em></li>
-<li>Pré-processamento</li>
-<li>Exploração e modelagem</li>
-<li>Interpretação e visualização</li>
-</ul>
+<p><img src="images/pipeline-dados.png" class="img-fluid"></p>
 <blockquote class="blockquote">
-<p>Quais são fontes interessantes para estudos políticos?</p>
+<p>Quais são fontes textuais interessantes para estudos políticos?</p>
 </blockquote>
 <p>Tipos de fontes de dados textuais:</p>
 <ul>
 <li><p><em>Banco de dados</em>: dados já organizados e estruturados para análise.</p>
 <p>Muitas vezes inclúem metadados (informações adicionais sobre os textos, ex: dada, interlocutor, local etc).</p>
-<p>Como o custo de manutenção é alto, o acesso geralmente é fechado para colaboradores.</p></li>
+<p>Como o custo de manutenção é alto, o acesso geralmente é restrito para a instituição.</p></li>
 <li><p><em>APIs</em>: interfaces de programação que permitem acessar dados textuais de forma automatizada, como APIs de redes sociais (Twitter, Facebook) e dados governamentais (dados.gov.br)</p>
 <p>O formato dos dados varia para cada fonte (JSON ou XML), mas geralmente inclui metadados e o texto em si.</p>
 <p>O acesso pode ser fechado (chave de API) ou limitado (limite de requisições por dia).</p></li>
@@ -1349,10 +1344,6 @@ docs             erika hilton consulado
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in wordcloud_comparison(x, min_size, max_size, min_count, max_words, :
-assinaturas could not be fit on page. It will not be plotted.</code></pre>
-</div>
 </div>
 </section>
 <section id="para-saber-mais" class="level2" data-number="2.4">
@@ -1791,8 +1782,8 @@ Moffitt, Benjamin. 2016. <em>The Global Rise of Populism: Performance, Political
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./aula1.html" class="pagination-link" aria-label="Aula 1: Linguagem R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Aula 1: Linguagem R</span></span>
+      <a href="./aula1.html" class="pagination-link" aria-label="Linguagem R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linguagem R</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

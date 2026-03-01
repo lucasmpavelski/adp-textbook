@@ -1,18 +1,28 @@
-# N-gramas, Collocations, TF-IDF e Análise de Tópicos
+---
+title: N-gramas, Collocations, TF-IDF e Análise de Tópicos
+format: ipynb
+---
 
 ```{r}
 if (!"tidyverse" %in% installed.packages()) {
   install.packages("tidyverse")
 }
 library(tidyverse)
+
 if (!"quanteda" %in% installed.packages()) {
   install.packages("quanteda")
 }
 library(quanteda)
+
 if (!"quanteda.textstats" %in% installed.packages()) {
   install.packages("quanteda.textstats")
 }
 library(quanteda.textstats)
+
+if (!"stopwords" %in% installed.packages()) {
+  install.packages("stopwords")
+}
+library(stopwords)
 ```
 
 ## N-gramas
@@ -38,10 +48,11 @@ Desvantagens de utilizar n-gramas:
 -   Há um retorno decrescente. Como há muitas combinações possíveis de palavras, os dados podem ficar esparsos (muitos casos raros).
 
 ```{r}
-read_csv("data/dados_sessoes.csv") |>
+corpus_sessoes <- read_csv("data/dados_sessoes.csv") |>
   corpus()
-```
 
+print(corpus_sessoes)
+```
 
 ### Dicionários
 
@@ -58,6 +69,54 @@ Collocations são combinações de palavras que coocorrem com mais frequência d
 > -   "federal" aparece 30 vezes
 > -   "distrito federal" aparece 20 vezes
 > -   A frequência esperada de "distrito federal" por acaso seria (50/1000) \* (30/1000) = 1.5 vezes. Portanto, "distrito federal" é uma collocation, pois ocorre muito mais frequentemente do que o esperado por acaso.
+
+### Exemplo
+
+```{r}
+corpus_sessoes <- read_csv("data/dados_sessoes.csv") |>
+  corpus()
+
+collocations_sessoes <- corpus_sessoes |>
+  textstat_collocations()
+
+print(head(collocations_sessoes))
+```
+
+Podemos testar removendo stopwords:
+
+```{r}
+palavras_irrelevantes <- c(stopwords(language = "pt"), "n<c2><ba>")
+
+collocations_sessoes <- corpus_sessoes |>
+  tokens() |>
+  tokens_tolower() |>
+  tokens_remove(palavras_irrelevantes, padding = TRUE) |>
+  textstat_collocations()
+
+print((collocations_sessoes))
+```
+
+Podemos também buscar por collocations com mais de duas palavras:
+
+```{r}
+palavras_irrelevantes <- c(stopwords(language = "pt"), "n<c2><ba>")
+
+collocations_sessoes <- corpus_sessoes |>
+  tokens() |>
+  tokens_tolower() |>
+  tokens_remove(palavras_irrelevantes, padding = TRUE) |>
+  textstat_collocations(size = 2:4)
+
+print(collocations_sessoes)
+```
+
+Além das collocations, a tabela gerada retorna:
+
+-   `count`: a contagem de ocorrências
+-   `count_nested`: a contagem de ocorrências com tamanho menor
+-   `length`: o tamanho da colocations em número de palavras
+-   `lambda`: indica o quão fortemente as palavras da colocação estão relacionadas
+-   `z`: estatística do valor `lambda`, corrigido de acordo com o erro padrão (quanto maior `z`, maior a confiança em `lambda`)
 
 ## TF-IDF
 
@@ -81,6 +140,8 @@ TF-IDF (Term Frequency-Inverse Document Frequency) é uma métrica de importânc
 
 O TF-IDF é calculado multiplicando a TF pela IDF. No exemplo acima, o TF-IDF para a palavra "sonho" seria 0.05 \* 1 = 0.05.
 
+## Keyness
+
 ## Análise de tópicos
 
 Em diversos cenários estamos analizando um conjunto de documentos e queremos identificar os temas ou tópicos principais presentes nesses documentos. Por exemplo, quais temas foram discutidos no plenário em 2025?
@@ -90,6 +151,8 @@ A *análise de tópicos* é uma técnica de modelagem de texto que permite desco
 A análise de tópicos é considerada uma técnica de aprendizado não-supervisionado. Os dados são apresentados e o modelo tenta encontrar padrões e estruturas subjacentes sem rótulos ou categorias pré-definidas.
 
 O objetivo é identificar grupos de palavras que frequentemente coocorrem em documentos, sugerindo a presença de um tópico.
+
+![](images/analise-topicos.png)
 
 Latent Dirichlet allocation (LDA) é um dos métodos mais populares para análise de tópicos. Ele assume que:
 
@@ -113,5 +176,3 @@ TODO: comentar modelos de tópicos contextualizados
 ## Exemplo: Analise de n-gramas e Tópicos dos Discursos do Plenário da Câmara dos Deputados
 
 TODO: carregar dados dos discursos, criar um corpus, criar uma matriz de documentos e termos, calcular n-gramas, collocations, TF-IDF e análise de tópicos.
-
-

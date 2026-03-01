@@ -1,13 +1,10 @@
-# Aula 2: palavras, morfemas e tokens
+# Palavras, morfemas e tokens
 
 ## Obtendo dados textuais
 
--   *Obtenção de dados textuais*
--   Pré-processamento
--   Exploração e modelagem
--   Interpretação e visualização
+![](images/pipeline-dados.png)
 
-> Quais são fontes interessantes para estudos políticos?
+> Quais são fontes textuais interessantes para estudos políticos?
 
 Tipos de fontes de dados textuais:
 
@@ -15,7 +12,7 @@ Tipos de fontes de dados textuais:
 
     Muitas vezes inclúem metadados (informações adicionais sobre os textos, ex: dada, interlocutor, local etc).
 
-    Como o custo de manutenção é alto, o acesso geralmente é fechado para colaboradores.
+    Como o custo de manutenção é alto, o acesso geralmente é restrito para a instituição.
 
 -   *APIs*: interfaces de programação que permitem acessar dados textuais de forma automatizada, como APIs de redes sociais (Twitter, Facebook) e dados governamentais (dados.gov.br)
 
@@ -233,12 +230,12 @@ print(head(metadados)) # head mostra as primeiras linhas do data frame
 ```
 
 Assim como `filter`, podemos obter subconjuntos de `corpus_sessoes` com a função `corpus_subset()`:
+
 ```{r}
 corpus_sessoes_pt <- corpus_subset(corpus_sessoes, partido_orador == "PT")
 
 print(corpus_sessoes_pt)
 ```
-
 
 A biblioteca `quanteda.textstats` possui diversas funções para calcular estatísticas de texto, como frequência de palavras, diversidade lexical, legibilidade etc.
 
@@ -384,7 +381,7 @@ Stemming vai reduzir o vocabulário do texto, facilitando algumas análises de f
 
 ### Caracteres
 
-A menor unidade de informação em um texto _computacional_ (ou string) é o **caractere** (ou símbolo).
+A menor unidade de informação em um texto *computacional* (ou string) é o **caractere** (ou símbolo).
 
 O padrão *Unicode* cataloga e codifica caracteres de diferentes linguagens, incluindo linguagens extintas como sumério e cuneiforme:
 
@@ -414,6 +411,7 @@ O problema de separar palavras (ou unidades mínimas de significado) em um texto
 Note que o problema não é muito simples. O chinês, por exemplo, não utiliza espaço para separar palavras e cada caractere representa um morfema.
 
 A biblioteca `quanteda` possui a função `tokens()` para realizar a tokenização de um texto, com diversas opções para personalizar o processo:
+
 ```{r}
 texto <- 'Ele disse: "Uh, são 13 horas. Não está na hora de almoçar?"'
 
@@ -443,6 +441,7 @@ A tokenização em palavras é útil para análise sintática e semântica, enqu
 Em algumas aplicações, como modelos de linguagem, a tokenização é um processo essencial na contrução do **vocabulário**. O vocabulário é a coleção de todas as palavras conhecidas do modelo.
 
 Uma estrutura útil npara análise de texto é a **matriz de documentos e termos (Document-Feature Matrix, DFM)**, que representa a frequência de cada palavra em cada documento:
+
 ```{r}
 dfm_sessoes <- corpus_sessoes |>
   tokens(remove_punct = TRUE, remove_numbers = TRUE) |> # tokenizar texto
@@ -453,15 +452,16 @@ print(dfm_sessoes)
 ```
 
 Cada linha é um documento e cada coluna é uma palavra. O valor em cada célula representa a frequência da palavra no documento.
+
 ```{r}
 print(dfm_sessoes[3, "presidente"])
 ```
 
 Por exemplo, para contar quantas vezes a palavra "presidente" é mencionada em todos os discursos, podemos somar os valores da coluna correspondente:
+
 ```{r}
 sum(dfm_sessoes[, "presidente"])
 ```
-
 
 ### Byte Pair Encoding (BPE)
 
@@ -542,6 +542,7 @@ print(tokens_sessoes)
 ```
 
 Agora vamos construir a DFM:
+
 ```{r}
 dfm_sessoes <- dfm(tokens_sessoes)
 
@@ -549,6 +550,7 @@ print(dfm_sessoes)
 ```
 
 Para extrair algumas estatísticas básicas, como as palavras mais comuns, podemos utilizar a função `topfeatures`:
+
 ```{r}
 palavras_mais_comuns <- textstat_frequency(dfm_sessoes, n = 10)
 
@@ -567,12 +569,12 @@ palavras_mais_comuns <- textstat_frequency(dfm_sessoes, n = 10)
 print(palavras_mais_comuns)
 ```
 
-
 ```{r}
 textplot_wordcloud(dfm_sessoes, max_words = 100)
 ```
 
 Agrupando por partido:
+
 ```{r}
 palavras_por_partido <- textstat_frequency(dfm_sessoes, n = 5, groups = partido_orador)
 
@@ -580,6 +582,7 @@ print(palavras_por_partido)
 ```
 
 Para comparar as palavras mais comuns entre partidos, podemos utilizar a função `textplot_wordcloud` com o argumento `comparison = TRUE`:
+
 ```{r}
 dfm_sessoes |>
   dfm_subset(partido_orador %in% c("PT", "PL")) |>       # filtrar partidos PT e PL

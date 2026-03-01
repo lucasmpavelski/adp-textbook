@@ -20,7 +20,7 @@ book:
     - glossario.qmd
     - references.qmd
   appendices: 
-    - apendice.qmd
+    - apendice_regex.qmd
 
 bibliography: references.bib
 

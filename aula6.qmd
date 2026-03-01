@@ -1,4 +1,4 @@
-# Aula 6: Análise de Sentimentos e Entidades Nomeadas
+# Análise de Sentimentos e Entidades Nomeadas
 
 ## Análise de sentimentos
 

@@ -11,7 +11,7 @@ TODO: lista de tipos POS
 Os tipos de classes gramaticais são:
 
 | Anotação | Nome (inglês) | Nome (português) | Exemplo |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | [ADJ](https://universaldependencies.org/u/pos/ADJ.html "u-pos ADJ") | adjective | Adjetivo | *feliz, grande, azul, rápido, inteligente, cansado*. (Atribuem características aos substantivos) |
 | [ADP](https://universaldependencies.org/u/pos/ADP.html "u-pos ADP") | adposition | Adposição/Preposição | *de, em, para, com, por, sem, sob*. (Ligam palavras estabelecendo relação de sentido entre elas) |
 | [ADV](https://universaldependencies.org/u/pos/ADV.html "u-pos ADV") | adverb | Advérbio |  |
@@ -30,9 +30,9 @@ Os tipos de classes gramaticais são:
 | [VERB](https://universaldependencies.org/u/pos/VERB.html "u-pos VERB") | verb | Verbo |  |
 | [X](https://universaldependencies.org/u/pos/X.html "u-pos X") | other | Outro |  |
 
-TODO: intuição com HMM
+![](images/pos-viterbi.png){fig-align="center"}
 
-![](images/clipboard-1297568221.png)
+TODO: intuição com HMM
 
 TODO: exemplo com spacy
 

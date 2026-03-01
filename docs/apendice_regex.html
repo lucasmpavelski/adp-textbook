@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Referências – Laboratórios de Análise de Discurso Político</title>
+<title>Expressões regulares – Laboratórios de Análise de Discurso Político</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,26 +20,42 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,8 +65,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./apendice_regex.html" rel="next">
-<link href="./glossario.html" rel="prev">
+<link href="./references.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -90,6 +105,35 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -102,7 +146,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">Referências</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apendice_regex.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apendice_regex.html">Expressões regulares</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -183,7 +227,7 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Referências</span></a>
   </div>
 </li>
@@ -198,7 +242,7 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./apendice_regex.html" class="sidebar-item-text sidebar-link">
+  <a href="./apendice_regex.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Expressões regulares</span></a>
   </div>
 </li>
@@ -215,9 +259,9 @@ div.csl-indent {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./apendice_regex.html">Appendices</a></li><li class="breadcrumb-item"><a href="./apendice_regex.html">Expressões regulares</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Referências</h1>
+<h1 class="title">Expressões regulares</h1>
 </div>
 
 
@@ -234,54 +278,99 @@ div.csl-indent {
 </header>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-benoit2018" class="csl-entry" role="listitem">
-Benoit, Kenneth, Kohei Watanabe, Haiyan Wang, Paul Nulty, Adam Obeng,
-Stefan Müller, and Akitaka Matsuo. 2018. <span>“Quanteda: An r Package
-for the Quantitative Analysis of Textual Data.”</span> <em>Journal of
-Open Source Software</em> 3 (30): 774. <a href="https://doi.org/10.21105/joss.00774">https://doi.org/10.21105/joss.00774</a>.
+<ul>
+<li>Expressões regulares são padrões utilizados para buscar e manipular texto</li>
+<li>Permitem encontrar palavras, frases ou padrões específicos em um texto</li>
+</ul>
+<p>A biblioteca <code>stringr</code> do R é uma das mais utilizadas para trabalhar com expressões regulares.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"stringr"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>()) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"stringr"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="ref-processa2024" class="csl-entry" role="listitem">
-Caseli, H. M., and M. G. V. Nunes, eds. 2024. <em>Processamento de
-Linguagem Natural: Conceitos, Técnicas e Aplicações Em Português</em>.
-2nd ed. BPLN. <a href="https://brasileiraspln.com/livro-pln/2a-edicao/">https://brasileiraspln.com/livro-pln/2a-edicao/</a>.
+<p>A função <code>str_detect()</code> é utilizada para verificar se um padrão específico está presente em uma string.</p>
+<p>Exemplo de expressão regular para encontrar textos que contém qualquer palavra iniciando com “brasil”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o Brasil é um país maravilhoso"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a economia do Japão está crescendo"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o futebol argentino é famoso"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiras são conhecidas por sua alegria"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o clima no Brasil é tropical"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiros são apaixonados por futebol"</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>contem_brasil <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(discursos, <span class="st">"brasil.*"</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discursos[contem_brasil])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "brasileiras são conhecidas por sua alegria"
+[2] "brasileiros são apaixonados por futebol"   </code></pre>
 </div>
-<div id="ref-jurafsky_speech_2026" class="csl-entry" role="listitem">
-Jurafsky, Daniel, and James H. Martin. 2026. <em>Speech and
-<span>Language</span> <span>Processing</span>: <span>An</span>
-<span>Introduction</span> to <span>Natural</span> <span>Language</span>
-<span>Processing</span>, <span>Computational</span>
-<span>Linguistics</span>, and <span>Speech</span>
-<span>Recognition</span>, with <span>Language</span>
-<span>Models</span></em>. 3rd ed. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
 </div>
-<div id="ref-moffitt2016" class="csl-entry" role="listitem">
-Moffitt, Benjamin. 2016. <em>The Global Rise of Populism: Performance,
-Political Style, and Representation</em>. 1st ed. Stanford University
-Press. <a href="https://doi.org/10.2307/j.ctvqsdsd8">https://doi.org/10.2307/j.ctvqsdsd8</a>.
+<ul>
+<li>o ponto <code>.</code> significa “qualquer caractere” e o asterisco <code>*</code> significa “zero ou mais vezes”. Portanto, a expressão regular <code>brasil.*</code> corresponde a qualquer string que contenha a palavra “brasil” seguida de zero ou mais caracteres, ou seja, qualquer string que contenha a palavra “brasil” em qualquer posição.</li>
+</ul>
+<p>Para encontrar o padrão “Brasil” (com B maiúsculo) ou “brasil” podemos utilizar:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>contem_brasil <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(discursos, <span class="st">"brasil.*|Brasil.*"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discursos[contem_brasil])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "o Brasil é um país maravilhoso"            
+[2] "brasileiras são conhecidas por sua alegria"
+[3] "o clima no Brasil é tropical"              
+[4] "brasileiros são apaixonados por futebol"   </code></pre>
 </div>
-<div id="ref-nivre2020" class="csl-entry" role="listitem">
-Nivre, Joakim, Marie-Catherine de Marneffe, Filip Ginter, Jan Hajič,
-Christopher D. Manning, Sampo Pyysalo, Sebastian Schuster, Francis
-Tyers, and Daniel Zeman. 2020. <span>“Universal Dependencies v2: An
-Evergrowing Multilingual Treebank Collection.”</span> In, edited by
-Nicoletta Calzolari, Frédéric Béchet, Philippe Blache, Khalid Choukri,
-Christopher Cieri, Thierry Declerck, Sara Goggi, et al., 40344043.
-Marseille, France: European Language Resources Association. <a href="https://aclanthology.org/2020.lrec-1.497/">https://aclanthology.org/2020.lrec-1.497/</a>.
 </div>
-<div id="ref-oneill2021" class="csl-entry" role="listitem">
-O’Neill, Lachlan, Nandini Anantharama, Wray Buntine, and Simon D. Angus.
-2021. <span>“Quantitative Discourse Analysis at Scale - AI, NLP and the
-Transformer Revolution.”</span> <em>SoDa Laboratories Working Paper
-Series</em>, SoDa Laboratories Working Paper Series, December. <a href="https://ideas.repec.org//p/ajr/sodwps/2021-12.html">https://ideas.repec.org//p/ajr/sodwps/2021-12.html</a>.
+<p><code>&lt;re1&gt;|&lt;re2&gt;</code> vai detectar a expressão <code>re1</code> ou <code>re2</code>. Ou, de forma mais concisa:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>contem_brasil <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(discursos, <span class="st">"[Bb]rasil.*"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discursos[contem_brasil])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "o Brasil é um país maravilhoso"            
+[2] "brasileiras são conhecidas por sua alegria"
+[3] "o clima no Brasil é tropical"              
+[4] "brasileiros são apaixonados por futebol"   </code></pre>
 </div>
-<div id="ref-silge2017" class="csl-entry" role="listitem">
-Silge, Julia, and David Robinson. 2017. <em>Text mining with R: a tidy
-approach</em>. Beijing, China: O’Reilly.
 </div>
-<div id="ref-wickham2023" class="csl-entry" role="listitem">
-Wickham, Hadley. 2023. <em>R for Data Science</em>. 2nd ed. Sebastopol:
-O’Reilly Media, Incorporated.
+<ul>
+<li>Os colchetes <code>[]</code> indicam um conjunto de caracteres. Portanto, a expressão regular <code>[Bb]rasil.*</code> corresponde a qualquer string que contenha “Brasil” com B maiúsculo ou “brasil” com b minúsculo, seguida de zero ou mais caracteres.</li>
+</ul>
+<p>Podemos procurar por discursos que começam com “brasil” ou “Brasil” utilizando o símbolo <code>^</code> para indicar o início da string:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Brasil é um país maravilhoso"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a economia do Japão está crescendo"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o futebol argentino é famoso"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiras são conhecidas por sua alegria"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o clima no Brasil é tropical"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiros são apaixonados por futebol"</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>começam_com_brasil <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(discursos, <span class="st">"^[bB]rasil"</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discursos[começam_com_brasil])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Brasil é um país maravilhoso"              
+[2] "brasileiras são conhecidas por sua alegria"
+[3] "brasileiros são apaixonados por futebol"   </code></pre>
+</div>
+</div>
+<p>De forma análioga o símbolo <span class="math inline">\(`\)</span> indica o final da string. Para encontrar discursos que terminam com “o”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>discursos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Brasil é um país maravilhoso"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"a economia do Japão está crescendo"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o futebol argentino é famoso"</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiras são conhecidas por sua alegria"</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"o clima no Brasil é tropical"</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"brasileiros são apaixonados por futebol"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>começam_com_brasil <span class="ot">&lt;-</span> <span class="fu">str_detect</span>(discursos, <span class="st">"o$"</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(discursos[começam_com_brasil])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Brasil é um país maravilhoso"       "a economia do Japão está crescendo"
+[3] "o futebol argentino é famoso"      </code></pre>
 </div>
 </div>
 
@@ -690,14 +779,11 @@ O’Reilly Media, Incorporated.
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./glossario.html" class="pagination-link" aria-label="Glossário">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Glossário</span>
+      <a href="./references.html" class="pagination-link" aria-label="Referências">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Referências</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./apendice_regex.html" class="pagination-link" aria-label="Expressões regulares">
-        <span class="nav-page-text">Expressões regulares</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
