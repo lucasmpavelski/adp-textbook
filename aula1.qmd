@@ -14,7 +14,7 @@ bibliography: "references.bib"
 
 -   Funções para processamento de texto
 
-Link para Google Colab: <https://drive.google.com/file/d/1LalxshzmyMmTyfuIaFbp7RYcoP5Qnvuo/view?usp=sharing>
+Link para Google Colab: <https://colab.research.google.com/drive/1LalxshzmyMmTyfuIaFbp7RYcoP5Qnvuo>
 :::
 
 -   **R** é uma linguagem de programação e ambiente de software para computação estatística e gráficos
@@ -607,7 +607,7 @@ Pesquisadores do mundo todo contribuem com bibliotecas no repositório oficial d
 
 Para acessar as funções de uma biblioteca, é necessário carregá-la com `library(...)`:
 
-```{r, echo=FALSE}
+```{r}
 library(tidyverse)
 ```
 

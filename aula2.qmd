@@ -1,48 +1,82 @@
 # Palavras, morfemas e tokens
 
+::: callout-note
+## Nesta aula
+
+-   Otendo dados textuais
+
+-   Biblioteca *quanteda*
+
+-   Palavras, morfemas e tokens
+
+-   *Stopwords* (Palavras vazias)
+
+-   *Keyword-in-context* (Palavras em contexto)
+
+Link para Google Colab: TODO
+:::
+
 ## Obtendo dados textuais
 
 ![](images/pipeline-dados.png)
 
-> Quais são fontes textuais interessantes para estudos políticos?
+> Quais são as fontes de textos interessantes para estudos políticos?
 
-Tipos de fontes de dados textuais:
+### Tipos de fontes de dados textuais
 
--   *Banco de dados*: dados já organizados e estruturados para análise.
+#### Banco de dados
 
-    Muitas vezes inclúem metadados (informações adicionais sobre os textos, ex: dada, interlocutor, local etc).
+-   São coleções onde os textos já vêm organizados e prontos para análise.
 
-    Como o custo de manutenção é alto, o acesso geralmente é restrito para a instituição.
+-   Eles costumam incluir "metadados", que são informações valiosas de contexto sobre o texto (como a data, quem falou, o partido e o local).
 
--   *APIs*: interfaces de programação que permitem acessar dados textuais de forma automatizada, como APIs de redes sociais (Twitter, Facebook) e dados governamentais (dados.gov.br)
+-   O acesso pode ser restrito por conta do alto custo de manutenção dessas plataformas.
 
-    O formato dos dados varia para cada fonte (JSON ou XML), mas geralmente inclui metadados e o texto em si.
+![](images/clipboard-2187134464.png)
 
-    O acesso pode ser fechado (chave de API) ou limitado (limite de requisições por dia).
+#### APIs (Interface de Programação de Aplicações)
 
--   *Arquivos de texto*: dados em formato bruto, como arquivos de texto (TXT, CSV) e texto com formatação (Markdown, HTML, RTF)
+-   São ferramentas que nos permitem extrair dados de redes sociais e sites do governo (como o dados.gov.br) de forma automática.
 
-    A leitura desses arquivos por programas é fácil, mas pode exigir pré-processamento para lidar com formatação e metadados.
+-   O acesso pode exigir um cadastro prévio ou ter um limite de buscas por dia.
 
--   *Arquivos não estruturados*: dados em formatos não estruturados, como PDFs, documentos Word, planilhas, imagens e vídeos.
+-   O formato dos dados varia para cada fonte (JSON ou XML).
 
-    PDFs e imagens e vídeos podem ser convertidos em texto utilizando técnicas de OCR (Optical Character Recognition) ou transcrição automática.
+![](images/clipboard-1329770482.png)
 
-    O processamento pode ser custoso e gerar ruídos.
+#### Arquivos de texto
 
--   *Web scraping*: extração de dados textuais de sites da internet utilizando ferramentas como `rvest` em R.
+-   Formatos brutos (como planilhas CSV e arquivos TXT) que são muito fáceis de serem lidos pelo computador.
 
-    O acesso é aberto, mas pode ser limitado por políticas de uso do site ou por medidas de segurança (CAPTCHA, bloqueio de IP).
+-   No entanto, eles são estáticos e podem precisar de ajustes manuais de formatação.
 
-    O formato dos dados varia para cada site e pode exigir pré-processamento para lidar com formatação e metadados. Alterações no site podem quebrar o processo de extração.
+![](images/clipboard-3755277579.png)
+
+#### Arquivos não estruturados
+
+-   Documentos em PDF, Word, imagens e vídeos. O conteúdo de imagens e vídeos pode ser transformado em texto através de técnicas de transcrição automática.
+
+-   O processamento pode ser custoso e gerar ruídos.
+
+![](images/clipboard-133926285.png)
+
+#### Web scraping
+
+-   Extração de textos diretamente das páginas da internet utilizando ferramentas automatizadas.
+
+-   O formato dos dados muda de site para site e exige preparação prévia para organizar as informações.
+
+-   Se os criadores do site mudarem o layout da página, o processo de coleta pode parar de funcionar.
+
+![](images/clipboard-865900192.png)
 
 ### Exemplo: Obtendo Discursos da Câmara dos Deputados
 
-A Câmara dos Deputados disponibiliza um banco de dados de discursos em formato XML, que pode ser acessado por meio de uma API.
+A Câmara dos Deputados disponibiliza um banco de dados de discursos que pode ser acessado por meio de um sistema automatizado (API).
 
 A documentação da API com exemplos está disponível em: <https://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/sessoesreunioes-2>
 
-Para isso, vamos utilizar a biblioteca `httr` para fazer requisições HTTP e as bibliotecas `xml2` e `tidyverse` para ler e manipular os dados XML.
+Para baixar e organizar esses dados, utilizamos pacotes da linguagem R (`httr`, `xml2` e `tidyverse`).
 
 ```{r}
 if (!"httr" %in% installed.packages()) {
@@ -59,7 +93,7 @@ library(xml2)
 library(tidyverse)
 ```
 
-Vamos obter os dados de sessões do mês de abril de 2025:
+Os parâmetros da nossa busca (como data, partido e estado) são organizados diretamente no endereço de internet (URL). O endereço completo é construído juntando a URL base com esses parâmetros.
 
 ```{r}
 data_inicial <- "01/04/2025"
@@ -82,7 +116,7 @@ endereco <- str_c(url_base,
 print(endereco)
 ```
 
--   Como a requisição a ser feita é do tipo GET, os parâmetros são passados na URL. O endereço completo da requisição é construído concatenando a URL base com os parâmetros utilizando a função `str_c` do pacote `stringr`.
+Com o R, nós acessamos esse endereço, baixamos os resultados e os convertemos em uma lista.
 
 ```{r cache=TRUE}
 dados_sessoes <- httr::GET(endereco) |>         # realizar requisição
@@ -104,12 +138,12 @@ dados_primeiro_discurso <- dados_sessoes[[1]]$sessao$fasesSessao[[1]]$discursos[
 print(dados_primeiro_discurso)
 ```
 
-Podemos transformar os dados em data frame (`tibble`) para facilitar a manipulação:
+Em seguida, transformamos essa lista em uma tabela para facilitar o nosso manuseio e leitura.
 
 ```{r}
 df_sessoes <- dados_sessoes[[1]] |>
-  map(as_tibble) |>   # converter cada elemento da lista em tibble
-  bind_rows()         # combinar os tibbles em um único tibble
+  map(as_tibble) |>   # converter cada elemento da lista em tabela
+  bind_rows()         # combinar as tabela em uma única tabela
 
 print(df_sessoes)
 ```
@@ -153,7 +187,7 @@ print(df_sessoes)
 
 -   o padrão Text Interchange Formats (TIF) foi criado para padronizar objetos de análise textual (<https://github.com/ropenscilabs/tif>). Para seguir o padrão, armazenamos o texto principal (sumário do discurso) na coluna `text` e um identificador único de cada texto (combinação de sessao, quarto, orador e num_insercao) na coluna `doc_id`.
 
-Algumas estatísticas básicas sobre os discursos:
+Por fim, podemos extrair estatísticas sobre os oradores e salvar os dados em uma planilha CSV para usos futuros.
 
 ```{r}
 print(str_c("Número total de discursos: ", nrow(df_sessoes)))
@@ -194,15 +228,15 @@ Da mesma forma, podemos ler arquivos CSV utilizando a função `read_csv` do pac
 df_sessoes <- read_csv("data/dados_sessoes.csv")
 ```
 
-### Criando objeto corpus
+#### Criando o corpus
 
-*Corpus* é um termo utilizado para se referir a um conjunto de textos que serão analisados.
+Na análise de textos, chamamos de **corpus** o conjunto de textos que vamos estudar.
 
-O corpus é a base para muitas análises de PLN, pois é a partir dele que os modelos aprendem padrões e estruturas da linguagem.
+É a partir dele que os programas de computador identificam padrões na linguagem.
 
-O termo *corpora* se refere à uma coleção de corpus.
+Quando temos várias coleções, utilizamos o termo **corpora**.
 
-A biblioteca `quanteda` possui diversas funções para criar e manipular corpora, como `corpus()`:
+A biblioteca `quanteda` do R possui diversas funções para criar e manipular esse material.
 
 ```{r}
 if (!"quanteda" %in% installed.packages()) {
@@ -219,7 +253,7 @@ corpus_sessoes <- corpus(df_sessoes, text_field = "text", docid_field = "doc_id"
 print(corpus_sessoes)
 ```
 
-Os metadados (informações adicionais sobre os textos) são armazenados como atributos do corpus e podem ser acessados utilizando a função `docvars()`:
+As informações extras sobre os textos (os metadados, como nome do orador e partido) ficam salvas junto com o corpus e podem ser consultadas facilmente utilizando a função `docvars()`:
 
 ```{r}
 metadados <- corpus_sessoes |>
@@ -237,7 +271,7 @@ corpus_sessoes_pt <- corpus_subset(corpus_sessoes, partido_orador == "PT")
 print(corpus_sessoes_pt)
 ```
 
-A biblioteca `quanteda.textstats` possui diversas funções para calcular estatísticas de texto, como frequência de palavras, diversidade lexical, legibilidade etc.
+O ecossistema do R também possui pacotes complementares como `quanteda.textstats` para visualizar os textos e calcular estatísticas de frequência.
 
 ```{r}
 if (!"quanteda.textstats" %in% installed.packages()) {
@@ -255,9 +289,7 @@ if (!"quanteda.textplots" %in% installed.packages()) {
 library(quanteda.textplots)
 ```
 
-A seguir, vamos utilizar `corpus_sessoes`, as bibliotecas `quanteda` e relacionadas para realizar as análises de palavras.
-
-## Palavras, morfemas, lemas e stems
+## Níveis de análise textual
 
 O estudo da língua é dividido em diversas subáreas:
 
@@ -275,9 +307,9 @@ O estudo da língua é dividido em diversas subáreas:
 
 -   **discurso**: estruturas do texto como todo
 
-O estudo de PLN geralmente tem foco no *texto escrito* (e.g morfologia, sintaxe, semântica, discurso).
+O processamento de textos pelo computador foca principalmente no texto escrito (sintaxe, semântica e discurso).
 
-Porém, fonética e fonologia também são importantes para PLN, especialmente em tarefas que envolvem *fala* (e.g. reconhecimento de fala, síntese de fala).
+Contudo, a fala e a entonação também são importantes, principalmente em estudos que envolvem áudio.
 
 Além disso, dada a natureza multimodal da análise de discurso a fala também é relevante. Por exemplo:
 
@@ -289,34 +321,13 @@ Além disso, dada a natureza multimodal da análise de discurso a fala também �
 
 > Que tipo de informação é transmitida por meio da fala, além do conteúdo semântico? Quais estão destacadas no texto taquigrafado?
 
-A unidade mínima de informação para PLN depende do nível de análise:
+A forma como dividimos o texto depende do nível da nossa análise:
 
--   partes de palavras (como morfemas, lemas ou stems) são uteis para "unir" signicados entre palavras relacionadas
--   palavras são uteis para análise sintática e semântica
--   frases e parágrafos são uteis para análise de modelos de discurso
+-   partes de palavras: palavras relacionadas e significados
+-   palavras: análise sintática e semântica
+-   frases e parágrafos: entidades e modelos de discurso
 
-Por exemplo "beija-flor" e "escova de dente" podem ser consideradas palavras compostas ou não.
-
-Na morfologia, a unidade mínima de significado é o **morfema**:
-
--   "casa" tem um morfema (casa)
--   "casas" tem dois morfemas (casa + s)
--   "casinha" tem dois morfemas (casa + inha)
--   "casinhas" tem três morfemas (casa + inha + s)
-
-A **lematização** é o processo de reduzir uma palavra ao seu lema (ou forma canônica). Ex.:
-
--   "gatos" -\> "gato"
--   "gata" -\> "gato"
--   "gatinhas" -\> "gato"
-
-A **stemização** é o processo (menos preciso) de reduzir uma palavra ao seu radical (ou raiz). Ex.:
-
--   "gatos" -\> "gat"
--   "gata" -\> "gat"
--   "gatinhas" -\> "gat"
-
-### Obtendo informações morfológicas de palavras
+## A estrutura das palavras: morfemas, lemas e radicais
 
 Separar palavras em subunidades pode ser útil em análises:
 
@@ -330,17 +341,30 @@ Separar palavras em subunidades pode ser útil em análises:
 
 Por exemplo, @moffitt2016 destaca o uso de neologismos em performances populistas (*refudiate* por Sarah Palin). Outros estudos comparam morfemas em diferentes estilos de texto, como jornalístico e literário.
 
-A biblioteca `morphemepiece` é uma ferramenta para segmentação de palavras em morfemas da língua inglesa.
+### Morfemas
+
+Na morfologia, a unidade mínima de significado é o **morfema**:
+
+-   "casa" tem um morfema (casa)
+-   "casas" tem dois morfemas (casa + s)
+-   "casinha" tem dois morfemas (casa + inha)
+-   "casinhas" tem três morfemas (casa + inha + s)
+
+A biblioteca `morphemepiece` possui funções para segmentação de palavras em morfemas da língua inglesa.
 
 ```{r}
 if (!"morphemepiece" %in% installed.packages()) {
   install.packages("morphemepiece")
 }
 library(morphemepiece)
+```
 
+Exemplos de uso:
+
+```{r}
 print(morphemepiece_tokenize("houses"))
 print(morphemepiece_tokenize("orderly"))
-print(morphemepiece_tokenize("paradoxical"))
+print(morphemepiece_tokenize("paradoxicity"))
 print(morphemepiece_tokenize("discoursal"))
 ```
 
@@ -359,9 +383,15 @@ fortinho    forte+A+DIM+M+SG
 -   M: masculino
 -   SG: singular
 
-### Stemming
+### **Stemização** (Corte do radical)
 
-Stemming é um processo mais simples e menos preciso do que lematização, mas pode ser útil para algumas tarefas de PLN, como análise de sentimentos ou classificação de texto.
+A **stemização** é o processo de reduzir uma palavra ao seu radical (ou raiz). Ex.:
+
+-   "gatos" -\> "gat"
+-   "gata" -\> "gat"
+-   "gatinhas" -\> "gat"
+
+Stemming pode ser útil para algumas tarefas de PLN, como análise de sentimentos ou classificação de texto.
 
 Exemplos utilizando a biblioteca `quanteda`:
 
@@ -377,13 +407,17 @@ stems_love <- char_wordstem(c("love", "loving", "loved"), language = "en")
 print(stems_love)
 ```
 
-Stemming vai reduzir o vocabulário do texto, facilitando algumas análises de frequência, mas pode gerar ambiguidades e perder informações importantes sobre o significado das palavras.
+Stemming vai reduzir o vocabulário do texto, facilitando também análises de frequência.
+
+Porém, os radicais gerados pode gerar ambiguidades e perder informações importantes sobre o significado das palavras.
+
+A **lematização** é o processo (mais preciso) de reduzir uma palavra à sua forma original de dicionário (ex: "gatos" e "gata" são convertidos para "gato").
 
 ### Caracteres
 
-A menor unidade de informação em um texto *computacional* (ou string) é o **caractere** (ou símbolo).
+A menor unidade de informação em um texto digital é o **caractere** (ou símbolo).
 
-O padrão *Unicode* cataloga e codifica caracteres de diferentes linguagens, incluindo linguagens extintas como sumério e cuneiforme:
+O computador usa códigos, como o padrão Unicode, para entender e catalogar caracteres de todas as linguagens.
 
 <iframe src="https://www.unicode.org/charts/" width="100%" height="500px" frameborder="0">
 
@@ -402,7 +436,7 @@ print(tokenize_character("avião = 飞机"))
 print(tokenize_character("#feliz! \U0001f600"))
 ```
 
-### Tokenização
+## Tokenização (Dividindo o texto)
 
 Não há consenso sobre a definição de *palavra* na linguística. Em PLN, a separação do texto em palavras depende do contexto da aplicação.
 
@@ -438,7 +472,7 @@ print(tokens)
 
 A tokenização em palavras é útil para análise sintática e semântica, enquanto a tokenização em sentenças é útil para análise de modelos de discurso.
 
-Em algumas aplicações, como modelos de linguagem, a tokenização é um processo essencial na contrução do **vocabulário**. O vocabulário é a coleção de todas as palavras conhecidas do modelo.
+Em algumas aplicações, como modelos de linguagem, a tokenização é um processo essencial na contrução do vocabulário. O **vocabulário** é a coleção de todas as palavras conhecidas (em geral, do texto ou do modelo).
 
 Uma estrutura útil npara análise de texto é a **matriz de documentos e termos (Document-Feature Matrix, DFM)**, que representa a frequência de cada palavra em cada documento:
 
@@ -493,9 +527,9 @@ bpe_encode(model, c("adultização", "adulto", "eleitoreado", "eleitor", "sexta-
 
 Note que os tokens gerados pelo BPE não necessáriamente correspontem "significados".
 
-Porém, são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.
+Porém, tokens BPE são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.
 
-### Stopwords
+## Stopwords
 
 **Stopwords** são palavras comuns que geralmente não carregam muito significado semântico, como "o", "a", "de", "e" em português. Elas são frequentemente removidas em tarefas de PLN para reduzir o ruído e melhorar a eficiência do modelo.
 
@@ -516,11 +550,11 @@ stopwords_portugues <- stopwords(language = "pt")
 print(stopwords_portugues[1:10])
 ```
 
-A remoção de stopwords pode não ser adequada para todas as tarefas, especialmente aquelas que dependem do contexto ou da estrutura do texto (análise sintática, partes de discurso, etc).
+A remoção de stopwords pode não ser adequada para todas as tarefas, especialmente aquelas que dependem do contexto ou da estrutura do texto (análise sintática, reconhecimento de entidades, etc).
 
 ## Exemplo: Palavras mais Utilizadas em Discursos
 
-Primeiro, vamos tokenizar os discursos utilizando a função `spacy_tokenize` e expandir os tokens em linhas utilizando a função `unnest` do pacote `tidyverse`:
+Primeiro, vamos tokenizar os discursos utilizando a função `tokens`:
 
 ```{r}
 tokens_sessoes <- corpus_sessoes |>
@@ -529,7 +563,7 @@ tokens_sessoes <- corpus_sessoes |>
 print(tokens_sessoes)
 ```
 
-Agora vamos transformar todas as palavras em minúsculo e remover stopwords utilizando a função `tokens_remove`:
+Agora vamos transformar todas as palavras em minúsculo e remover *stopwords* utilizando a função `tokens_remove`:
 
 ```{r}
 stopwords_portugues <- stopwords(language = "pt")
