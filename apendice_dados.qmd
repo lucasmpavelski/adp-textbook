@@ -1,0 +1,392 @@
+---
+title: "Exemplos - Dados do legislativo"
+---
+
+## Coletando dados da API v2 da Câmara dos Deputados
+
+Vamos utilizar `tidyverse` para tratamento dos dados e `httr2` para fazer requisições na API:
+```{r}
+if (!"tidyverse" %in% installed.packages()) {
+  install.packages("tidyverse")
+}
+if (!"httr2" %in% installed.packages()) {
+  install.packages("httr2")
+}
+library(tidyverse)
+library(httr2)
+```
+
+Vejamos como obter dados de deputados, seus respectivos discursos utilizando a versão nova da API de dados abertos: <https://dadosabertos.camara.leg.br/swagger/api.html>
+
+Primeiro, vamos montar uma requisição (função `request`) para obter dados dos deputados na legislatura 57 (atual):
+
+```{r}
+url_api <- "https://dadosabertos.camara.leg.br/"
+
+requisicao_deputados <- request(url_api) |>
+  req_url_path("api", "v2", "deputados") |>
+  req_url_query(
+    idLegislatura = 57, # número da legislatura
+    nome = "",          # parte do nome
+    siglaUF = "",       # sigla UF eleito
+    siglaPartido = "",  # sigla do partido
+    siglaSexo = "",     # sexo (M ou F)
+  )
+
+print(requisicao_deputados)
+```
+
+Executamos a requisição (`req_perform`) para obter a resposta do serviço de dados abertos:
+
+```{r cache=TRUE}
+resp_deputados <- req_perform(requisicao_deputados)
+
+print(resp_deputados)
+```
+
+Definimos uma função auxiliar para ler os dados da resposta e formatá-los em uma tabela:
+
+```{r}
+extrair_dados_resposta <- function(resp) {
+  resposta <- resp_body_json(resp, simplifyDataFrame = TRUE)
+  return(resposta$dados)
+}
+```
+
+Selecionamos apenas as colunas relevantes:
+
+```{r}
+df_deputados_partido <- resp_deputados |>      # executa a requisição
+  extrair_dados_resposta() |>                  # extrai item "dados"
+  select(                                      # seleciona colunas relevantes
+    id,
+    nome,
+    uf = siglaUf, 
+    partido = siglaPartido,
+    uri
+  )
+
+head(df_deputados_partido)
+```
+
+Note que existem repetições, quando um deputado pertenceu a mais de um partido:
+
+```{r}
+deputados_multiplos_partidos <- df_deputados_partido |>
+  group_by(nome) |>
+  filter(n() > 1)
+
+head(deputados_multiplos_partidos)
+```
+
+A coluna `uri` contém o endereço para buscarmos detalhes sobre o deputado, como sexo, data de nascimento, situação atual, etc.
+
+Para cada deputado, vamos fazer a requisição que retorna os detalhes. Para isso, vamos mapear cada elemento da coluna `uri` em uma requisição:
+
+```{r cache=TRUE}
+df_deputados_detalhes <- df_deputados_partido |>
+  mutate(req_detalhes = map(uri, request)) |>                # montar requisições
+  mutate(resp_detalhes = req_perform_parallel(req_detalhes)) # buscar detalhes
+
+head(df_deputados_detalhes)
+```
+
+- `req_perform_parallel` executa múltiplas requisições em paralelo.
+
+Vamos extrair os detalhes da coluna `resp_detalhes` e organizar os dados na tabela.
+
+```{r}
+df_deputados <- df_deputados_detalhes |>
+  mutate(detalhes = map(resp_detalhes, extrair_dados_resposta)) |> # extrair detalhes das respostas
+  unnest_wider(detalhes, names_sep = "_") |>              # desaninhar detalhes
+  unnest_wider(detalhes_ultimoStatus, names_sep = "_") |> # desaninhar último status
+  select(                                                 # selecionar colunas
+    # colunas antigas
+    colnames(df_deputados_partido),
+    # novas colunas
+    nome_civil = detalhes_nomeCivil,
+    sexo = detalhes_sexo,
+    cpf = detalhes_cpf,
+    data_nascimento = detalhes_dataNascimento,
+    data_falecimento = detalhes_dataFalecimento,
+    uf_nascimento = detalhes_ufNascimento,
+    municipio_nascimento = detalhes_municipioNascimento,
+    escolaridade = detalhes_escolaridade,
+    situacao = detalhes_ultimoStatus_situacao,
+    data_situacao = detalhes_ultimoStatus_data,
+    ultimo_partido = detalhes_ultimoStatus_siglaPartido
+  ) |>
+  filter(partido == ultimo_partido) |>   # considerar apenas último partido
+  distinct()                             # filtrar dados duplicados
+
+head(df_deputados)
+```
+
+Para obter os discursos, vamos definir uma função que monta a requisição para um deputado (por número identificador):
+
+```{r}
+req_discursos_deputado <- function(id_deputado) {
+  req <- request(url_api) |>
+    req_url_path("api", "v2", "deputados", id_deputado, "discursos") |>
+    req_url_query(
+      dataInicio = "2025-04-01",
+      dataFim = "2025-04-30",
+    )
+  return(req)
+}
+
+print(req_discursos_deputado(160575))
+```
+
+Para cada deputado, vamos montar a requisição e obter os dados em paralelo:
+
+```{r cache=TRUE}
+resp_discursos_deputados <- df_deputados |>
+  mutate(req_discursos = map(id, req_discursos_deputado)) |>
+  mutate(resp_discursos = req_perform_parallel(req_discursos))
+```
+
+Com os dados do discurso, podemos extraí-los e selecionar apenas as colunas relevantes:
+
+```{r}
+df_discursos <- resp_discursos_deputados |>
+  mutate(discursos = map(resp_discursos, extrair_dados_resposta)) |> # respostas
+  filter(lengths(discursos) > 0) |> # filtrar linhas sem discurso
+  unnest(discursos) |>              # desaninhar dados de discursos
+  unnest_wider(faseEvento, names_sep = "_") |> # desaninhar dados de evento
+  select(                                      # selecionar colunas relevantes
+    # colunas anteriores
+    colnames(df_deputados),
+    # novas colunas
+    hora_inicio = dataHoraInicio,
+    fase_evento = faseEvento_titulo,
+    tipo_discurso = tipoDiscurso,
+    keywords,
+    sumario,
+    transcricao
+  )
+
+print(head(df_discursos))
+```
+
+```{r}
+df_discursos |>
+  mutate(across(starts_with("data"), as_date)) |>
+  mutate(hora_inicio = as_datetime(str_c(hora_inicio, ":00")))
+```
+
+Unindo todo o processo:
+
+```{r}
+library(tidyverse)
+library(httr2)
+
+extrair_dados_resposta <- function(resp) {
+  resposta <- resp_body_json(resp, simplifyDataFrame = TRUE)
+  return(resposta$dados)
+}
+
+passo1_buscar_deputados <- function(id_legislatura = 57) {
+  print("Buscando lista de deputados")
+  url_api <- "https://dadosabertos.camara.leg.br/"
+  
+  df_deputados_partido <- request(url_api) |>
+    req_url_path("api", "v2", "deputados") |>
+    req_url_query(
+      idLegislatura = id_legislatura, # número da legislatura
+      nome = "",                      # parte do nome
+      siglaUF = "",                   # sigla UF eleito
+      siglaPartido = "",              # sigla do partido
+      siglaSexo = "",                 # sexo (M ou F)
+    ) |>
+    req_perform() |>              # executa a requisição
+    extrair_dados_resposta() |>   # extrai item "dados"
+    select(                       # seleciona colunas relevantes
+      id,
+      nome,
+      uf = siglaUf, 
+      partido = siglaPartido,
+      uri
+    )
+  
+  return(df_deputados_partido)
+}
+
+passo2_buscar_detalhes_deputados <- function(df_deputados_partido) {
+  print("Buscando detalhes de cada deputado")
+  
+  df_deputados <- df_deputados_partido |>
+    mutate(req_detalhes = map(uri, request)) |>                   # montar requisições
+    mutate(resp_detalhes = req_perform_parallel(req_detalhes)) |> # buscar detalhes
+    mutate(detalhes = map(resp_detalhes, extrair_dados_resposta)) |> # extrair detalhes das respostas
+    unnest_wider(detalhes, names_sep = "_") |>              # desaninhar detalhes
+    unnest_wider(detalhes_ultimoStatus, names_sep = "_") |> # desaninhar último status
+    select(                                                 # selecionar colunas
+      # colunas antigas
+      colnames(df_deputados_partido),
+      # novas colunas
+      nome_civil = detalhes_nomeCivil,
+      sexo = detalhes_sexo,
+      data_nascimento = detalhes_dataNascimento,
+      data_falecimento = detalhes_dataFalecimento,
+      uf_nascimento = detalhes_ufNascimento,
+      municipio_nascimento = detalhes_municipioNascimento,
+      escolaridade = detalhes_escolaridade,
+      situacao = detalhes_ultimoStatus_situacao,
+      data_situacao = detalhes_ultimoStatus_data,
+      ultimo_partido = detalhes_ultimoStatus_siglaPartido
+    ) |>
+    filter(partido == ultimo_partido) |>   # considerar apenas último partido
+    distinct()                             # filtrar dados duplicados
+
+  return(df_deputados)
+}
+
+passo3_buscar_discursos_deputados <- function(data_inicio, data_fim) {
+  print("Buscando discursos de cada deputado")
+  
+  req_discursos_deputado <- function(id_deputado) {
+    req <- request(url_api) |>
+      req_url_path("api", "v2", "deputados", id_deputado, "discursos") |>
+      req_url_query(
+        dataInicio = data_inicio,
+        dataFim = data_fim,
+      )
+    return(req)
+  }
+  
+  resp_discursos_deputados <- df_deputados |>
+    mutate(req_discursos = map(id, req_discursos_deputado)) |>
+    mutate(resp_discursos = req_perform_parallel(req_discursos))
+
+  df_discursos <- resp_discursos_deputados |>
+    mutate(discursos = map(resp_discursos, extrair_dados_resposta)) |> # respostas
+    filter(lengths(discursos) > 0) |> # filtrar linhas sem discurso
+    unnest(discursos) |>              # desaninhar dados de discursos
+    unnest_wider(faseEvento, names_sep = "_") |> # desaninhar dados de evento
+    select(                                      # selecionar colunas relevantes
+      # colunas anteriores
+      colnames(df_deputados),
+      # novas colunas
+      hora_inicio = dataHoraInicio,
+      fase_evento = faseEvento_titulo,
+      tipo_discurso = tipoDiscurso,
+      keywords,
+      sumario,
+      transcricao
+    )
+  
+  return(df_discursos)
+}
+
+obter_discursos_camara <- function(id_legislatura, data_inicio, data_fim) {
+  df_deputados <- passo1_buscar_deputados(id_legislatura)
+  df_deputados_detalhes <- passo2_buscar_detalhes_deputados(df_deputados)
+  df_discursos <- passo3_buscar_discursos_deputados(data_inicio, data_fim)
+  return(df_discursos)
+}
+```
+
+```{r}
+dt_discursos_camara <- obter_discursos_camara(
+  id_legislatura = 57, 
+  data_inicio = "2025-04-01",
+  data_fim = "2025-04-30"
+)
+
+head(dt_discursos_camara)
+```
+
+De maneira análoga, podemos definir uma função para obter dados de discursos do senado:
+
+```{r}
+obter_discursos_senado <- function(data_inicio, data_fim) {
+  url_discursos <- "https://legis.senado.leg.br/dadosabertos/plenario/lista/discursos/"
+  req_discursos <- request(url_discursos) |>
+    req_url_path_append(data_inicio, data_fim) |>
+    req_headers("Accept" = "application/json")
+  
+  resp_discursos <- req_perform(req_discursos)
+  
+  dt_discursos <- resp_discursos |>
+    resp_body_json() |>                              # extrair dados da resposta em JSON
+    pluck("DiscursosSessao", "Sessoes") |>           # acessar dados dentro de DiscursosSessa/Sessoes
+    as_tibble() |>                                   # transformar em tabela
+    unnest_wider(Sessao) |>                          # desaninhar dados das sessões
+    unnest(Pronunciamentos) |>                       # desaninhar pronunciamentos
+    unnest_longer(Pronunciamentos) |>                # desaninhar pronunciamentos da sessão
+    unnest_wider(Pronunciamentos) |>                 # desaninhar dados do pronunciamento
+    unnest_wider(TipoUsoPalavra, names_sep = '_') |> # desaninhar tipo de uso da palavra
+    filter(!is.na(CodigoParlamentar)) |>             # filtrar discursos de não-parlamentares
+    select(                                          # selecionar colunas
+      id,
+      codigo_parlamentar = CodigoParlamentar,
+      nome = NomeAutor,
+      partido = Partido,
+      uf = UF,
+      tipo_sessao = DescricaoSessao,
+      tipo_uso_palavra = TipoUsoPalavra_Descricao,
+      data = Data,
+      sumario = Resumo,
+      keywords = Indexacao,
+      transcricao = TextoIntegralTxt
+    )
+  
+  dt_discursos_inteiro <- dt_discursos |>
+    mutate(transcricao = map(transcricao, request)) |>         # requisição da transcrição
+    mutate(transcricao = req_perform_parallel(transcricao)) |> # buscar transcrições
+    mutate(transcricao = map(transcricao, resp_body_string))   # ler transcrições das respostas
+  
+  req_detalhes_senador <- function(codigo_parlamentar) {
+    url_senadores <- "https://legis.senado.leg.br/dadosabertos/senador/"
+    req <- request(url_senadores) |>
+      req_url_path_append(codigo_parlamentar) |>
+      req_headers(Accept = "application/json")
+    return(req)
+  }
+  
+  dt_detalhes_senadores <- dt_discursos_inteiro |>
+    select(codigo_parlamentar) |>
+    distinct() |>
+    mutate(req_senador = map(codigo_parlamentar, req_detalhes_senador)) |>
+    mutate(resp_senador = req_perform_parallel(req_senador)) |>
+    mutate(detalhes = map(resp_senador, resp_body_json)) |>
+    unnest(detalhes) |>                        # desaninhar detalhes
+    unnest_wider(detalhes) |>                  # desaninhar dados de detalhes
+    unnest_wider(Parlamentar) |>               # desaninhar dados do parlamentar
+    unnest_wider(DadosBasicosParlamentar) |>   # desaninhar dados básicos
+    unnest_wider(IdentificacaoParlamentar) |>  # desaninhar identificação
+    select(                                    # selecionar colunas
+      codigo_parlamentar,
+      nome_civil = NomeCompletoParlamentar,
+      sexo = SexoParlamentar,
+      data_nascimento = DataNascimento,
+      uf_nascimento = UfNaturalidade,
+      municipio_nascimento = Naturalidade
+    )
+  
+  dt_discursos_senado <- dt_discursos_inteiro |>
+    inner_join(dt_detalhes_senadores, by = join_by(codigo_parlamentar))
+  
+  return(dt_discursos_senado)
+}
+```
+
+```{r}
+df_discursos_senado <- obter_discursos_senado(
+  data_inicio = "20250401",
+  data_fim = "20250430"
+)
+
+head(df_discursos_senado)
+```
+
+
+
+```{r}
+df_discursos |>
+  mutate(keywords = str_split(keywords, ",")) |>
+  select(keywords) |>
+  unnest(keywords) |>
+  count(keywords, sort = TRUE)
+```

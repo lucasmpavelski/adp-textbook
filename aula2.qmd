@@ -103,7 +103,7 @@ parte_nome_parlamentar <- ""
 sigla_partido <- ""
 sigla_uf <- ""
 
-url_base <- "https://www.camara.leg.br/sitcamaraws/SessoesReunioes.asmx/ListarDiscursosPlenario"
+url_base <- "http://www.camara.leg.br/sitcamaraws/SessoesReunioes.asmx/ListarDiscursosPlenario"
 
 endereco <- str_c(url_base, 
                   "?codigoSessao=", codigo_sessao,
@@ -119,10 +119,8 @@ print(endereco)
 Com o R, nós acessamos esse endereço, baixamos os resultados e os convertemos em uma lista.
 
 ```{r cache=TRUE}
-dados_sessoes <- httr::GET(endereco) |>         # realizar requisição
-  httr::content(as = "text") |>                 # obter resposta como texto
-  xml2::read_xml() |>                           # ler texto como XML
-  xml2::xml_find_all("//sessoesDiscursos") |>   # obter todos os elementos dentro de <sessoesDiscursos>
+dados_sessoes <- xml2::read_xml(endereco) |>    # ler texto como XML
+  xml2::xml_find_all("//sessoesDiscursos") |>   # elementos dentro de <sessoesDiscursos>
   xml2::as_list()                               # converter XML para lista
 
 print(length(dados_sessoes))
@@ -551,6 +549,54 @@ print(stopwords_portugues[1:10])
 ```
 
 A remoção de stopwords pode não ser adequada para todas as tarefas, especialmente aquelas que dependem do contexto ou da estrutura do texto (análise sintática, reconhecimento de entidades, etc).
+
+## Palavras no contexto (Keywords-in-context)
+
+**Keywords-in-context (KWIC)** é um método de indexação que busca uma palavra juntamente com seu contexto.
+
+O **contexto** se refere à palavras próximas. O tamanho do contexto é o número de palavras antes e depois.
+
+```{r}
+kwic_anistia <- corpus_sessoes |>
+  tokens() |>
+  kwic("anistia") |>
+  head(15) 
+
+print(kwic_anistia)
+```
+
+-   ser ve para analisar termos específicos e seu significado no texto
+
+-   é útil para analisar marcadores de discurso (ex: porque, assim, portanto, etc) e identificar estratégias e intensões
+
+-   desvantagem: o tamanho do contexto é limitado
+
+```{r}
+golp_kwic <- corpus_sessoes |>
+  tokens() |>
+  kwic("golp*", window = 3) |>
+  head(15)
+
+print(golp_kwic)
+```
+
+```{r}
+kwic_defendeu_acusou <- corpus_sessoes |>
+  tokens() |>
+  kwic(c("defendeu", "acusou", "criticou", "repudiou")) |>
+  head(15)
+
+print(kwic_defendeu_acusou)
+```
+
+```{r}
+kwic_nomes <- corpus_sessoes |>
+  head(n = 100) |>
+  tokens() |>
+  kwic(phrase("Deputad[ao] [A-Z][a-z]+ [A-Z][a-z]+"), valuetype = "regex", case_insensitive = FALSE)
+
+print(kwic_nomes)
+```
 
 ## Exemplo: Palavras mais Utilizadas em Discursos
 
