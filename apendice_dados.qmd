@@ -181,14 +181,14 @@ Unindo todo o processo:
 library(tidyverse)
 library(httr2)
 
-extrair_dados_resposta <- function(resp) {
-  resposta <- resp_body_json(resp, simplifyDataFrame = TRUE)
-  return(resposta$dados)
-}
-
-passo1_buscar_deputados <- function(id_legislatura = 57) {
-  print("Buscando lista de deputados")
+obter_discursos_camara <- function(data_inicio, data_fim, id_legislatura = 57) {
+  print("1/3 - Buscando lista de deputados")
   url_api <- "https://dadosabertos.camara.leg.br/"
+  
+  extrair_dados_resposta <- function(resp) {
+    resposta <- resp_body_json(resp, simplifyDataFrame = TRUE)
+    return(resposta$dados)
+  }
   
   df_deputados_partido <- request(url_api) |>
     req_url_path("api", "v2", "deputados") |>
@@ -209,11 +209,7 @@ passo1_buscar_deputados <- function(id_legislatura = 57) {
       uri
     )
   
-  return(df_deputados_partido)
-}
-
-passo2_buscar_detalhes_deputados <- function(df_deputados_partido) {
-  print("Buscando detalhes de cada deputado")
+  print("2/3 - Buscando detalhes de cada deputado")
   
   df_deputados <- df_deputados_partido |>
     mutate(req_detalhes = map(uri, request)) |>                   # montar requisições
@@ -239,11 +235,7 @@ passo2_buscar_detalhes_deputados <- function(df_deputados_partido) {
     filter(partido == ultimo_partido) |>   # considerar apenas último partido
     distinct()                             # filtrar dados duplicados
 
-  return(df_deputados)
-}
-
-passo3_buscar_discursos_deputados <- function(data_inicio, data_fim) {
-  print("Buscando discursos de cada deputado")
+  print("3/3 - Buscando discursos de cada deputado")
   
   req_discursos_deputado <- function(id_deputado) {
     req <- request(url_api) |>
@@ -276,13 +268,6 @@ passo3_buscar_discursos_deputados <- function(data_inicio, data_fim) {
       transcricao
     )
   
-  return(df_discursos)
-}
-
-obter_discursos_camara <- function(id_legislatura, data_inicio, data_fim) {
-  df_deputados <- passo1_buscar_deputados(id_legislatura)
-  df_deputados_detalhes <- passo2_buscar_detalhes_deputados(df_deputados)
-  df_discursos <- passo3_buscar_discursos_deputados(data_inicio, data_fim)
   return(df_discursos)
 }
 ```

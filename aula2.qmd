@@ -72,158 +72,224 @@ Link para Google Colab: TODO
 
 ### Exemplo: Obtendo Discursos da Câmara dos Deputados
 
-A Câmara dos Deputados disponibiliza um banco de dados de discursos que pode ser acessado por meio de um sistema automatizado (API).
+A Câmara dos Deputados disponibiliza dados de discursos por meio de um sistema automatizado (API).
 
-A documentação da API com exemplos está disponível em: <https://www2.camara.leg.br/transparencia/dados-abertos/dados-abertos-legislativo/webservices/sessoesreunioes-2>
+A documentação da API com exemplos está disponível em: <https://dadosabertos.camara.leg.br/>
 
-Para baixar e organizar esses dados, utilizamos pacotes da linguagem R (`httr`, `xml2` e `tidyverse`).
+Para baixar e organizar esses dados, utilizamos pacotes da linguagem R:
+
+-   `httr2` para fazer requisições na API
+
+-   `tidyverse` para organizar e tratar os dados
 
 ```{r}
-if (!"httr" %in% installed.packages()) {
-  install.packages("httr")
-}
-if (!"xml2" %in% installed.packages()) {
-  install.packages("xml2")
-}
 if (!"tidyverse" %in% installed.packages()) {
   install.packages("tidyverse")
 }
-library(httr)
-library(xml2)
 library(tidyverse)
+
+if (!"httr2" %in% installed.packages()) {
+  install.packages("httr2")
+}
+library(httr2)
 ```
 
-Os parâmetros da nossa busca (como data, partido e estado) são organizados diretamente no endereço de internet (URL). O endereço completo é construído juntando a URL base com esses parâmetros.
+![](images/clipboard-894913952.png){width="100%"}
+
+Primeiro, vamos montar uma requisição (função `request`) para obter dados dos deputados na legislatura 57 (atual):
 
 ```{r}
-data_inicial <- "01/04/2025"
-data_final <- "30/04/2025"
-codigo_sessao <- ""
-parte_nome_parlamentar <- ""
-sigla_partido <- ""
-sigla_uf <- ""
+url_api <- "https://dadosabertos.camara.leg.br/"
 
-url_base <- "http://www.camara.leg.br/sitcamaraws/SessoesReunioes.asmx/ListarDiscursosPlenario"
-
-endereco <- str_c(url_base, 
-                  "?codigoSessao=", codigo_sessao,
-                  "&parteNomeParlamentar=", parte_nome_parlamentar,
-                  "&siglaPartido=", sigla_partido,
-                  "&siglaUF=", sigla_uf,
-                  "&dataIni=", data_inicial,
-                  "&dataFim=", data_final)
-
-print(endereco)
-```
-
-Com o R, nós acessamos esse endereço, baixamos os resultados e os convertemos em uma lista.
-
-```{r cache=TRUE}
-dados_sessoes <- xml2::read_xml(endereco) |>    # ler texto como XML
-  xml2::xml_find_all("//sessoesDiscursos") |>   # elementos dentro de <sessoesDiscursos>
-  xml2::as_list()                               # converter XML para lista
-
-print(length(dados_sessoes))
-```
-
-Os dados incluem informações sobre as sessões, fases das sessões e discursos, incluindo metadados como nome do orador, partido, estado, hora de início do discurso, sumário do discurso etc.
-
-Vamos inspecionar a lista gerada para entender a estrutura:
-
-```{r}
-dados_primeiro_discurso <- dados_sessoes[[1]]$sessao$fasesSessao[[1]]$discursos[[1]]
-
-print(dados_primeiro_discurso)
-```
-
-Em seguida, transformamos essa lista em uma tabela para facilitar o nosso manuseio e leitura.
-
-```{r}
-df_sessoes <- dados_sessoes[[1]] |>
-  map(as_tibble) |>   # converter cada elemento da lista em tabela
-  bind_rows()         # combinar as tabela em uma única tabela
-
-print(df_sessoes)
-```
-
-Como os dados estão aninhados (sessões \> fases \> discursos), precisamos expandir os dados em linhas e colunas:
-
-```{r}
-df_sessoes <- df_sessoes |>
-  unnest_wider(fasesSessao, names_sep = '_') |>                  # expandir a dados de fases em colunas 
-  unnest(fasesSessao_discursos) |>                               # expandir discursos em linhas
-  unnest_wider(fasesSessao_discursos, names_sep = '_') |>        # expandir dados de discurso em colunas
-  unnest_wider(fasesSessao_discursos_orador, names_sep = '_') |> # expandir dados de orador em colunas separadas
-  mutate_all(compose(str_trim, unlist))                          # remover espaços em branco e converter listas em caracteres
-
-print(df_sessoes)
-```
-
-Renomeando as colunas para facilitar a leitura:
-
-```{r}
-df_sessoes <- df_sessoes |>
-  rename(
-    text = fasesSessao_discursos_sumario,
-    cod_sessao = fasesSessao_codigo,
-    fase_sessao = fasesSessao_descricao,
-    num_orador = fasesSessao_discursos_orador_numero,
-    nome_orador = fasesSessao_discursos_orador_nome,
-    partido_orador = fasesSessao_discursos_orador_partido,
-    uf_orador = fasesSessao_discursos_orador_uf,
-    hora_inicio_discurso = fasesSessao_discursos_horaInicioDiscurso,
-    indexacao = fasesSessao_discursos_txtIndexacao,
-    num_quarto = fasesSessao_discursos_numeroQuarto,
-    num_insercao = fasesSessao_discursos_numeroInsercao
-  ) |>
-  mutate(
-    doc_id = str_c(cod_sessao, num_quarto, num_orador, num_insercao, sep = "_")
+requisicao_deputados <- request(url_api) |>
+  req_url_path("api", "v2", "deputados") |>
+  req_url_query(
+    idLegislatura = 57, # número da legislatura
+    nome = "",          # parte do nome
+    siglaUF = "",       # sigla UF eleito
+    siglaPartido = "",  # sigla do partido
+    siglaSexo = "",     # sexo (M ou F)
   )
 
-print(df_sessoes)
+print(requisicao_deputados)
 ```
 
--   o padrão Text Interchange Formats (TIF) foi criado para padronizar objetos de análise textual (<https://github.com/ropenscilabs/tif>). Para seguir o padrão, armazenamos o texto principal (sumário do discurso) na coluna `text` e um identificador único de cada texto (combinação de sessao, quarto, orador e num_insercao) na coluna `doc_id`.
+Executamos a requisição (`req_perform`) para obter a resposta do serviço de dados abertos:
+
+```{r cache=TRUE}
+resp_deputados <- req_perform(requisicao_deputados)
+
+print(resp_deputados)
+```
+
+Os dados retornados estão no formato JSON, que é representado no R como uma lista aninhada (lista com elementos de lista).
+
+```{r}
+dados_resposta <- resp_body_json(resp_deputados)
+dados_resposta <- dados_resposta$dados   # acessa elemento "dados" da lista
+
+print(length(dados_resposta))     # número de elementos
+print(dados_resposta[[1]])  # primeiro elemento
+```
+
+-   `$dados` acesso o elemento "dados" da lista, `[[1]]` acessa o primeiro elemento da lista.
+
+Transformamos a lista em dataframe com o código comentado abaixo:
+
+```{r}
+df_deputados_partido <- dados_resposta |>
+  tibble() |>                               # transformar em dataframe
+  unnest_wider("dados_resposta") |>         # desaninhar em colunas
+  select(                                   # seleciona colunas relevantes
+    id,
+    nome,
+    uf = siglaUf,
+    partido = siglaPartido,
+    uri
+  )
+
+head(df_deputados_partido) # head mostra as primeiras linhas do data frame
+```
+
+Note que existem repetições, quando um deputado pertenceu a mais de um partido:
+
+```{r}
+deputados_multiplos_partidos <- df_deputados_partido |>
+  group_by(nome) |>  # agrupar por nome
+  filter(n() > 1)    # filtrar grupos com mais de um elemento
+
+head(deputados_multiplos_partidos)
+```
+
+A coluna `uri` contém o endereço para buscarmos detalhes sobre o deputado, como sexo, data de nascimento, situação atual, etc.
+
+Para cada deputado, vamos fazer a requisição que retorna os detalhes. Para isso, vamos mapear cada elemento da coluna `uri` em uma requisição:
+
+```{r cache=TRUE}
+df_deputados_detalhes <- df_deputados_partido |>
+  mutate(req_detalhes = map(uri, request)) |>                # montar requisições
+  mutate(resp_detalhes = req_perform_parallel(req_detalhes)) # buscar detalhes e armazena a resposta na coluna resp_detalhes
+
+head(df_deputados_detalhes)
+```
+
+-   `req_perform_parallel` executa múltiplas requisições em paralelo (cada requisição da coluna `req_detalhes`).
+
+Vamos extrair os detalhes da coluna `resp_detalhes` e organizar os dados na tabela.
+
+```{r}
+df_deputados <- df_deputados_detalhes |>
+  mutate(detalhes = map(resp_detalhes, resp_body_json)) |>            # ler dados da resposta
+  unnest_wider(detalhes) |> unnest_wider("dados", names_sep = "_") |> # desaninhar coluna "dados" (novas colunas são nomeadas dados_)
+  unnest_wider("dados_ultimoStatus", names_sep = "_") |>              # desaninhar ultimoStatus
+  select(                                                             # selecionar colunas
+    # colunas antigas
+    colnames(df_deputados_partido),
+    # novas colunas
+    nome_civil = dados_nomeCivil,
+    sexo = dados_sexo,
+    cpf = dados_cpf,
+    data_nascimento = dados_dataNascimento,
+    data_falecimento = dados_dataFalecimento,
+    uf_nascimento = dados_ufNascimento,
+    municipio_nascimento = dados_municipioNascimento,
+    escolaridade = dados_escolaridade,
+    situacao = dados_ultimoStatus_situacao,
+    data_situacao = dados_ultimoStatus_data,
+    ultimo_partido = dados_ultimoStatus_siglaPartido
+  ) |>
+  filter(partido == ultimo_partido) |>   # considerar apenas último partido
+  distinct()                             # filtrar dados duplicados
+
+head(df_deputados)
+```
+
+Para obter os discursos, vamos definir uma função que monta a requisição para um deputado (por número identificador):
+
+```{r}
+req_discursos_deputado <- function(id_deputado) {
+  req <- request(url_api) |>
+    req_url_path("api", "v2", "deputados", id_deputado, "discursos") |>
+    req_url_query(
+      dataInicio = "2025-04-01",
+      dataFim = "2025-04-30",
+      itens=100
+    )
+  return(req)
+}
+
+print(req_discursos_deputado(160575))
+```
+
+Da mesma forma que obtemos os dados dos deputados, vamos fazer requisições para obter discursos de cada deputado:
+
+```{r cache=TRUE}
+df_discursos <- df_deputados |>
+  mutate(req_discursos = map(id, req_discursos_deputado)) |>      # montar a requisição chamando req_discursos_deputado para cada id
+  mutate(resp_discursos = req_perform_parallel(req_discursos)) |> # executar requisições em paralelo
+  mutate(dados_discursos = map(resp_discursos, resp_body_json))   # ler dados das respostas
+
+print(df_discursos$dados_discursos[[2]])
+```
+
+Por fim, vamos extrair dos dados em colunas:
+
+```{r}
+df_discursos <- df_discursos |>
+  unnest_wider(dados_discursos) |>             # desaninhar resposta em colunas (dados e links)
+  unnest(dados) |>                             # desaninhar dados de discursos em linha (um discurso por linha)
+  unnest_wider(dados) |>                       # desaninhar dados em colunas
+  unnest_wider(faseEvento, names_sep = "_") |> # desaninhar "faseEvento"
+  select(
+    # colunas anteriores
+    colnames(df_deputados),
+    # novas colunas
+    hora_inicio = dataHoraInicio,
+    fase_evento = faseEvento_titulo,
+    tipo_discurso = tipoDiscurso,
+    keywords,
+    sumario,
+    transcricao
+  )
+
+head(df_discursos)
+```
 
 Por fim, podemos extrair estatísticas sobre os oradores e salvar os dados em uma planilha CSV para usos futuros.
 
 ```{r}
-print(str_c("Número total de discursos: ", nrow(df_sessoes)))
-print(str_c("Número total de oradores: ", n_distinct(df_sessoes$nome_orador)))
-print(str_c("Número total de partidos: ", n_distinct(df_sessoes$partido_orador)))
-print(str_c("Número total de estados: ", n_distinct(df_sessoes$uf_orador)))
+print(str_c("Número total de discursos: ", nrow(df_discursos)))
+print(str_c("Número total de oradores: ", df_discursos |> select(nome) |> n_distinct()))
+print(str_c("Número total de partidos: ", df_discursos |> select(partido) |> n_distinct()))
+print(str_c("Número total de estados: ", df_discursos |> select(uf) |> n_distinct()))
 ```
 
 Principais oradores:
 
 ```{r}
-df_sessoes |>
-  group_by(nome_orador) |>           # agrupar por nome do orador
-  summarise(num_discursos = n()) |>  # contar número de discursos por orador
-  arrange(desc(num_discursos)) |>    # ordenar por número de discursos em ordem decrescente
-  head(5)                            # mostrar os 5 oradores com mais discursos
+df_discursos |>
+  group_by(nome) |>  # agrupar por nome do orador
+  count(sort = TRUE) # contar e ordenar
 ```
 
 Principais partidos:
 
 ```{r}
-df_sessoes |>
-  group_by(partido_orador) |>        # agrupar por nome do partido
-  summarise(num_discursos = n()) |>  # contar número de discursos por orador
-  arrange(desc(num_discursos)) |>    # ordenar por número de discursos em ordem decrescente
-  head(5)                            # mostrar os 5 oradores com mais discursos
+df_discursos |>
+  group_by(partido) |>  # agrupar por partido do orador
+  count(sort = TRUE)    # contar e ordenar
 ```
 
 Para facilitar novos processamentos, podemos salvar os dados em formato CSV:
 
 ```{r}
-write_csv(df_sessoes, "data/dados_sessoes.csv")
+write_csv(df_discursos, "discursos.csv")
 ```
 
 Da mesma forma, podemos ler arquivos CSV utilizando a função `read_csv` do pacote `readr`, incluído na coleção `tidyverse`:
 
 ```{r}
-df_sessoes <- read_csv("data/dados_sessoes.csv")
+df_discursos <- read_csv("discursos.csv")
 ```
 
 #### Criando o corpus
@@ -243,44 +309,46 @@ if (!"quanteda" %in% installed.packages()) {
 library(quanteda)
 ```
 
-Por padrão, o corpus é criado utilizando a coluna `text` como texto principal e a coluna `doc_id` como identificador único de cada texto:
+O corpus é criado a partir de uma tabela (data frame) especificando o texto principal (`text`) e uma coluna (`doc_id`) como identificador único de cada texto:
 
 ```{r}
-corpus_sessoes <- corpus(df_sessoes, text_field = "text", docid_field = "doc_id")
+num_discurso <- 1:nrow(df_discursos)
 
-print(corpus_sessoes)
+df_discursos <- df_discursos |>
+  mutate(doc_id = str_c(num_discurso, nome, hora_inicio, sep = " "))  # concatenar "nome", "hora início"
+
+corpus_discursos <- corpus(df_discursos, text_field = "transcricao", docid_field = "doc_id")
+
+print(corpus_discursos)
 ```
 
 As informações extras sobre os textos (os metadados, como nome do orador e partido) ficam salvas junto com o corpus e podem ser consultadas facilmente utilizando a função `docvars()`:
 
 ```{r}
-metadados <- corpus_sessoes |>
-  docvars() |>                                   # obter metadados do corpus
-  select(nome_orador, partido_orador, uf_orador) # selecionar colunas de interesse
+metadados <- corpus_discursos |>
+  docvars() |>              # obter metadados do corpus
+  select(nome, partido, uf) # selecionar colunas de interesse
 
-print(head(metadados)) # head mostra as primeiras linhas do data frame
+head(metadados)
 ```
 
-Assim como `filter`, podemos obter subconjuntos de `corpus_sessoes` com a função `corpus_subset()`:
+Assim como `filter`, podemos obter subconjuntos de `corpus_discursos` com a função `corpus_subset()`:
 
 ```{r}
-corpus_sessoes_pt <- corpus_subset(corpus_sessoes, partido_orador == "PT")
+corpus_discursos_pt <- corpus_discursos |>
+  corpus_subset(partido == "PT")
 
-print(corpus_sessoes_pt)
+print(corpus_discursos_pt)
 ```
 
-O ecossistema do R também possui pacotes complementares como `quanteda.textstats` para visualizar os textos e calcular estatísticas de frequência.
+Outras bibliotecas relacionadas que vamos utilizar são: `quanteda.textstats`, para gerar estatísticas a partir de corpus, e `quatenda.textplots`, para visualizações gráficas como núvens de palavras.
 
 ```{r}
 if (!"quanteda.textstats" %in% installed.packages()) {
   install.packages("quanteda.textstats")
 }
 library(quanteda.textstats)
-```
 
-Da mesma forma, `quatenda.textplots` possui diversas funções para visualização de texto, como nuvens de palavras, gráficos de frequência, gráficos de coocorrência etc.
-
-```{r}
 if (!"quanteda.textplots" %in% installed.packages()) {
   install.packages("quanteda.textplots")
 }
@@ -319,23 +387,20 @@ Além disso, dada a natureza multimodal da análise de discurso a fala também �
 
 > Que tipo de informação é transmitida por meio da fala, além do conteúdo semântico? Quais estão destacadas no texto taquigrafado?
 
+## A estrutura das palavras: morfemas, lemas e radicais
+
 A forma como dividimos o texto depende do nível da nossa análise:
 
 -   partes de palavras: palavras relacionadas e significados
 -   palavras: análise sintática e semântica
 -   frases e parágrafos: entidades e modelos de discurso
 
-## A estrutura das palavras: morfemas, lemas e radicais
+Separar palavras em subunidades pode ser útil para:
 
-Separar palavras em subunidades pode ser útil em análises:
-
--   dividir palavras compostas
-
--   tratar palavras novas ou desconhecidas
-
--   analisar palavras incorretas
-
--   avaliar complexidade do texto
+-   neologismos, palavras incorretas ou desconhecidas
+-   complexidade do texto
+-   regionalismos e dialetos antigos
+-   generos literários alternativos (poemas, músicas etc)
 
 Por exemplo, @moffitt2016 destaca o uso de neologismos em performances populistas (*refudiate* por Sarah Palin). Outros estudos comparam morfemas em diferentes estilos de texto, como jornalístico e literário.
 
@@ -381,29 +446,25 @@ fortinho    forte+A+DIM+M+SG
 -   M: masculino
 -   SG: singular
 
-### **Stemização** (Corte do radical)
+### Stemização (Corte do radical)
 
-A **stemização** é o processo de reduzir uma palavra ao seu radical (ou raiz). Ex.:
-
--   "gatos" -\> "gat"
--   "gata" -\> "gat"
--   "gatinhas" -\> "gat"
-
-Stemming pode ser útil para algumas tarefas de PLN, como análise de sentimentos ou classificação de texto.
+A **stemização** é o processo de reduzir uma palavra ao seu radical (ou raiz).
 
 Exemplos utilizando a biblioteca `quanteda`:
 
 ```{r}
-stems_testar <- char_wordstem(c("testar", "testando", "testarei"), language = "pt")
+stems_testar <- char_wordstem(c("testar", "testando", "testarei"), language = "portuguese")
 
 print(stems_testar)
 ```
 
 ```{r}
-stems_love <- char_wordstem(c("love", "loving", "loved"), language = "en")
+stems_love <- char_wordstem(c("love", "loving", "loved"), language = "english")
 
 print(stems_love)
 ```
+
+Stemming pode ser útil para algumas tarefas de PLN, como análise de sentimentos ou classificação de texto.
 
 Stemming vai reduzir o vocabulário do texto, facilitando também análises de frequência.
 
@@ -470,62 +531,39 @@ print(tokens)
 
 A tokenização em palavras é útil para análise sintática e semântica, enquanto a tokenização em sentenças é útil para análise de modelos de discurso.
 
+```{r}
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE) |> # tokenizar texto
+  tokens_tolower()
+
+tokens_discursos
+```
+
 Em algumas aplicações, como modelos de linguagem, a tokenização é um processo essencial na contrução do vocabulário. O **vocabulário** é a coleção de todas as palavras conhecidas (em geral, do texto ou do modelo).
 
 Uma estrutura útil npara análise de texto é a **matriz de documentos e termos (Document-Feature Matrix, DFM)**, que representa a frequência de cada palavra em cada documento:
 
 ```{r}
-dfm_sessoes <- corpus_sessoes |>
+dfm_discursos <- corpus_discursos |>
   tokens(remove_punct = TRUE, remove_numbers = TRUE) |> # tokenizar texto
   tokens_tolower() |>                                   # converter palavras para minúsculo
   dfm()                                                 # criar matriz de documentos e termos
 
-print(dfm_sessoes)
+dfm_discursos
 ```
 
 Cada linha é um documento e cada coluna é uma palavra. O valor em cada célula representa a frequência da palavra no documento.
 
 ```{r}
-print(dfm_sessoes[3, "presidente"])
+print(dfm_discursos[6, "presidente"])
 ```
 
 Por exemplo, para contar quantas vezes a palavra "presidente" é mencionada em todos os discursos, podemos somar os valores da coluna correspondente:
 
 ```{r}
-sum(dfm_sessoes[, "presidente"])
+print(dfm_discursos[, "presidente"])
+print(sum(dfm_discursos[, "presidente"]))
 ```
-
-### Byte Pair Encoding (BPE)
-
-A divisão em simples palavras tem um problema com palavras desconhecidas (*out-of-vocabulary*).
-
-Uma solução que busca o "meio-termo" entre a separação entre palavras e a separação entre caracteres é o **Byte Pair Encoding (BPE)**.
-
-O BPE é um algoritmo de compressão de dados que pode ser adaptado para tokenização. Ele funciona substituindo pares caracteres mais frequentes por um token único, recursivamente, criando assim um vocabulário de subpalavras.
-
-```{r}
-if (!"tokenizers.bpe" %in% installed.packages()) {
-  install.packages("tokenizers.bpe")
-}
-library(tokenizers.bpe)
-```
-
-```{r}
-model <- bpe(
-  df_sessoes$text,
-  vocab_size = 200000,
-  threads = 1,
-  model_path = "data/bpe_tokenizer"
-)
-```
-
-```{r}
-bpe_encode(model, c("adultização", "adulto", "eleitoreado", "eleitor", "sexta-feira", "sextou"))
-```
-
-Note que os tokens gerados pelo BPE não necessáriamente correspontem "significados".
-
-Porém, tokens BPE são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.
 
 ## Stopwords
 
@@ -557,12 +595,12 @@ A remoção de stopwords pode não ser adequada para todas as tarefas, especialm
 O **contexto** se refere à palavras próximas. O tamanho do contexto é o número de palavras antes e depois.
 
 ```{r}
-kwic_anistia <- corpus_sessoes |>
+kwic_anistia <- corpus_discursos |>
   tokens() |>
   kwic("anistia") |>
   head(15) 
 
-print(kwic_anistia)
+kwic_anistia
 ```
 
 -   ser ve para analisar termos específicos e seu significado no texto
@@ -572,30 +610,30 @@ print(kwic_anistia)
 -   desvantagem: o tamanho do contexto é limitado
 
 ```{r}
-golp_kwic <- corpus_sessoes |>
+golp_kwic <- corpus_discursos |>
   tokens() |>
   kwic("golp*", window = 3) |>
   head(15)
 
-print(golp_kwic)
+golp_kwic
 ```
 
 ```{r}
-kwic_defendeu_acusou <- corpus_sessoes |>
+kwic_defendeu_acusou <- corpus_discursos |>
   tokens() |>
-  kwic(c("defendeu", "acusou", "criticou", "repudiou")) |>
+  kwic(c("portanto", "dessa forma", "assim", "porém")) |>
   head(15)
 
-print(kwic_defendeu_acusou)
+kwic_defendeu_acusou
 ```
 
 ```{r}
-kwic_nomes <- corpus_sessoes |>
-  head(n = 100) |>
+kwic_nomes <- corpus_discursos |>
+  head(n = 50) |>
   tokens() |>
   kwic(phrase("Deputad[ao] [A-Z][a-z]+ [A-Z][a-z]+"), valuetype = "regex", case_insensitive = FALSE)
 
-print(kwic_nomes)
+kwic_nomes
 ```
 
 ## Exemplo: Palavras mais Utilizadas em Discursos
@@ -603,10 +641,10 @@ print(kwic_nomes)
 Primeiro, vamos tokenizar os discursos utilizando a função `tokens`:
 
 ```{r}
-tokens_sessoes <- corpus_sessoes |>
+tokens_discursos <- corpus_discursos |>
   tokens(remove_punct = TRUE, remove_symbols = TRUE, remove_numbers = TRUE)
  
-print(tokens_sessoes)
+tokens_discursos
 ```
 
 Agora vamos transformar todas as palavras em minúsculo e remover *stopwords* utilizando a função `tokens_remove`:
@@ -614,60 +652,98 @@ Agora vamos transformar todas as palavras em minúsculo e remover *stopwords* ut
 ```{r}
 stopwords_portugues <- stopwords(language = "pt")
 
-tokens_sessoes <- tokens_sessoes |>
+tokens_discursos <- tokens_discursos |>
   tokens_tolower() |>
   tokens_remove(stopwords_portugues)
 
-print(tokens_sessoes)
+print(tokens_discursos)
 ```
 
 Agora vamos construir a DFM:
 
 ```{r}
-dfm_sessoes <- dfm(tokens_sessoes)
+dfm_discursos <- dfm(tokens_discursos)
 
-print(dfm_sessoes)
+print(dfm_discursos)
 ```
 
 Para extrair algumas estatísticas básicas, como as palavras mais comuns, podemos utilizar a função `topfeatures`:
 
 ```{r}
-palavras_mais_comuns <- textstat_frequency(dfm_sessoes, n = 10)
+palavras_mais_comuns <- dfm_discursos |>
+  textstat_frequency(n = 10)
 
-print(palavras_mais_comuns)
+palavras_mais_comuns
 ```
 
 Podemos remover mais palavras que não colaboram para a interpretação dos dados, da mesma forma que removemos stopwords:
 
 ```{r}
-palavras_irrelevantes <- c("senhor", "senhora", "sobre", "presidente", "deputado", "deputada", "lei", "nº", "projeto", "é")
+partidos <- docvars(dfm_discursos) |> select(partido) |> distinct() |> pull()
+estados <- docvars(dfm_discursos) |> select(uf) |> distinct() |> pull()
 
-dfm_sessoes <- dfm_remove(dfm_sessoes, palavras_irrelevantes)
+palavras_irrelevantes <- c("senhor", "sr", "senhora", "sra", "sobre", "presidente", "deputado", "deputada", "lei", "nº", "projeto", "é", "bloco", partidos, estados)
 
-palavras_mais_comuns <- textstat_frequency(dfm_sessoes, n = 10)
+dfm_discursos <- dfm_discursos |>
+  dfm_remove(palavras_irrelevantes)
 
-print(palavras_mais_comuns)
+palavras_mais_comuns <- dfm_discursos |>
+  textstat_frequency(n = 10)
+
+palavras_mais_comuns
 ```
 
 ```{r}
-textplot_wordcloud(dfm_sessoes, max_words = 100)
+suppressWarnings({ # desabilitar mensagens de aviso (warning)
+
+dfm_discursos |>
+  textplot_wordcloud()
+
+})
+```
+
+```{r}
+suppressWarnings({ # desabilitar mensagens de aviso (warning)
+
+dfm_discursos |>
+  dfm_weight("logcount") |>  # aplicar logaritmo às contagens
+  textplot_wordcloud(max_words = 200)
+
+})
+```
+
+Aplicando stematização:
+
+```{r}
+suppressWarnings({ # desabilitar mensagens de aviso (warning)
+
+dfm_discursos |>
+  dfm_wordstem(language = "portuguese") |>
+  textplot_wordcloud(max_words = 100)
+
+})
 ```
 
 Agrupando por partido:
 
 ```{r}
-palavras_por_partido <- textstat_frequency(dfm_sessoes, n = 5, groups = partido_orador)
+palavras_por_partido <- dfm_discursos |>
+  textstat_frequency(n = 5, groups = partido)
 
-print(palavras_por_partido)
+palavras_por_partido
 ```
 
 Para comparar as palavras mais comuns entre partidos, podemos utilizar a função `textplot_wordcloud` com o argumento `comparison = TRUE`:
 
 ```{r}
-dfm_sessoes |>
-  dfm_subset(partido_orador %in% c("PT", "PL")) |>       # filtrar partidos PT e PL
-  dfm_group(groups = partido_orador) |>                  # agrupar por partido
-  textplot_wordcloud(comparison = TRUE, max_words = 50)  # gerar wordcloud comparativo
+suppressWarnings({ # desabilitar mensagens de aviso (warning)
+
+dfm_discursos |>
+  dfm_subset(partido %in% c("PT", "PL")) |>       # filtrar partidos PT e PL
+  dfm_group(groups = partido) |>                  # agrupar por partido
+  textplot_wordcloud(comparison = TRUE, color = c("blue", "red"), min_count = 2)  # gerar wordcloud comparativo
+
+})
 ```
 
 ## Para saber mais
@@ -683,5 +759,5 @@ Estude os tutoriais da biblioteca `quanteda` em <https://tutorials.quanteda.io/>
 1.  Obtenha os discursos do plenário da Câmara dos Deputados utilizando a API para um período de sua escolha.
 2.  Realize a tokenização e remova stopwords dos discursos.
 3.  Conte as palavras mais comuns e visualize os resultados utilizando uma nuvem de palavras (word cloud).
-4.  Compare as palavras mais comuns entre diferentes partidos ou oradores.
+4.  Compare as palavras mais comuns entre diferentes gêneros de oradores.
 5.  Utilize o argumento `groups` para construir o `dfm(..., groups = "partido_orador")` e `textplot_wordcloud(..., comparison = TRUE)` para gerar wordclouds comparativos.
