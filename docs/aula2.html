@@ -284,6 +284,7 @@ div.csl-indent {
 <li>Processamento básico: Tokenização, <em>Stopwords</em> e <em>Stemming</em>.</li>
 <li>Exploração inicial: <em>Keyword-in-context</em> (KWIC) e Nuvens de Palavras.</li>
 </ul>
+<p>Link para o Google Colab: <a href="https://colab.research.google.com/drive/1bOM77Nea3m4OLQSDMUz4k-yj9Qq9q0Zk" class="uri">https://colab.research.google.com/drive/1bOM77Nea3m4OLQSDMUz4k-yj9Qq9q0Zk</a></p>
 </div>
 </div>
 <div class="cell">
@@ -534,8 +535,7 @@ div.csl-indent {
 </ul>
 <p>O processamento de textos pelo computador (PLN) foca principalmente no texto escrito (sintaxe, semântica e discurso). Contudo, a fala e a entonação também são vitais. Dada a natureza multimodal da análise de discurso, as marcas de oralidade carregam forte peso interpretativo.</p>
 <p>Observe o exemplo abaixo das notas taquigráficas da Câmara:</p>
-<iframe src="https://www.camara.leg.br/internet/sitaqweb/TextoHTML.asp?etapa=5&amp;nuSessao=64.2025&amp;nuQuarto=4327701&amp;nuOrador=1&amp;nuInsercao=1&amp;dtHorarioQuarto=09:32&amp;sgFaseSessao=BC&amp;Data=30/04/2025&amp;txApelido=Otoni%20de%20Paula&amp;txFaseSessao=Breves%20Comunica%C3%A7%C3%B5es&amp;txTipoSessao=Ordin%C3%A1ria%20-%20CD&amp;dtHoraQuarto=09:32&amp;txEtapa=" width="100%" height="400px" frameborder="0">
-</iframe>
+<p><a href="https://www.camara.leg.br/internet/sitaqweb/TextoHTML.asp?etapa=5&amp;nuSessao=64.2025&amp;nuQuarto=4327701&amp;nuOrador=1&amp;nuInsercao=1&amp;dtHorarioQuarto=09:32&amp;sgFaseSessao=BC&amp;Data=30/04/2025" class="uri">https://www.camara.leg.br/internet/sitaqweb/TextoHTML.asp?etapa=5&amp;nuSessao=64.2025&amp;nuQuarto=4327701&amp;nuOrador=1&amp;nuInsercao=1&amp;dtHorarioQuarto=09:32&amp;sgFaseSessao=BC&amp;Data=30/04/2025</a></p>
 <blockquote class="blockquote">
 <p>Que tipo de informação é transmitida por meio da fala, além do conteúdo semântico? A transcrição em texto consegue capturar sarcasmo, exaltação ou hesitação? Perceba como os taquígrafos utilizam parênteses e marcadores para tentar registrar reações do plenário.</p>
 </blockquote>
@@ -547,7 +547,8 @@ div.csl-indent {
 <section id="lematização-e-anotação-morfossintática" class="level3" data-number="2.3.1">
 <h3 data-number="2.3.1" class="anchored" data-anchor-id="lematização-e-anotação-morfossintática"><span class="header-section-number">2.3.1</span> Lematização e Anotação Morfossintática</h3>
 <p>A <strong>lematização</strong> é o processo de reduzir uma palavra à sua forma original de dicionário (seu “lema”). Por exemplo, “gatos” e “gata” são convertidos para “gato”, e “fui” é convertido para o verbo “ir”.</p>
-<p>No português, esse processo é complexo e exige dicionários e ferramentas avançadas (como o projeto MorphoBR ou a biblioteca <code>spacyr</code>), pois depende do contexto (ex: “canto” pode ser o verbo cantar ou o substantivo). Isso enriquece a análise de discurso ao agrupar flexões verbais e nominais sob um mesmo guarda-chuva.</p>
+<p>No português, esse processo é complexo e exige dicionários e ferramentas avançadas (como o projeto MorphoBR ou a biblioteca <code>spacyr</code>), pois depende do contexto (ex: “canto” pode ser o verbo cantar ou o substantivo).</p>
+<p>Isso enriquece a análise de discurso ao agrupar flexões verbais e nominais sob um mesmo guarda-chuva.</p>
 </section>
 <section id="stemização-corte-do-radical" class="level3" data-number="2.3.2">
 <h3 data-number="2.3.2" class="anchored" data-anchor-id="stemização-corte-do-radical"><span class="header-section-number">2.3.2</span> Stemização (Corte do radical)</h3>
@@ -638,6 +639,283 @@ docs                         acácio favacho sem
 <pre><code>[1] 4737</code></pre>
 </div>
 </div>
+<p>A partir da DFM, podemos extrair estatísticas sobre os discursos, como <code>textstat_frequency</code> para contar palavras.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      feature frequency rank docfreq group
+1          de     26004    1    1809   all
+2         que     23622    2    1819   all
+3           o     21855    3    1840   all
+4           a     21616    4    1818   all
+5           e     16707    5    1768   all
+6          do     13012    6    1827   all
+7        para      9192    7    1650   all
+8           é      8970    8    1626   all
+9          da      8935    9    1651   all
+10        não      7469   10    1481   all
+11         um      6501   11    1515   all
+12        com      6101   12    1431   all
+13         em      5588   13    1436   all
+14        uma      5228   14    1435   all
+15         no      5067   15    1412   all
+16 presidente      4737   16    1754   all
+17         os      4486   17    1347   all
+18         na      3872   18    1294   all
+19         sr      3756   19    1687   all
+20         eu      3686   20    1196   all
+21        por      3682   21    1279   all
+22        nós      3566   22    1132   all
+23       mais      3294   23    1158   all
+24         se      3257   24    1147   all
+25        dos      2732   25    1078   all
+26         as      2701   26    1034   all
+27       como      2689   27    1075   all
+28       isso      2685   28    1102   all
+29        sem      2665   29    1820   all
+30         ao      2633   30    1149   all
+31       aqui      2508   31    1043   all
+32       está      2410   32     994   all
+33     brasil      2404   33     982   all
+34          à      2098   34     979   all
+35       pela      2082   35    1388   all
+36      muito      2030   36    1038   all
+37        mas      1974   37     981   all
+38      bloco      1863   38    1593   all
+39   deputado      1862   39     811   all
+40        foi      1845   40     819   all
+41        tem      1713   41     862   all
+42    revisão      1675   42    1661   all
+43     também      1659   43     834   all
+44      nosso      1615   44     790   all
+45    governo      1606   45     640   all
+46       essa      1590   46     807   all
+47        das      1588   47     747   all
+48       hoje      1584   48     876   all
+49       casa      1573   49     770   all
+50     porque      1564   50     813   all</code></pre>
+</div>
+</div>
+<p>Agrupando por partidos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       feature frequency rank docfreq         group
+1           de       252    1      17        AVANTE
+2            o       169    2      19        AVANTE
+3          que       162    3      18        AVANTE
+4            a       154    4      17        AVANTE
+5            e       148    5      18        AVANTE
+6         para        87    6      17        AVANTE
+7           do        86    7      19        AVANTE
+8          não        66    8      14        AVANTE
+9           da        64    9      15        AVANTE
+10         com        60   10      17        AVANTE
+11          de       112    1       3     CIDADANIA
+12         que       107    2       3     CIDADANIA
+13           a        85    3       3     CIDADANIA
+14           o        71    4       3     CIDADANIA
+15           e        68    5       3     CIDADANIA
+16         não        37    6       3     CIDADANIA
+17         com        33    7       3     CIDADANIA
+18          do        30    8       3     CIDADANIA
+19          os        28    9       3     CIDADANIA
+20          eu        27   10       3     CIDADANIA
+21          de      1285    1     103           MDB
+22         que      1193    2     104           MDB
+23           o      1140    3     105           MDB
+24           a      1044    4     103           MDB
+25          do       819    5     105           MDB
+26           e       717    6      96           MDB
+27           é       426    7      83           MDB
+28          da       422    8      91           MDB
+29        para       418    9      90           MDB
+30         não       343   10      73           MDB
+31           o       189    1       6        MISSÃO
+32          de       161    2       6        MISSÃO
+33         que       156    3       6        MISSÃO
+34           a       145    4       6        MISSÃO
+35          do       132    5       6        MISSÃO
+36           e        95    6       6        MISSÃO
+37         não        78    7       6        MISSÃO
+38        para        76    8       6        MISSÃO
+39           é        52    9       6        MISSÃO
+40          um        50   10       6        MISSÃO
+41           o      1602    1     136          NOVO
+42          de      1595    2     134          NOVO
+43         que      1567    3     134          NOVO
+44           a      1306    4     134          NOVO
+45           e       909    5     130          NOVO
+46           é       850    6     129          NOVO
+47          do       817    7     134          NOVO
+48         não       706    8     129          NOVO
+49        para       572    9     125          NOVO
+50          um       472   10     113          NOVO
+51          de       684    1      57         PCdoB
+52         que       617    2      56         PCdoB
+53           a       615    3      57         PCdoB
+54           o       509    4      55         PCdoB
+55           e       437    5      55         PCdoB
+56          da       361    6      57         PCdoB
+57          do       348    7      52         PCdoB
+58        para       241    8      50         PCdoB
+59           é       193    9      45         PCdoB
+60  presidente       156   10      55         PCdoB
+61           o       489    1      43           PDT
+62          de       443    2      38           PDT
+63         que       428    3      40           PDT
+64           a       388    4      40           PDT
+65           e       289    5      38           PDT
+66          do       252    6      42           PDT
+67        para       224    7      35           PDT
+68           é       218    8      42           PDT
+69          da       158    9      34           PDT
+70         não       136   10      33           PDT
+71         que      5557    1     452            PL
+72          de      5445    2     449            PL
+73           o      5219    3     454            PL
+74           a      4729    4     450            PL
+75           e      3240    5     433            PL
+76          do      2929    6     451            PL
+77           é      2127    7     410            PL
+78         não      2034    8     381            PL
+79        para      2015    9     397            PL
+80          da      1915   10     380            PL
+81          de       646    1      33          PODE
+82           o       569    2      37          PODE
+83         que       561    3      36          PODE
+84           a       538    4      34          PODE
+85           e       442    5      35          PODE
+86          do       337    6      37          PODE
+87        para       243    7      34          PODE
+88           é       227    8      33          PODE
+89          da       220    9      33          PODE
+90         não       171   10      27          PODE
+91          de       775    1      52            PP
+92         que       601    2      53            PP
+93           o       587    3      53            PP
+94           a       579    4      53            PP
+95           e       479    5      52            PP
+96          do       417    6      53            PP
+97          da       310    7      49            PP
+98        para       291    8      49            PP
+99         com       203    9      42            PP
+100          é       203    9      44            PP
+101         de       201    1       6           PRD
+102        que       177    2       6           PRD
+103          a       116    3       6           PRD
+104          e        86    4       6           PRD
+105          o        85    5       6           PRD
+106         da        58    6       6           PRD
+107         do        56    7       6           PRD
+108        com        56    7       6           PRD
+109       para        52    9       6           PRD
+110          é        52    9       6           PRD
+111         de      1297    1      80           PSB
+112          o      1097    2      81           PSB
+113        que      1038    3      78           PSB
+114          a       994    4      79           PSB
+115          e       966    5      77           PSB
+116         do       646    6      81           PSB
+117       para       405    7      72           PSB
+118          é       404    8      72           PSB
+119         da       400    9      77           PSB
+120        com       345   10      64           PSB
+121         de      1638    1      92           PSD
+122          a      1267    2      91           PSD
+123          e      1130    3      85           PSD
+124        que      1101    4      88           PSD
+125          o      1030    5      94           PSD
+126         do       710    6      91           PSD
+127         da       582    7      87           PSD
+128       para       486    8      82           PSD
+129          é       384    9      75           PSD
+130        com       340   10      68           PSD
+131         de       498    1      14          PSDB
+132          e       375    2      14          PSDB
+133          a       327    3      14          PSDB
+134        que       311    4      14          PSDB
+135          o       261    5      14          PSDB
+136         do       254    6      14          PSDB
+137       para       169    7      14          PSDB
+138         da       130    8      13          PSDB
+139        com       116    9      14          PSDB
+140          é       110   10      14          PSDB
+141        que      1757    1     128          PSOL
+142         de      1743    2     126          PSOL
+143          a      1614    3     127          PSOL
+144          o      1413    4     128          PSOL
+145          e      1140    5     125          PSOL
+146         do       909    6     126          PSOL
+147          é       741    7     114          PSOL
+148         da       701    8     124          PSOL
+149       para       640    9     116          PSOL
+150        não       613   10     115          PSOL
+151        que      5310    1     371            PT
+152         de      5270    2     364            PT
+153          a      4661    3     370            PT
+154          o      4618    4     370            PT
+155          e      3597    5     362            PT
+156         do      2657    6     372            PT
+157       para      2018    7     339            PT
+158         da      1910    8     347            PT
+159          é      1842    9     335            PT
+160        não      1547   10     298            PT
+161         de       242    1      16            PV
+162          o       198    2      16            PV
+163          a       194    3      16            PV
+164        que       194    3      16            PV
+165          e       153    5      16            PV
+166         do       137    6      16            PV
+167          é        89    7      15            PV
+168         da        78    8      16            PV
+169       para        77    9      15            PV
+170        com        75   10      13            PV
+171          a        23    1       2          REDE
+172         de        14    2       2          REDE
+173        que        13    3       2          REDE
+174    cultura        13    3       2          REDE
+175          o        10    5       2          REDE
+176          é         9    6       2          REDE
+177          e         6    7       2          REDE
+178 presidente         5    8       2          REDE
+179        sem         4    9       2          REDE
+180         do         4    9       2          REDE
+181         de      1611    1      91  REPUBLICANOS
+182          a      1265    2      90  REPUBLICANOS
+183          o      1189    3      91  REPUBLICANOS
+184        que      1179    4      90  REPUBLICANOS
+185          e      1129    5      92  REPUBLICANOS
+186         do       684    6      92  REPUBLICANOS
+187         da       476    7      82  REPUBLICANOS
+188       para       472    8      80  REPUBLICANOS
+189          é       424    9      77  REPUBLICANOS
+190        com       390   10      76  REPUBLICANOS
+191         de       107    1       9 SOLIDARIEDADE
+192        que        73    2      10 SOLIDARIEDADE
+193          o        69    3      10 SOLIDARIEDADE
+194          e        60    4      10 SOLIDARIEDADE
+195          a        59    5      10 SOLIDARIEDADE
+196         do        40    6       9 SOLIDARIEDADE
+197       para        34    7      10 SOLIDARIEDADE
+198        com        32    8       5 SOLIDARIEDADE
+199         da        27    9      10 SOLIDARIEDADE
+200         as        22   10       5 SOLIDARIEDADE
+201         de      1985    1     117         UNIÃO
+202        que      1520    2     114         UNIÃO
+203          a      1513    3     116         UNIÃO
+204          o      1341    4     117         UNIÃO
+205          e      1241    5     113         UNIÃO
+206         do       748    6     116         UNIÃO
+207       para       645    7     108         UNIÃO
+208         da       606    8     107         UNIÃO
+209          é       530    9      99         UNIÃO
+210         um       471   10     104         UNIÃO</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="stopwords" class="level2" data-number="2.5">
@@ -645,9 +923,9 @@ docs                         acácio favacho sem
 <p><strong>Stopwords</strong> são palavras funcionais muito comuns (como “o”, “a”, “de”, “e”, “mas”) que, isoladamente, não ajudam a diferenciar os temas dos discursos. Elas são frequentemente removidas para reduzir o “ruído” nos gráficos e nas contagens.</p>
 <p>No R, podemos usar o pacote <code>stopwords</code> para obter listas pré-definidas em português:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>stopwords_portugues <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">"pt"</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(stopwords_portugues[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>stopwords_portugues <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">"portuguese"</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(stopwords_portugues[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "de"   "a"    "o"    "que"  "e"    "do"   "da"   "em"   "um"   "para"</code></pre>
 </div>
@@ -655,19 +933,238 @@ docs                         acácio favacho sem
 <blockquote class="blockquote">
 <p><strong>Atenção:</strong> A remoção de stopwords é ótima para descobrir os <em>temas</em> de um texto, mas pode ser problemática se você estiver analisando <em>estilos</em> ou <em>marcadores conversacionais</em> (o uso excessivo do pronome “nós” vs “eu”, por exemplo, desapareceria se você os tratasse como stopwords).</p>
 </blockquote>
+<p>Vamos ver a diferença nas frequências após remover as stopwords:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(stopwords_portugues) <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          feature frequency rank docfreq         group
+1               é        44    1      13        AVANTE
+2      presidente        43    2      19        AVANTE
+3              sr        36    3      18        AVANTE
+4          avante        30    4      17        AVANTE
+5            aqui        26    5      10        AVANTE
+6            casa        23    6       9        AVANTE
+7          pastor        21    7      10        AVANTE
+8           bahia        20    8       7        AVANTE
+9       município        20    8       5        AVANTE
+10         brasil        19   10       9        AVANTE
+11              é        23    1       3     CIDADANIA
+12        projeto        21    2       3     CIDADANIA
+13           aqui        18    3       3     CIDADANIA
+14       deputado        17    4       3     CIDADANIA
+15        pessoas        17    4       2     CIDADANIA
+16          todos        15    6       3     CIDADANIA
+17     presidente        14    7       3     CIDADANIA
+18       autistas        13    8       2     CIDADANIA
+19             sr        12    9       3     CIDADANIA
+20      deputados        12    9       2     CIDADANIA
+21              é       426    1      83           MDB
+22     presidente       195    2      86           MDB
+23             sr       186    3     104           MDB
+24            mdb       159    4     104           MDB
+25       deputado       108    5      48           MDB
+26          bloco       105    6     103           MDB
+27           aqui       103    7      51           MDB
+28        revisão       101    8     101           MDB
+29         estado        99    9      34           MDB
+30           casa        99    9      40           MDB
+31              é        52    1       6        MISSÃO
+32        supremo        43    2       4        MISSÃO
+33        governo        33    3       4        MISSÃO
+34     presidente        21    4       6        MISSÃO
+35          gente        21    4       5        MISSÃO
+36            vai        21    4       5        MISSÃO
+37          agora        21    4       6        MISSÃO
+38      deputados        20    8       5        MISSÃO
+39       ministro        20    8       4        MISSÃO
+40       tribunal        19   10       5        MISSÃO
+41              é       850    1     129          NOVO
+42     presidente       334    2     134          NOVO
+43             sr       250    3     121          NOVO
+44           aqui       218    4      88          NOVO
+45           novo       180    5      99          NOVO
+46       deputado       171    6      81          NOVO
+47            ser       151    7      73          NOVO
+48         porque       137    8      73          NOVO
+49         brasil       136    9      64          NOVO
+50        governo       132   10      59          NOVO
+51              é       193    1      45         PCdoB
+52     presidente       156    2      55         PCdoB
+53            lei        80    3      13         PCdoB
+54         brasil        76    4      29         PCdoB
+55           aqui        71    5      30         PCdoB
+56          pcdob        70    6      57         PCdoB
+57          bloco        69    7      57         PCdoB
+58             sr        67    8      36         PCdoB
+59          quero        56    9      37         PCdoB
+60        revisão        54   10      54         PCdoB
+61              é       218    1      42           PDT
+62     presidente        98    2      42           PDT
+63             sr        89    3      42           PDT
+64            pdt        62    4      43           PDT
+65         brasil        56    5      21           PDT
+66          bloco        47    6      43           PDT
+67         grande        45    7      19           PDT
+68           aqui        44    8      16           PDT
+69           casa        43    9      19           PDT
+70        revisão        41   10      41           PDT
+71              é      2127    1     410            PL
+72     presidente      1277    2     444            PL
+73             sr      1090    3     446            PL
+74             pl       651    4     413            PL
+75           aqui       639    5     264            PL
+76         brasil       605    6     235            PL
+77          bloco       599    7     438            PL
+78       deputado       526    8     208            PL
+79        revisão       443    9     437            PL
+80        governo       426   10     170            PL
+81              é       227    1      33          PODE
+82             sr       108    2      36          PODE
+83         brasil        99    3      23          PODE
+84     presidente        98    4      32          PODE
+85           aqui        93    5      21          PODE
+86          todos        70    6      22          PODE
+87         estado        53    7      17          PODE
+88           pode        53    7      37          PODE
+89          bloco        48    9      36          PODE
+90           hoje        47   10      18          PODE
+91              é       203    1      44            PP
+92     presidente       151    2      52            PP
+93             sr       103    3      47            PP
+94         estado        95    4      26            PP
+95           aqui        66    5      29            PP
+96         brasil        60    6      30            PP
+97          bloco        59    7      51            PP
+98       deputado        55    8      27            PP
+99             pp        54    9      50            PP
+100         quero        52   10      29            PP
+101             é        52    1       6           PRD
+102       pessoas        21    2       5           PRD
+103        brasil        20    3       6           PRD
+104            sr        19    4       6           PRD
+105    presidente        19    4       6           PRD
+106        muitas        19    4       6           PRD
+107         todos        16    7       6           PRD
+108         gente        16    7       3           PRD
+109          todo        15    9       6           PRD
+110  infelizmente        15    9       6           PRD
+111             é       404    1      72           PSB
+112            sr       142    2      81           PSB
+113          acre       132    3      20           PSB
+114    presidente       123    4      79           PSB
+115        brasil       108    5      45           PSB
+116          hoje        93    6      51           PSB
+117           ser        88    7      32           PSB
+118           psb        88    7      50           PSB
+119       federal        82    9      33           PSB
+120       justiça        77   10      28           PSB
+121             é       384    1      75           PSD
+122    presidente       236    2      91           PSD
+123            sr       181    3      80           PSD
+124           psd       125    4      77           PSD
+125        brasil        95    5      47           PSD
+126        estado        91    6      32           PSD
+127       projeto        91    6      28           PSD
+128          aqui        88    8      42           PSD
+129        cidade        86    9      25           PSD
+130      obrigado        83   10      54           PSD
+131             é       110    1      14          PSDB
+132       federal        55    2      12          PSDB
+133    presidente        47    3      14          PSDB
+134        estado        36    4      11          PSDB
+135          aqui        34    5      13          PSDB
+136           sul        33    6       7          PSDB
+137       governo        32    7       8          PSDB
+138            sr        31    8      11          PSDB
+139       entorno        30    9       2          PSDB
+140        grande        29   10      11          PSDB
+141             é       741    1     114          PSOL
+142    presidente       251    2     116          PSOL
+143      deputado       239    3      59          PSOL
+144          aqui       213    4      87          PSOL
+145          psol       179    5     129          PSOL
+146            sr       162    6     101          PSOL
+147         bloco       140    7     129          PSOL
+148       revisão       130    8     128          PSOL
+149       glauber       129    9      34          PSOL
+150        porque       125   10      63          PSOL
+151             é      1842    1     335            PT
+152    presidente      1066    2     351            PT
+153            sr       712    3     327            PT
+154          aqui       558    4     224            PT
+155        brasil       546    5     218            PT
+156       governo       448    6     166            PT
+157        porque       394    7     196            PT
+158            pt       383    8     339            PT
+159         bloco       379    9     348            PT
+160          casa       369   10     168            PT
+161             é        89    1      15            PV
+162            sr        34    2      16            PV
+163    presidente        33    3      15            PV
+164       governo        24    4       9            PV
+165        brasil        23    5       7            PV
+166          aqui        21    6      11            PV
+167       federal        20    7       8            PV
+168          casa        19    8      11            PV
+169         bloco        17    9      16            PV
+170            pv        17    9      16            PV
+171       cultura        13    1       2          REDE
+172             é         9    2       2          REDE
+173    presidente         5    3       2          REDE
+174       partido         3    4       1          REDE
+175          viva         3    4       1          REDE
+176            sr         2    6       2          REDE
+177          além         2    6       1          REDE
+178          povo         2    6       1          REDE
+179         bloco         2    6       2          REDE
+180       revisão         2    6       2          REDE
+181             é       424    1      77  REPUBLICANOS
+182    presidente       213    2      88  REPUBLICANOS
+183            sr       180    3      88  REPUBLICANOS
+184        brasil       132    4      54  REPUBLICANOS
+185      deputado        92    5      57  REPUBLICANOS
+186           ser        92    5      34  REPUBLICANOS
+187          aqui        90    7      46  REPUBLICANOS
+188         todos        87    8      45  REPUBLICANOS
+189          hoje        83    9      49  REPUBLICANOS
+190          povo        80   10      23  REPUBLICANOS
+191             é        22    1       9 SOLIDARIEDADE
+192    presidente        21    2       9 SOLIDARIEDADE
+193       pessoas        18    3       3 SOLIDARIEDADE
+194            sr        11    4       9 SOLIDARIEDADE
+195       autismo        11    4       1 SOLIDARIEDADE
+196           lei        11    4       5 SOLIDARIEDADE
+197       projeto        11    4       5 SOLIDARIEDADE
+198 solidariedade        11    4       9 SOLIDARIEDADE
+199       revisão         9    9       9 SOLIDARIEDADE
+200         ordem         8   10       8 SOLIDARIEDADE
+201             é       530    1      99         UNIÃO
+202    presidente       336    2     110         UNIÃO
+203            sr       330    3     107         UNIÃO
+204        brasil       189    4      77         UNIÃO
+205          aqui       153    5      63         UNIÃO
+206       pessoas       151    6      45         UNIÃO
+207          casa       143    7      56         UNIÃO
+208         união       138    8     104         UNIÃO
+209         todos       124    9      59         UNIÃO
+210         bloco       114   10     104         UNIÃO</code></pre>
+</div>
+</div>
 </section>
 <section id="palavras-no-contexto-keywords-in-context" class="level2" data-number="2.6">
 <h2 data-number="2.6" class="anchored" data-anchor-id="palavras-no-contexto-keywords-in-context"><span class="header-section-number">2.6</span> Palavras no contexto (Keywords-in-context)</h2>
 <p><strong>Keywords-in-context (KWIC)</strong> é um método qualitativo excelente para a Análise de Discurso. Ele busca um termo específico e exibe a palavra central cercada pelas palavras que vêm antes e depois (o seu contexto).</p>
 <p>Isso nos permite analisar os <em>enquadramentos</em> (frames) e <em>associações</em> feitas pelos oradores.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscando o termo "anistia" e observando 3 palavras de contexto</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>kwic_anistia <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">|&gt;</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kwic</span>(<span class="st">"anistia"</span>, <span class="at">window =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) </span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>kwic_anistia</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Buscando o termo "anistia" e observando 3 palavras de contexto</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>kwic_anistia <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kwic</span>(<span class="st">"anistia"</span>, <span class="at">window =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>) </span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>kwic_anistia</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Keyword-in-context with 10 matches.                                                                               
      [5_Adilson Barroso_PL, 88]           a Lei da | Anistia | , a extrema     
@@ -684,12 +1181,12 @@ docs                         acácio favacho sem
 </div>
 <p>Você também pode usar o curinga <code>*</code> para buscar variações (ex: “golp*” pegará “golpe” e “golpista”):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>golp_kwic <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kwic</span>(<span class="st">"golp*"</span>, <span class="at">window =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>golp_kwic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>golp_kwic <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kwic</span>(<span class="st">"golp*"</span>, <span class="at">window =</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>golp_kwic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Keyword-in-context with 10 matches.                                                             
  [39_Airton Faleiro_PT, 255]   quem idealizou o |   golpe   |
@@ -721,34 +1218,276 @@ docs                         acácio favacho sem
 <p>Vamos consolidar tudo que aprendemos criando uma visualização que compara as palavras mais ditas pelos deputados do PT e do PL.</p>
 <p><strong>Passo 1: Tokenização e Limpeza</strong> Vamos quebrar em palavras, remover pontuação, converter para minúsculo e remover stopwords do português.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tokens_limpos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">"pt"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>tokens_limpos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="at">language =</span> <span class="st">"portuguese"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Passo 2: Criando o DFM e removendo jargões políticos</strong> O plenário da Câmara é cheio de vícios de linguagem (“senhor”, “presidente”, “deputado”). Se não os removermos, a nossa análise será engolida por eles.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_limpos)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando lista de palavras "irrelevantes" para o nosso contexto</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>palavras_irrelevantes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"senhor"</span>, <span class="st">"sr"</span>, <span class="st">"senhora"</span>, <span class="st">"sra"</span>, <span class="st">"sobre"</span>, <span class="st">"presidente"</span>, </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"deputado"</span>, <span class="st">"deputada"</span>, <span class="st">"lei"</span>, <span class="st">"nº"</span>, <span class="st">"projeto"</span>, <span class="st">"é"</span>, <span class="st">"nesta"</span>, <span class="st">"desta"</span>)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="ot">&lt;-</span> dfm_final <span class="sc">|&gt;</span> <span class="fu">dfm_remove</span>(palavras_irrelevantes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_limpos)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criando lista de palavras "irrelevantes" para o nosso contexto</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>palavras_irrelevantes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"senhor"</span>, <span class="st">"sr"</span>, <span class="st">"senhora"</span>, <span class="st">"sra"</span>, <span class="st">"sobre"</span>, <span class="st">"presidente"</span>, </span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"deputado"</span>, <span class="st">"deputada"</span>, <span class="st">"lei"</span>, <span class="st">"nº"</span>, <span class="st">"projeto"</span>, <span class="st">"é"</span>, <span class="st">"nesta"</span>, <span class="st">"desta"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="ot">&lt;-</span> dfm_final <span class="sc">|&gt;</span> <span class="fu">dfm_remove</span>(palavras_irrelevantes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p><strong>Passo 3: Visualizando a Diferença (Wordcloud)</strong> Vamos filtrar os partidos de interesse, agrupar o DFM por partido e gerar a nuvem de comparação. As palavras maiores representam os termos mais frequentes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_subset</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PT"</span>, <span class="st">"PL"</span>)) <span class="sc">|&gt;</span>       <span class="co"># filtrar partidos </span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> partido) <span class="sc">|&gt;</span>                  <span class="co"># agrupar matriz por partido</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textplot_wordcloud</span>(<span class="at">comparison =</span> <span class="cn">TRUE</span>,           <span class="co"># modo comparativo</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>),    <span class="co"># cores PT (red) e PL (blue)</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">min_count =</span> <span class="dv">5</span>,</span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">max_words =</span> <span class="dv">150</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          feature frequency rank docfreq         group
+1          avante        30    1      17        AVANTE
+2            aqui        26    2      10        AVANTE
+3            casa        23    3       9        AVANTE
+4          pastor        21    4      10        AVANTE
+5           bahia        20    5       7        AVANTE
+6       município        20    5       5        AVANTE
+7          brasil        19    7       9        AVANTE
+8            deus        19    7       4        AVANTE
+9            hoje        18    9       8        AVANTE
+10          bloco        18    9      18        AVANTE
+11           aqui        18    1       3     CIDADANIA
+12        pessoas        17    2       2     CIDADANIA
+13          todos        15    3       3     CIDADANIA
+14       autistas        13    4       2     CIDADANIA
+15      deputados        12    5       2     CIDADANIA
+16       direitos        11    6       3     CIDADANIA
+17        matéria        11    6       1     CIDADANIA
+18       obrigado         9    8       2     CIDADANIA
+19           cada         9    8       2     CIDADANIA
+20          apoio         8   10       2     CIDADANIA
+21            mdb       159    1     104           MDB
+22          bloco       105    2     103           MDB
+23           aqui       103    3      51           MDB
+24        revisão       101    4     101           MDB
+25         estado        99    5      34           MDB
+26           casa        99    5      40           MDB
+27         orador        96    7      96           MDB
+28         porque        86    8      45           MDB
+29         brasil        85    9      44           MDB
+30          quero        83   10      45           MDB
+31        supremo        43    1       4        MISSÃO
+32        governo        33    2       4        MISSÃO
+33          gente        21    3       5        MISSÃO
+34            vai        21    3       5        MISSÃO
+35          agora        21    3       6        MISSÃO
+36      deputados        20    6       5        MISSÃO
+37       ministro        20    6       4        MISSÃO
+38       tribunal        19    8       5        MISSÃO
+39        federal        18    9       5        MISSÃO
+40         câmara        15   10       5        MISSÃO
+41           aqui       218    1      88          NOVO
+42           novo       180    2      99          NOVO
+43            ser       151    3      73          NOVO
+44         porque       137    4      73          NOVO
+45         brasil       136    5      64          NOVO
+46        governo       132    6      59          NOVO
+47            vai       130    7      49          NOVO
+48        revisão       126    8     123          NOVO
+49           país       111    9      56          NOVO
+50         orador       108   10     105          NOVO
+51         brasil        76    1      29         PCdoB
+52           aqui        71    2      30         PCdoB
+53          pcdob        70    3      57         PCdoB
+54          bloco        69    4      57         PCdoB
+55          quero        56    5      37         PCdoB
+56        revisão        54    6      54         PCdoB
+57          ordem        51    7      39         PCdoB
+58           casa        44    8      25         PCdoB
+59            dia        43    9      25         PCdoB
+60     importante        42   10      28         PCdoB
+61            pdt        62    1      43           PDT
+62         brasil        56    2      21           PDT
+63          bloco        47    3      43           PDT
+64         grande        45    4      19           PDT
+65           aqui        44    5      16           PDT
+66           casa        43    6      19           PDT
+67        revisão        41    7      41           PDT
+68         orador        40    8      40           PDT
+69        estados        38    9       6           PDT
+70          todos        36   10      14           PDT
+71             pl       651    1     413            PL
+72           aqui       639    2     264            PL
+73         brasil       605    3     235            PL
+74          bloco       599    4     438            PL
+75        revisão       443    5     437            PL
+76        governo       426    6     170            PL
+77         porque       417    7     213            PL
+78         orador       415    8     412            PL
+79           hoje       399    9     204            PL
+80          ordem       382   10     298            PL
+81         brasil        99    1      23          PODE
+82           aqui        93    2      21          PODE
+83          todos        70    3      22          PODE
+84         estado        53    4      17          PODE
+85           pode        53    4      37          PODE
+86          bloco        48    6      36          PODE
+87           hoje        47    7      18          PODE
+88          santo        44    8      13          PODE
+89       espírito        43    9      12          PODE
+90            dia        41   10      16          PODE
+91         estado        95    1      26            PP
+92           aqui        66    2      29            PP
+93         brasil        60    3      30            PP
+94          bloco        59    4      51            PP
+95             pp        54    5      50            PP
+96          quero        52    6      29            PP
+97        revisão        51    7      50            PP
+98        pessoas        48    8      20            PP
+99           hoje        40    9      25            PP
+100        orador        40    9      40            PP
+101       pessoas        21    1       5           PRD
+102        brasil        20    2       6           PRD
+103        muitas        19    3       6           PRD
+104         todos        16    4       6           PRD
+105         gente        16    4       3           PRD
+106          todo        15    6       6           PRD
+107  infelizmente        15    6       6           PRD
+108         fazer        14    8       4           PRD
+109         vezes        14    8       6           PRD
+110          casa        14    8       5           PRD
+111          acre       132    1      20           PSB
+112        brasil       108    2      45           PSB
+113          hoje        93    3      51           PSB
+114           ser        88    4      32           PSB
+115           psb        88    4      50           PSB
+116       federal        82    6      33           PSB
+117       justiça        77    7      28           PSB
+118       governo        73    8      25           PSB
+119        estado        67    9      36           PSB
+120      recursos        65   10      31           PSB
+121           psd       125    1      77           PSD
+122        brasil        95    2      47           PSD
+123        estado        91    3      32           PSD
+124          aqui        88    4      42           PSD
+125        cidade        86    5      25           PSD
+126      obrigado        83    6      54           PSD
+127          hoje        81    7      45           PSD
+128         bloco        77    8      77           PSD
+129         todos        75    9      40           PSD
+130       revisão        74   10      74           PSD
+131       federal        55    1      12          PSDB
+132        estado        36    2      11          PSDB
+133          aqui        34    3      13          PSDB
+134           sul        33    4       7          PSDB
+135       governo        32    5       8          PSDB
+136       entorno        30    6       2          PSDB
+137        grande        29    7      11          PSDB
+138         quero        28    8      11          PSDB
+139      dourados        26    9       3          PSDB
+140         saúde        25   10       8          PSDB
+141          aqui       213    1      87          PSOL
+142          psol       179    2     129          PSOL
+143         bloco       140    3     129          PSOL
+144       revisão       130    4     128          PSOL
+145       glauber       129    5      34          PSOL
+146        porque       125    6      63          PSOL
+147        brasil       124    7      57          PSOL
+148        contra       112    8      57          PSOL
+149           dia       109    9      49          PSOL
+150         ordem       108   10      73          PSOL
+151          aqui       558    1     224            PT
+152        brasil       546    2     218            PT
+153       governo       448    3     166            PT
+154        porque       394    4     196            PT
+155            pt       383    5     339            PT
+156         bloco       379    6     348            PT
+157          casa       369    7     168            PT
+158          lula       357    8     149            PT
+159       revisão       343    9     341            PT
+160          país       320   10     151            PT
+161       governo        24    1       9            PV
+162        brasil        23    2       7            PV
+163          aqui        21    3      11            PV
+164       federal        20    4       8            PV
+165          casa        19    5      11            PV
+166         bloco        17    6      16            PV
+167            pv        17    6      16            PV
+168       revisão        16    8      16            PV
+169        orador        16    8      16            PV
+170      obrigado        14   10       9            PV
+171       cultura        13    1       2          REDE
+172       partido         3    2       1          REDE
+173          viva         3    2       1          REDE
+174          além         2    4       1          REDE
+175          povo         2    4       1          REDE
+176         bloco         2    4       2          REDE
+177       revisão         2    4       2          REDE
+178        orador         2    4       2          REDE
+179          cada         2    4       2          REDE
+180           sim         2    4       2          REDE
+181        brasil       132    1      54  REPUBLICANOS
+182           ser        92    2      34  REPUBLICANOS
+183          aqui        90    3      46  REPUBLICANOS
+184         todos        87    4      45  REPUBLICANOS
+185          hoje        83    5      49  REPUBLICANOS
+186          povo        80    6      23  REPUBLICANOS
+187       pessoas        71    7      27  REPUBLICANOS
+188  republicanos        71    7      55  REPUBLICANOS
+189          casa        68    9      43  REPUBLICANOS
+190        estado        67   10      34  REPUBLICANOS
+191       pessoas        18    1       3 SOLIDARIEDADE
+192       autismo        11    2       1 SOLIDARIEDADE
+193 solidariedade        11    2       9 SOLIDARIEDADE
+194       revisão         9    4       9 SOLIDARIEDADE
+195         ordem         8    5       8 SOLIDARIEDADE
+196        orador         7    6       7 SOLIDARIEDADE
+197        pessoa         7    6       2 SOLIDARIEDADE
+198          casa         7    6       4 SOLIDARIEDADE
+199      nacional         7    6       3 SOLIDARIEDADE
+200         quero         6   10       4 SOLIDARIEDADE
+201        brasil       189    1      77         UNIÃO
+202          aqui       153    2      63         UNIÃO
+203       pessoas       151    3      45         UNIÃO
+204          casa       143    4      56         UNIÃO
+205         união       138    5     104         UNIÃO
+206         todos       124    6      59         UNIÃO
+207         bloco       114    7     104         UNIÃO
+208          hoje       109    8      65         UNIÃO
+209       governo       109    8      45         UNIÃO
+210          país       107   10      58         UNIÃO</code></pre>
+</div>
+</div>
+<p><strong>Passo 3: Visualizando a Diferença (Wordcloud)</strong> Wordclouds são visualizações úteis para análise de frequências. As palavras maiores representam os termos mais frequentes.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textplot_wordcloud</span>(<span class="at">max_words =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="aula2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="aula2_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="sc">|&gt;</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_weight</span>(<span class="st">"logcount"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textplot_wordcloud</span>(<span class="at">max_words =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula2_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Vamos filtrar os partidos de interesse, agrupar o DFM por partido e gerar a nuvem de comparação.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>dfm_final <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_remove</span>(<span class="fu">c</span>(<span class="st">"pt"</span>, <span class="st">"pl"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_subset</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PT"</span>, <span class="st">"PL"</span>)) <span class="sc">|&gt;</span>       <span class="co"># filtrar partidos </span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> partido) <span class="sc">|&gt;</span>                  <span class="co"># agrupar matriz por partido</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textplot_wordcloud</span>(<span class="at">comparison =</span> <span class="cn">TRUE</span>,           <span class="co"># modo comparativo</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>),    <span class="co"># cores PT (red) e PL (blue)</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">min_count =</span> <span class="dv">5</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">max_words =</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula2_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
