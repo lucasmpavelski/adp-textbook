@@ -8,6 +8,8 @@
 -   Níveis de análise: de caracteres a discursos.
 -   Processamento básico: Tokenização, *Stopwords* e *Stemming*.
 -   Exploração inicial: *Keyword-in-context* (KWIC) e Nuvens de Palavras.
+
+Link para o Google Colab: <https://colab.research.google.com/drive/1bOM77Nea3m4OLQSDMUz4k-yj9Qq9q0Zk>
 :::
 
 ```{r}
@@ -133,9 +135,7 @@ O processamento de textos pelo computador (PLN) foca principalmente no texto esc
 
 Observe o exemplo abaixo das notas taquigráficas da Câmara:
 
-<iframe src="https://www.camara.leg.br/internet/sitaqweb/TextoHTML.asp?etapa=5&amp;nuSessao=64.2025&amp;nuQuarto=4327701&amp;nuOrador=1&amp;nuInsercao=1&amp;dtHorarioQuarto=09:32&amp;sgFaseSessao=BC&amp;Data=30/04/2025&amp;txApelido=Otoni%20de%20Paula&amp;txFaseSessao=Breves%20Comunica%C3%A7%C3%B5es&amp;txTipoSessao=Ordin%C3%A1ria%20-%20CD&amp;dtHoraQuarto=09:32&amp;txEtapa=" width="100%" height="400px" frameborder="0">
-
-</iframe>
+<https://www.camara.leg.br/internet/sitaqweb/TextoHTML.asp?etapa=5&nuSessao=64.2025&nuQuarto=4327701&nuOrador=1&nuInsercao=1&dtHorarioQuarto=09:32&sgFaseSessao=BC&Data=30/04/2025>
 
 > Que tipo de informação é transmitida por meio da fala, além do conteúdo semântico? A transcrição em texto consegue capturar sarcasmo, exaltação ou hesitação? Perceba como os taquígrafos utilizam parênteses e marcadores para tentar registrar reações do plenário.
 
@@ -149,7 +149,9 @@ Por exemplo, @moffitt2016 destaca o uso de neologismos em performances populista
 
 A **lematização** é o processo de reduzir uma palavra à sua forma original de dicionário (seu "lema"). Por exemplo, "gatos" e "gata" são convertidos para "gato", e "fui" é convertido para o verbo "ir".
 
-No português, esse processo é complexo e exige dicionários e ferramentas avançadas (como o projeto MorphoBR ou a biblioteca `spacyr`), pois depende do contexto (ex: "canto" pode ser o verbo cantar ou o substantivo). Isso enriquece a análise de discurso ao agrupar flexões verbais e nominais sob um mesmo guarda-chuva.
+No português, esse processo é complexo e exige dicionários e ferramentas avançadas (como o projeto MorphoBR ou a biblioteca `spacyr`), pois depende do contexto (ex: "canto" pode ser o verbo cantar ou o substantivo).
+
+Isso enriquece a análise de discurso ao agrupar flexões verbais e nominais sob um mesmo guarda-chuva.
 
 ### Stemização (Corte do radical)
 
@@ -209,6 +211,21 @@ Por exemplo, para ver a frequência da palavra "presidente":
 print(sum(dfm_discursos[, "presidente"]))
 ```
 
+A partir da DFM, podemos extrair estatísticas sobre os discursos, como `textstat_frequency` para contar palavras.
+
+```{r}
+dfm_discursos |>
+  textstat_frequency() |>
+  head(50)
+```
+
+Agrupando por partidos:
+
+```{r}
+dfm_discursos |>
+  textstat_frequency(10, groups = partido)
+```
+
 ## Stopwords
 
 **Stopwords** são palavras funcionais muito comuns (como "o", "a", "de", "e", "mas") que, isoladamente, não ajudam a diferenciar os temas dos discursos. Elas são frequentemente removidas para reduzir o "ruído" nos gráficos e nas contagens.
@@ -218,11 +235,19 @@ No R, podemos usar o pacote `stopwords` para obter listas pré-definidas em port
 ```{r}
 #| message: false
 library(stopwords)
-stopwords_portugues <- stopwords(language = "pt")
+stopwords_portugues <- stopwords(language = "portuguese")
 print(stopwords_portugues[1:10])
 ```
 
 > **Atenção:** A remoção de stopwords é ótima para descobrir os *temas* de um texto, mas pode ser problemática se você estiver analisando *estilos* ou *marcadores conversacionais* (o uso excessivo do pronome "nós" vs "eu", por exemplo, desapareceria se você os tratasse como stopwords).
+
+Vamos ver a diferença nas frequências após remover as stopwords:
+
+```{r}
+dfm_discursos |>
+  dfm_remove(stopwords_portugues) |>
+  textstat_frequency(10, groups = partido)
+```
 
 ## Palavras no contexto (Keywords-in-context)
 
@@ -261,7 +286,7 @@ Vamos consolidar tudo que aprendemos criando uma visualização que compara as p
 tokens_limpos <- corpus_discursos |>
   tokens(remove_punct = TRUE, remove_symbols = TRUE, remove_numbers = TRUE) |>
   tokens_tolower() |>
-  tokens_remove(stopwords(language = "pt"))
+  tokens_remove(stopwords(language = "portuguese"))
 ```
 
 **Passo 2: Criando o DFM e removendo jargões políticos** O plenário da Câmara é cheio de vícios de linguagem ("senhor", "presidente", "deputado"). Se não os removermos, a nossa análise será engolida por eles.
@@ -276,17 +301,38 @@ palavras_irrelevantes <- c("senhor", "sr", "senhora", "sra", "sobre", "president
 dfm_final <- dfm_final |> dfm_remove(palavras_irrelevantes)
 ```
 
-**Passo 3: Visualizando a Diferença (Wordcloud)** Vamos filtrar os partidos de interesse, agrupar o DFM por partido e gerar a nuvem de comparação. As palavras maiores representam os termos mais frequentes.
+```{r}
+dfm_final |>
+  textstat_frequency(10, groups = partido)
+```
+
+**Passo 3: Visualizando a Diferença (Wordcloud)** Wordclouds são visualizações úteis para análise de frequências. As palavras maiores representam os termos mais frequentes.
 
 ```{r}
 #| warning: false
 dfm_final |>
+  textplot_wordcloud(max_words = 300)
+```
+
+```{r}
+#| warning: false
+dfm_final |>
+  dfm_weight("logcount") |>
+  textplot_wordcloud(max_words = 300)
+```
+
+Vamos filtrar os partidos de interesse, agrupar o DFM por partido e gerar a nuvem de comparação.
+
+```{r}
+#| warning: false
+dfm_final |>
+  dfm_remove(c("pt", "pl")) |>
   dfm_subset(partido %in% c("PT", "PL")) |>       # filtrar partidos 
   dfm_group(groups = partido) |>                  # agrupar matriz por partido
   textplot_wordcloud(comparison = TRUE,           # modo comparativo
                      color = c("red", "blue"),    # cores PT (red) e PL (blue)
                      min_count = 5,
-                     max_words = 150)
+                     max_words = 300)
 ```
 
 ## Para saber mais
