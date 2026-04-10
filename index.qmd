@@ -64,13 +64,15 @@ Disponível em: <https://brasileiraspln.com/livro-pln/2a-edicao/>
 
 ### Aula 3 - 10/04/2026:
 
--   n-gramas
--   Collocations
+-   Dicionários
+-   n-gramas, Collocations
 -   TF-IDF
--   Análise de tópicos
+-   Readibility
+-   Keyness
 
 ### Aula 4 - 15/05/2026:
 
+-   Análise de tópicos
 -   Análise sintática
 -   Embeddings
 -   Similaridade de Documentos

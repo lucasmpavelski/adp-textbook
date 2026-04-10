@@ -12,6 +12,7 @@ book:
     - index.qmd
     - aula1.qmd
     - aula2.qmd
+    - aula3.qmd
     - glossario.qmd
     - references.qmd
   appendices: 
