@@ -1,5 +1,96 @@
 # Análise sintática, Embeddings e Similaridade de Documentos
 
+## Análise de tópicos
+
+Em diversos cenários estamos analizando um conjunto de documentos e queremos identificar os temas ou tópicos principais presentes nesses documentos. Por exemplo, quais temas foram discutidos no plenário em 2025?
+
+A *análise de tópicos* é uma técnica de modelagem de texto que permite descobrir automaticamente os tópicos subjacentes em um conjunto de documentos.
+
+A análise de tópicos é considerada uma técnica de aprendizado não-supervisionado. Os dados são apresentados e o modelo tenta encontrar padrões e estruturas subjacentes sem rótulos ou categorias pré-definidas.
+
+O objetivo é identificar grupos de palavras que frequentemente coocorrem em documentos, sugerindo a presença de um tópico.
+
+![](images/analise-topicos.png)
+
+Latent Dirichlet allocation (LDA) é um dos métodos mais populares para análise de tópicos. Ele assume que:
+
+-   cada documento é uma mistura de vários tópicos
+-   cada tópico é uma distribuição de palavras
+
+```{r}
+if (!"stm" %in% installed.packages()) {
+  install.packages("stm")
+}
+library(stm)
+```
+
+```{r}
+tm_dfm <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_symbols = TRUE) |>
+  tokens_remove(stopwords("portuguese")) |>
+  dfm() |>
+  dfm_trim(min_termfreq = 0.8, termfreq_type = "quantile",
+                       max_docfreq = 0.1, docfreq_type = "prop")
+
+set.seed(42)
+tmod_discursos <- textmodel_lda(tm_dfm, verbose = TRUE)
+```
+
+```{r}
+terms(tmod_discursos)
+```
+
+```{r}
+topics(tmod_discursos) |> head()
+```
+
+```{r}
+tmod_discursos$theta |> head()
+```
+
+```{r}
+tmod_discursos$theta |>
+  as.data.frame() |>
+  arrange(desc(topic5)) |>
+  select(topic5)
+```
+
+```{r}
+corpus_discursos[["1148_Pezenti_MDB"]]
+```
+
+```{r}
+tmod_discursos$phi |>
+  as_tibble(rownames = "Tópico") |>
+  select(católica, católico)
+```
+
+#### Análise guiada de tópicos
+
+```{r}
+topicos <- list(
+  "golpe" = c("anistia", "golp*", "ditatura", "stf"),
+  "papa" = c("papa", "francisco", "igreja"),
+  "glauber" = c("glauber", "cassação", "cpi")
+)
+
+stmod_discursos <- textmodel_seededlda(tm_dfm, dictionary(topicos))
+
+terms(stmod_discursos)
+```
+
+```{r}
+
+```
+
+TODO: comentar análise de tópicos temporais, estruturados
+
+TODO: comentar modelos de tópicos contextualizados
+
+## Exemplo: Analise de n-gramas e Tópicos dos Discursos do Plenário da Câmara dos Deputados
+
+TODO: carregar dados dos discursos, criar um corpus, criar uma matriz de documentos e termos, calcular n-gramas, collocations, TF-IDF e análise de tópicos.
+
 ## Análise sintática
 
 TODO: motivação (pesquisa de verbos, pronomes, etc)
@@ -11,7 +102,7 @@ TODO: lista de tipos POS
 Os tipos de classes gramaticais são:
 
 | Anotação | Nome (inglês) | Nome (português) | Exemplo |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | [ADJ](https://universaldependencies.org/u/pos/ADJ.html "u-pos ADJ") | adjective | Adjetivo | *feliz, grande, azul, rápido, inteligente, cansado*. (Atribuem características aos substantivos) |
 | [ADP](https://universaldependencies.org/u/pos/ADP.html "u-pos ADP") | adposition | Adposição/Preposição | *de, em, para, com, por, sem, sob*. (Ligam palavras estabelecendo relação de sentido entre elas) |
 | [ADV](https://universaldependencies.org/u/pos/ADV.html "u-pos ADV") | adverb | Advérbio |  |

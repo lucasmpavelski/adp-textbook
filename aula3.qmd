@@ -1,5 +1,5 @@
 ---
-title: N-gramas, Collocations, TF-IDF e Análise de Tópicos
+title: N-gramas, Collocations e TF-IDF
 format: ipynb
 ---
 
