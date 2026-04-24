@@ -2,4 +2,40 @@
 
 ## Análise de sentimentos
 
-## Reconhecimento de entidades nomeadas
+## Classificação de textos
+
+## Modelos de linguagem
+
+### Byte Pair Encoding (BPE)
+
+A divisão em simples palavras tem um problema com palavras desconhecidas (*out-of-vocabulary*).
+
+Uma solução que busca o "meio-termo" entre a separação entre palavras e a separação entre caracteres é o **Byte Pair Encoding (BPE)**.
+
+O BPE é um algoritmo de compressão de dados que pode ser adaptado para tokenização. Ele funciona substituindo pares caracteres mais frequentes por um token único, recursivamente, criando assim um vocabulário de subpalavras.
+
+```{r}
+if (!"tokenizers.bpe" %in% installed.packages()) {
+  install.packages("tokenizers.bpe")
+}
+library(tokenizers.bpe)
+```
+
+```{r}
+df_discursos <- read.csv("discursos.csv")
+
+model <- bpe(
+  df_discursos$transcricao,
+  vocab_size = 10000,
+  threads = 1,
+  model_path = "bpe_tokenizer"
+)
+```
+
+```{r}
+bpe_encode(model, c("adultização", "adultos", "eleitoreado", "eleitorado", "sexta-feira", "sextou"))
+```
+
+Note que os tokens gerados pelo BPE não necessáriamente correspondem "significados".
+
+Porém, tokens BPE são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.

@@ -332,8 +332,9 @@ Uma medida comum de diversidade léxica é o Type-Token Ratio (TTR), que é a ra
 ```{r}
 corpus_discursos |>
   tokens() |>
-  textstat_lexdiv() |>  # calcula a diversidade léxica
-  arrange(desc(TTR))    # ordena por Type-Token Ratio (TTR) em ordem decrescente
+  textstat_lexdiv() |>   # calcula a diversidade léxica
+  arrange(desc(TTR)) |>  # ordena por Type-Token Ratio (TTR) em ordem decrescente
+  head(20)
 ```
 
 O TTR é uma medida simples, mas pode ser influenciada pelo tamanho do texto. Textos mais longos tendem a ter um TTR mais baixo, pois é mais provável que palavras sejam repetidas.
@@ -356,7 +357,8 @@ Na biblioteca quanteda, utilizamos a função `textstat_readability`, que por pa
 ```{r}
 corpus_discursos |>
   textstat_readability() |>
-  arrange(desc(Flesch))
+  arrange(desc(Flesch)) |>
+  head(20)
 ```
 
 Métricas de leiturabilidade podem ser úteis para comparar a complexidade de discursos de diferentes parlamentares, partidos ou temas. Por exemplo, podemos comparar a leiturabilidade de discursos sobre economia e saúde para verificar se há diferenças na complexidade dos textos.

@@ -1,39 +1,23 @@
 # Classificação de Textos e Modelos de Linguagem
 
-## Classificação de textos
+{r} dfm_stm_discursos \<- corpus_discursos \|\> tokens(remove_numbers = TRUE, remove_punct = TRUE, remove_symbols = TRUE) \|\> tokens_remove(c(stopwords("portuguese"), "é", "senhor", "senhora", "sr", "sra")) \|\> dfm() \|\> dfm_trim(min_termfreq = 0.8, termfreq_type = "quantile", max_docfreq = 0.1, docfreq_type = "prop")
 
-## Modelos de linguagem
+dfm_stm_discursos
 
-### Byte Pair Encoding (BPE)
+topic.count \<- 10 dfm2stm \<- convert(dfm_stm_discursos, to = "stm") model.stm \<- stm(dfm2stm$documents, dfm2stm$vocab, K = topic.count, data = dfm2stm\$meta, init.type = "Spectral") \# this is the actual stm call
 
-A divisão em simples palavras tem um problema com palavras desconhecidas (*out-of-vocabulary*).
+data.frame(t(labelTopics(model.stm, n = 10)\$prob))
 
-Uma solução que busca o "meio-termo" entre a separação entre palavras e a separação entre caracteres é o **Byte Pair Encoding (BPE)**.
+TODO: outros atributos spacy
 
-O BPE é um algoritmo de compressão de dados que pode ser adaptado para tokenização. Ele funciona substituindo pares caracteres mais frequentes por um token único, recursivamente, criando assim um vocabulário de subpalavras.
+{r} tokens_ulysses \<- spacy_parse(frases_ulysses, additional_attributes = "morph")
 
-```{r}
-if (!"tokenizers.bpe" %in% installed.packages()) {
-  install.packages("tokenizers.bpe")
-}
-library(tokenizers.bpe)
-```
+tokens_ulyses \|\> mutate(morph = map(morph, (x) x\$to_dict())) \|\> unnest_wider(morph)
 
-```{r}
-df_discursos <- read.csv("discursos.csv")
+## Reconhecimento de entidades nomeadas
 
-model <- bpe(
-  df_discursos$transcricao,
-  vocab_size = 10000,
-  threads = 1,
-  model_path = "bpe_tokenizer"
-)
-```
+## Embeddings
 
-```{r}
-bpe_encode(model, c("adultização", "adultos", "eleitoreado", "eleitorado", "sexta-feira", "sextou"))
-```
+## Similaridade textual
 
-Note que os tokens gerados pelo BPE não necessáriamente correspondem "significados".
-
-Porém, tokens BPE são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.
+## 

@@ -13,6 +13,7 @@ book:
     - aula1.qmd
     - aula2.qmd
     - aula3.qmd
+    - aula4.qmd
     - glossario.qmd
     - references.qmd
   appendices: 
