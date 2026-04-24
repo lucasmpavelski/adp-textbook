@@ -1,4 +1,7 @@
-# Análise Sintática e Modelos de Tópicos
+---
+title: "Análise Sintática e Modelos de Tópicos"
+bibliography: "references.bib"
+---
 
 ::: callout-note
 ## Nesta aula
@@ -6,7 +9,7 @@
 -   Análise sintática
 -   Modelos de tópicos
 
-Link para o Google Colab: TODO
+Link para o Google Colab: <https://drive.google.com/file/d/1RlbTbNNC2JLMvYxenrzCH1Vyw3AR70oy/view?usp=sharing>
 :::
 
 ```{r}
@@ -44,11 +47,6 @@ if (!"seededlda" %in% installed.packages()) {
   install.packages("seededlda")
 }
 library(seededlda)
-
-#if (!"stm" %in% installed.packages()) {
-#  install.packages("stm")
-#}
-#library(stm)
 ```
 
 ```{r}
@@ -61,8 +59,7 @@ corpus_discursos <- dados_discursos |>
 
 ## Análise sintática: classes gramaticais
 
-**Classes gramaticais**, classes de palavras ou partes do discurso (em inglês *parts of speech*) é a forma como categorizamos palavras com base em sua função.
-Por exemplo: substantivos, verbos, adjetivos, advérbios, pronomes, etc.
+**Classes gramaticais**, classes de palavras ou partes do discurso (em inglês *parts of speech*) é a forma como categorizamos palavras com base em sua função. Por exemplo: substantivos, verbos, adjetivos, advérbios, pronomes, etc.
 
 ![](images/clipboard-3901793703.png)
 
@@ -80,45 +77,27 @@ Para construir e avaliar modelos para rotulagens de sequência, pesquisadores de
 
 O padrão de rótulos proposto por @marcus1993 foi utilizado para criar a base anotada **Penn Treebank**:
 
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| **Anotação (tag)** | **Descrição**                             | **Anotação (tag)** | **Descrição**                          |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| CC                 | Coordinating conjunction                  | PRP\$              | Possessive pronoun                     |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| CD                 | Cardinal number                           | RB                 | Adverb                                 |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| DT                 | Determiner                                | RBR                | Adverb, comparative                    |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| EX                 | Existential *there*                       | RBS                | Adverb, superlative                    |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| FW                 | Foreign word                              | RP                 | Particle                               |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| IN                 | Preposition or subordinating conjunction  | SYM                | Symbol                                 |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| JJ                 | Adjective                                 | TO                 | *to*                                   |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| JJR                | Adjective, comparative                    | UH                 | Interjection                           |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| JJS                | Adjective, superlative                    | VB                 | Verb, base form                        |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| LS                 | List item marker                          | VBD                | Verb, past tense                       |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| MD                 | Modal                                     | VBG                | Verb, gerund or present participle     |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| NN                 | Noun, singular or mass                    | VBN                | Verb, past participle                  |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| NNS                | Noun, plural                              | VBP                | Verb, non-3rd person singular present  |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| NNP                | Proper noun, singular                     | VBZ                | Verb, 3rd person singular present      |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| NNPS               | Proper noun, plural                       | WDT                | Wh-determiner                          |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| PDT                | Predeterminer                             | WP                 | Wh-pronoun                             |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| POS                | Possessive ending                         | WP\$               | Possessive wh-pronoun                  |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
-| PRP                | Personal pronoun                          | WRB                | Wh-adverb                              |
-+--------------------+-------------------------------------------+--------------------+----------------------------------------+
+|  |  |  |  |
+|----|----|----|----|
+| **Anotação (tag)** | **Descrição** | **Anotação (tag)** | **Descrição** |
+| CC | Coordinating conjunction | PRP\$ | Possessive pronoun |
+| CD | Cardinal number | RB | Adverb |
+| DT | Determiner | RBR | Adverb, comparative |
+| EX | Existential *there* | RBS | Adverb, superlative |
+| FW | Foreign word | RP | Particle |
+| IN | Preposition or subordinating conjunction | SYM | Symbol |
+| JJ | Adjective | TO | *to* |
+| JJR | Adjective, comparative | UH | Interjection |
+| JJS | Adjective, superlative | VB | Verb, base form |
+| LS | List item marker | VBD | Verb, past tense |
+| MD | Modal | VBG | Verb, gerund or present participle |
+| NN | Noun, singular or mass | VBN | Verb, past participle |
+| NNS | Noun, plural | VBP | Verb, non-3rd person singular present |
+| NNP | Proper noun, singular | VBZ | Verb, 3rd person singular present |
+| NNPS | Proper noun, plural | WDT | Wh-determiner |
+| PDT | Predeterminer | WP | Wh-pronoun |
+| POS | Possessive ending | WP\$ | Possessive wh-pronoun |
+| PRP | Personal pronoun | WRB | Wh-adverb |
 
 @nivre2020 propõe o **Universal Dependencies v2**, uma base anotada com notações gramaticais universais:
 
@@ -323,49 +302,29 @@ Há duas vantagens de relações de dependência sobre árvores gramaticais:
 
 Alguns exemplos de tipos de relações de dependência do padrão Universal Dependencies v2 são:
 
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| **Tag (dep_rel)** | **Nome (Inglês)**        | **Nome (Português)**          | **Exemplo Prático (O termo em negrito recebe a tag)** |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `root`            | Root                     | Raiz (Termo principal)        | O plenário **aprovou** a medida provisória.           |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `nsubj`           | Nominal subject          | Sujeito nominal               | O **ministro** discursou hoje.                        |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `nsubj:pass`      | Passive nominal subject  | Sujeito nominal passivo       | A **lei** foi sancionada ontem.                       |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `obj`             | Object                   | Objeto direto                 | O partido criticou a **reforma**.                     |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `iobj`            | Indirect object          | Objeto indireto               | O governo concedeu perdão **aos devedores**.          |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `obl`             | Oblique nominal          | Modificador oblíquo (prep.)   | O debate ocorreu **na comissão**.                     |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `amod`            | Adjectival modifier      | Modificador adjetival         | O país enfrenta uma crise **econômica**.              |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `nmod`            | Nominal modifier         | Modificador nominal           | É um projeto **de lei**.                              |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `advmod`          | Adverbial modifier       | Modificador adverbial         | O deputado votou **rapidamente**.                     |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `appos`           | Appositional modifier    | Aposto                        | Silva, o **relator**, pediu a palavra.                |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `cc`              | Coordinating conjunction | Conjunção coordenativa        | Senadores **e** deputados debateram.                  |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `conj`            | Conjunct                 | Elemento coordenado           | Senadores e **deputados** debateram.                  |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `case`            | Case marking             | Marca de caso (Preposição)    | Protestaram **contra** o corte.                       |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `mark`            | Marker                   | Marcador (Subordinação)       | Prometeu **que** reduziria impostos.                  |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `acl`             | Clausal modifier of noun | Oração adjetiva/modificadora  | O parlamentar, **que estava ausente**, justificou-se. |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `xcomp`           | Open clausal complement  | Complemento oracional aberto  | A oposição tentou **obstruir** a pauta.               |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `ccomp`           | Clausal complement       | Complemento oracional         | O relatório indica **que haverá déficit**.            |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `det`             | Determiner               | Determinante (Artigo/Pronome) | **Os** vetos foram mantidos.                          |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `nummod`          | Numeric modifier         | Modificador numérico          | O partido elegeu **quinze** prefeitos.                |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
-| `punct`           | Punctuation              | Pontuação                     | Senhor presidente**,** peço a palavra**.**            |
-+-------------------+--------------------------+-------------------------------+-------------------------------------------------------+
+|  |  |  |  |
+|----|----|----|----|
+| **Tag (dep_rel)** | **Nome (Inglês)** | **Nome (Português)** | **Exemplo Prático (O termo em negrito recebe a tag)** |
+| `root` | Root | Raiz (Termo principal) | O plenário **aprovou** a medida provisória. |
+| `nsubj` | Nominal subject | Sujeito nominal | O **ministro** discursou hoje. |
+| `nsubj:pass` | Passive nominal subject | Sujeito nominal passivo | A **lei** foi sancionada ontem. |
+| `obj` | Object | Objeto direto | O partido criticou a **reforma**. |
+| `iobj` | Indirect object | Objeto indireto | O governo concedeu perdão **aos devedores**. |
+| `obl` | Oblique nominal | Modificador oblíquo (prep.) | O debate ocorreu **na comissão**. |
+| `amod` | Adjectival modifier | Modificador adjetival | O país enfrenta uma crise **econômica**. |
+| `nmod` | Nominal modifier | Modificador nominal | É um projeto **de lei**. |
+| `advmod` | Adverbial modifier | Modificador adverbial | O deputado votou **rapidamente**. |
+| `appos` | Appositional modifier | Aposto | Silva, o **relator**, pediu a palavra. |
+| `cc` | Coordinating conjunction | Conjunção coordenativa | Senadores **e** deputados debateram. |
+| `conj` | Conjunct | Elemento coordenado | Senadores e **deputados** debateram. |
+| `case` | Case marking | Marca de caso (Preposição) | Protestaram **contra** o corte. |
+| `mark` | Marker | Marcador (Subordinação) | Prometeu **que** reduziria impostos. |
+| `acl` | Clausal modifier of noun | Oração adjetiva/modificadora | O parlamentar, **que estava ausente**, justificou-se. |
+| `xcomp` | Open clausal complement | Complemento oracional aberto | A oposição tentou **obstruir** a pauta. |
+| `ccomp` | Clausal complement | Complemento oracional | O relatório indica **que haverá déficit**. |
+| `det` | Determiner | Determinante (Artigo/Pronome) | **Os** vetos foram mantidos. |
+| `nummod` | Numeric modifier | Modificador numérico | O partido elegeu **quinze** prefeitos. |
+| `punct` | Punctuation | Pontuação | Senhor presidente**,** peço a palavra**.** |
 
 A lista completa de relações no padrão Universal Dependencies v2 está disponível em <https://universaldependencies.org/u/dep/index.html>.
 
@@ -450,8 +409,7 @@ Em diversos cenários estamos analisando um conjunto de documentos e queremos id
 
 A **análise de tópicos** é uma técnica de modelagem de texto que permite descobrir automaticamente os tópicos subjacentes em um conjunto de documentos.
 
-A análise de tópicos é considerada uma técnica de **aprendizado não-supervisionado**.
-Os dados são apresentados e o modelo tenta encontrar padrões e estruturas subjacentes sem rótulos ou categorias pré-definidas.
+A análise de tópicos é considerada uma técnica de **aprendizado não-supervisionado**. Os dados são apresentados e o modelo tenta encontrar padrões e estruturas subjacentes sem rótulos ou categorias pré-definidas.
 
 O objetivo é identificar grupos de palavras que frequentemente coocorrem em documentos, sugerindo a presença de um tópico.
 

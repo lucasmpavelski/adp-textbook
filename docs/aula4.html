@@ -289,7 +289,7 @@ div.csl-indent {
 <li>Análise sintática</li>
 <li>Modelos de tópicos</li>
 </ul>
-<p>Link para o Google Colab: TODO</p>
+<p>Link para o Google Colab: <a href="https://drive.google.com/file/d/1RlbTbNNC2JLMvYxenrzCH1Vyw3AR70oy/view?usp=sharing" class="uri">https://drive.google.com/file/d/1RlbTbNNC2JLMvYxenrzCH1Vyw3AR70oy/view?usp=sharing</a></p>
 </div>
 </div>
 <div class="cell">
@@ -356,14 +356,10 @@ O seguinte objeto é mascarado por 'package:stats':
 
     terms</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#if (!"stm" %in% installed.packages()) {</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  install.packages("stm")</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#library(stm)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1527 Columns: 21
 ── Column specification ────────────────────────────────────────────────────────
@@ -377,8 +373,8 @@ date  (2): data_nascimento, data_situacao
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="análise-sintática-classes-gramaticais" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="análise-sintática-classes-gramaticais"><span class="header-section-number">4.1</span> Análise sintática: classes gramaticais</h2>
@@ -395,10 +391,10 @@ date  (2): data_nascimento, data_situacao
 <p>O padrão de rótulos proposto por <span class="citation" data-cites="marcus1993">Marcus, Santorini, and Marcinkiewicz (<a href="references.html#ref-marcus1993" role="doc-biblioref">1993</a>)</span> foi utilizado para criar a base anotada <strong>Penn Treebank</strong>:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 16%">
-<col style="width: 34%">
-<col style="width: 16%">
-<col style="width: 31%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -675,12 +671,12 @@ date  (2): data_nascimento, data_situacao
 <p>A configuração padrão que vamos utilizar é o <em>pipeline</em> para língua portuguesa, treinada a partir de textos de notícias: <code>pt_core_news_sm</code>.</p>
 <p>O código abaixo baixa e inicializa os componentes:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_download_langmodel</span>(<span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_download_langmodel</span>(<span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_download_langmodel("pt_core_news_sm"): Skipping installation.
 Use `force` to force installation or update.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>successfully initialized (spaCy Version: 3.8.11, language model: pt_core_news_sm)</code></pre>
 </div>
@@ -688,9 +684,9 @@ Use `force` to force installation or update.</code></pre>
 <p>Para mais detalhes sobre a pipeline: <a href="https://spacy.io/models/pt" class="uri">https://spacy.io/models/pt</a></p>
 <p>Com a biblioteca carregada, podemos processar os textos com a função <code>spacy_parse</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"O gato subiu no telhado."</span> </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(texto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"O gato subiu no telhado."</span> </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(texto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_parse.character(texto): lemmatization may not work properly in
 model 'pt_core_news_sm'</code></pre>
@@ -707,14 +703,14 @@ model 'pt_core_news_sm'</code></pre>
 </div>
 <p>A função <code>spacy_parse</code> também processa objetos <code>corpus</code> da biblioteca <code>quanteda</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>frases_ulysses <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A Nação quer mudar, a Nação deve mudar, a Nação vai mudar."</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"O homem público é o cidadão de tempo inteiro, de quem as circunstâncias exigem o sacrifício da liberdade pessoal, mas a quem o destino oferece a mais confortadora das recompensas: a de servir à Nação em sua grandeza e projeção na eternidade."</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>corpus_ulysses <span class="ot">&lt;-</span> <span class="fu">corpus</span>(frases_ulysses)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(frases_ulysses)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>frases_ulysses <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"A Nação quer mudar, a Nação deve mudar, a Nação vai mudar."</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"O homem público é o cidadão de tempo inteiro, de quem as circunstâncias exigem o sacrifício da liberdade pessoal, mas a quem o destino oferece a mais confortadora das recompensas: a de servir à Nação em sua grandeza e projeção na eternidade."</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>corpus_ulysses <span class="ot">&lt;-</span> <span class="fu">corpus</span>(frases_ulysses)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(frases_ulysses)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_parse.character(frases_ulysses): lemmatization may not work
 properly in model 'pt_core_news_sm'</code></pre>
@@ -796,149 +792,148 @@ properly in model 'pt_core_news_sm'</code></pre>
 </ul>
 <p>Vamos agora identificar estatísticas dos discursos de abril de 2025 da Câmara dos Deputados:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>amostra_discursos <span class="ot">&lt;-</span> <span class="fu">corpus_sample</span>(corpus_discursos, <span class="dv">100</span>) <span class="co"># amostra de 100 discursos (apenas para a análise não demorar muito)</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(amostra_discursos, <span class="at">entity =</span> <span class="cn">FALSE</span>) <span class="co"># processa discurso desconsiderando entidades</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>amostra_discursos <span class="ot">&lt;-</span> <span class="fu">corpus_sample</span>(corpus_discursos, <span class="dv">100</span>) <span class="co"># amostra de 100 discursos (apenas para a análise não demorar muito)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(amostra_discursos, <span class="at">entity =</span> <span class="cn">FALSE</span>) <span class="co"># processa discurso desconsiderando entidades</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_parse.character(amostra_discursos, entity = FALSE):
 lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_sintaxe_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_sintaxe_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                doc_id sentence_id token_id  token  lemma   pos
-1 288_Cleber Verde_MDB           1        1      O      o   DET
-2 288_Cleber Verde_MDB           1        2     SR     SR PROPN
-3 288_Cleber Verde_MDB           1        3      .      . PUNCT
-4 288_Cleber Verde_MDB           2        1 CLEBER CLEBER PROPN
-5 288_Cleber Verde_MDB           2        2  VERDE  VERDE PROPN
-6 288_Cleber Verde_MDB           2        3      (      ( PUNCT</code></pre>
+<pre><code>               doc_id sentence_id token_id  token  lemma   pos
+1 231_Carlos Jordy_PL           1        1      O      o   DET
+2 231_Carlos Jordy_PL           1        2     SR     SR PROPN
+3 231_Carlos Jordy_PL           1        3      .      . PUNCT
+4 231_Carlos Jordy_PL           2        1 CARLOS CARLOS PROPN
+5 231_Carlos Jordy_PL           2        2  JORDY  JORDY PROPN
+6 231_Carlos Jordy_PL           2        3      (      ( PUNCT</code></pre>
 </div>
 </div>
 <p>Contagem de classes gramaticais:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="sc">|&gt;</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pos, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contagem de classes gramaticais</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pos, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contagem de classes gramaticais</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pos    n
-1   NOUN 7577
-2  PUNCT 6402
-3    ADP 5680
-4   VERB 4478
-5    DET 4274
-6  PROPN 3961
-7   PRON 2220
-8    ADV 1986
-9    ADJ 1917
-10   AUX 1522
-11 SCONJ 1343
-12 CCONJ 1124
-13   NUM  478
-14     X   21
-15   SYM   19
-16  INTJ    5</code></pre>
+1   NOUN 8074
+2  PUNCT 6664
+3    ADP 6208
+4   VERB 4663
+5    DET 4410
+6  PROPN 4269
+7   PRON 2381
+8    ADV 2193
+9    ADJ 2042
+10   AUX 1446
+11 SCONJ 1289
+12 CCONJ 1195
+13   NUM  599
+14   SYM   44
+15     X   39
+16  INTJ    7</code></pre>
 </div>
 </div>
 <p>Verbos mais utilizados:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="sc">|&gt;</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos <span class="sc">==</span> <span class="st">"VERB"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dt_sintaxe_discursos <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos <span class="sc">==</span> <span class="st">"VERB"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(lemma, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      lemma   n
-1       ter 245
-2     fazer 212
-3    querer 181
-4     haver 107
-5     poder  99
-6     dizer  88
-7       dar  66
-8       vir  56
-9     falar  55
-10 precisar  51</code></pre>
+<pre><code>    lemma   n
+1     ter 245
+2   fazer 188
+3  querer 167
+4   poder 107
+5   haver  93
+6   falar  89
+7   dizer  88
+8     ver  56
+9     dar  55
+10    ser  51</code></pre>
 </div>
 </div>
 <p>A função <code>as.tokens</code> permite converter a tabela novamente em objeto tokens da biblioteca <code>quanteda</code> concatenando a informação de classe gramatical (opcionalmente utilizando lemas no lugar do token original):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">as.tokens</span>(dt_sintaxe_discursos, <span class="at">include_pos =</span> <span class="st">"pos"</span>, <span class="at">use_lemma =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="sc">|&gt;</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/VERB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">as.tokens</span>(dt_sintaxe_discursos, <span class="at">include_pos =</span> <span class="st">"pos"</span>, <span class="at">use_lemma =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/VERB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 100 documents.
-288_Cleber Verde_MDB :
- [1] "querer/VERB"           "cumprimentar/VERB"     "fazer/VERB"           
- [4] "querer/VERB"           "cumprimentar ele/VERB" "parabenizár ele/VERB" 
- [7] "fazer/VERB"            "conscientizar/VERB"    "significar/VERB"      
-[10] "garantir/VERB"         "ir/VERB"               "atender/VERB"         
-[ ... and 20 more ]
+231_Carlos Jordy_PL :
+ [1] "obrigado/VERB" "ver/VERB"      "fazer/VERB"    "coletar/VERB" 
+ [5] "saber/VERB"    "fazer/VERB"    "coletar/VERB"  "coletar/VERB" 
+ [9] "reforçar/VERB" "pautar/VERB"   "assinar/VERB"  "querer/VERB"  
+[ ... and 44 more ]
 
-872_Lindbergh Farias_PT :
- [1] "acontecer/VERB"  "estudar/VERB"    "trazer/VERB"     "anunciar/VERB"  
- [5] "prejudicar/VERB" "querer/VERB"     "trazer/VERB"     "haver/VERB"     
- [9] "querer/VERB"     "fazer/VERB"      "ter/VERB"        "significar/VERB"
-[ ... and 108 more ]
+712_Ivoneide Caetano_PT :
+ [1] "querer/VERB"      "falar/VERB"       "afetar/VERB"      "prolongar/VERB"  
+ [5] "atingir/VERB"     "prejudicar/VERB"  "comprometer/VERB" "afetar/VERB"     
+ [9] "querer/VERB"      "agradecer/VERB"   "articular/VERB"   "coordenar/VERB"  
+[ ... and 14 more ]
 
-1121_Paulão_PT :
- [1] "gostar/VERB"      "parabenizar/VERB" "fazer/VERB"       "propor/VERB"     
- [5] "póstum/VERB"      "querer/VERB"      "ceifou/VERB"      "fazer/VERB"      
- [9] "Gostaria/VERB"    "destacar/VERB"    "realizar/VERB"    "encontrar/VERB"  
-[ ... and 42 more ]
+380_Delegada Katarina_PSD :
+ [1] "DELEGADA/VERB"   "gostar/VERB"     "registrar/VERB"  "recebi/VERB"    
+ [5] "participar/VERB" "acompanhar/VERB" "reunir/VERB"     "vir/VERB"       
+ [9] "gostar/VERB"     "destacar/VERB"   "eleita/VERB"     "formar/VERB"    
+[ ... and 43 more ]
 
-1067_Osmar Terra_PL :
- [1] "viver/VERB"      "piorar/VERB"     "fechar/VERB"     "impor/VERB"     
- [5] "endeusar/VERB"   "viver/VERB"      "ter/VERB"        "fechar/VERB"    
- [9] "oferecer/VERB"   "passar/VERB"     "posicionar/VERB" "querer/VERB"    
-[ ... and 11 more ]
+962_Márcio Jerry_PCdoB :
+ [1] "fazer/VERB"      "retratar/VERB"   "assassinar/VERB" "encontrar/VERB" 
+ [5] "querer/VERB"     "aproveitar/VERB" "registrar/VERB"  "ajudar/VERB"    
+ [9] "resolver/VERB"   "querer/VERB"     "dizer/VERB"      "construir/VERB" 
+[ ... and 6 more ]
 
-536_Fernanda Melchionna_PSOL :
- [1] "orientar/VERB"  "poder/VERB"     "tratar/VERB"    "acontecer/VERB"
- [5] "vir/VERB"       "chegar/VERB"    "ter/VERB"       "cassar/VERB"   
- [9] "falar/VERB"     "falar/VERB"     "atacar/VERB"    "ter/VERB"      
-[ ... and 16 more ]
+475_Eli Borges_PL :
+ [1] "fervilhar/VERB" "ter/VERB"       "exercer/VERB"   "parar/VERB"    
+ [5] "ter/VERB"       "continuar/VERB" "clamar/VERB"    "negar/VERB"    
+ [9] "vier/VERB"      "acreditar/VERB" "fazer/VERB"     "lembrar/VERB"  
+[ ... and 73 more ]
 
-735_João Daniel_PT :
- [1] "Obrigado/VERB"    "querer/VERB"      "registrar/VERB"   "parabenizar/VERB"
- [5] "querer/VERB"      "relembrar/VERB"   "querer/VERB"      "saudar/VERB"     
- [9] "querer/VERB"      "saudar/VERB"      "ter/VERB"         "caminhada/VERB"  
-[ ... and 29 more ]
+489_Eli Borges_PL :
+ [1] "fazer/VERB"       "vivenciei/VERB"   "ser/VERB"         "ver/VERB"        
+ [5] "tratar/VERB"      "votar/VERB"       "falávamos/VERB"   "abr/VERB"        
+ [9] "precisar/VERB"    "compreender/VERB" "demando/VERB"     "torcer/VERB"     
+[ ... and 8 more ]
 
 [ reached max_ndoc ... 94 more documents ]</code></pre>
 </div>
 </div>
 <p>Por exemplo, para contar os substantivos próprios mais utilizados no PT e PL:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">as.tokens</span>(dt_sintaxe_discursos, <span class="at">include_pos =</span> <span class="st">"pos"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(tokens_sintaxe_discursos) <span class="ot">&lt;-</span> <span class="fu">docvars</span>(amostra_discursos) <span class="co"># recupera metadados do corpus original</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="sc">|&gt;</span></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_subset</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PL"</span>, <span class="st">"PT"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/PROPN"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="ot">&lt;-</span> <span class="fu">as.tokens</span>(dt_sintaxe_discursos, <span class="at">include_pos =</span> <span class="st">"pos"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">docvars</span>(tokens_sintaxe_discursos) <span class="ot">&lt;-</span> <span class="fu">docvars</span>(amostra_discursos) <span class="co"># recupera metadados do corpus original</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>tokens_sintaxe_discursos <span class="sc">|&gt;</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_subset</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PL"</span>, <span class="st">"PT"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/PROPN"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            feature frequency rank docfreq group
-1      brasil/propn        47    1      18    PL
-2          pl/propn        37    2      22    PL
-3          sr/propn        35    3      25    PL
-4       bloco/propn        32    4      25    PL
-5   deputados/propn        29    5      13    PL
-6     governo/propn        19    6      12    PL
-7    deputado/propn        18    7       7    PL
-8  presidente/propn        16    8      10    PL
-9     polícia/propn        16    8       5    PL
-10   monteiro/propn        16    8       2    PL
-11     brasil/propn        43    1      18    PT
-12       lula/propn        41    2      15    PT
-13    governo/propn        37    3      14    PT
-14         pt/propn        35    4      28    PT
-15      bloco/propn        29    5      29    PT
-16 presidente/propn        22    6      12    PT
-17         sr/propn        20    7      20    PT
-18    federal/propn        20    7       8    PT
-19       casa/propn        20    7      13    PT
-20       papa/propn        19   10       2    PT</code></pre>
+1      brasil/propn        35    1      12    PL
+2          pl/propn        29    2      20    PL
+3          sr/propn        27    3      25    PL
+4       bloco/propn        23    4      22    PL
+5   deputados/propn        19    5      12    PL
+6    deputado/propn        18    6      11    PL
+7  presidente/propn        15    7       9    PL
+8     governo/propn        13    8       9    PL
+9         pec/propn        13    8       2    PL
+10       casa/propn        13    8       8    PL
+11     brasil/propn        33    1       8    PT
+12  bolsonaro/propn        28    2       7    PT
+13    governo/propn        23    3       7    PT
+14      bloco/propn        19    4      14    PT
+15         sr/propn        16    5      11    PT
+16         pt/propn        16    5      14    PT
+17       lula/propn        15    7       6    PT
+18    federal/propn        12    8       7    PT
+19          "/propn        11    9       4    PT
+20      trump/propn        11    9       3    PT</code></pre>
 </div>
 </div>
 </section>
@@ -970,10 +965,10 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <p>Alguns exemplos de tipos de relações de dependência do padrão Universal Dependencies v2 são:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 14%">
-<col style="width: 19%">
-<col style="width: 23%">
-<col style="width: 40%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
 </colgroup>
 <tbody>
 <tr class="odd">
@@ -1109,9 +1104,9 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="exemplo-de-relações-de-dependência-com-spacy"><span class="header-section-number">4.2.1</span> Exemplo de relações de dependência com Spacy</h3>
 <p>Podemos gerar relações de dependência com a biblioteca <code>spacyr</code> utilizando o parâmetro <code>dependency = TRUE</code> na função <code>spacy_parse</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"O gato subiu no telhado."</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(texto, <span class="at">dependency =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>texto <span class="ot">&lt;-</span> <span class="st">"O gato subiu no telhado."</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_parse</span>(texto, <span class="at">dependency =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_parse.character(texto, dependency = TRUE): lemmatization may
 not work properly in model 'pt_core_news_sm'</code></pre>
@@ -1139,18 +1134,18 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 <li><p><code>dep_rel</code>: o tipo da relação de dependência</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>textos_exemplo <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc1 =</span> <span class="st">"O governo cortou os gastos públicos ontem."</span>,</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc2 =</span> <span class="st">"Os gastos públicos foram cortados pela inflação."</span>,</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc3 =</span> <span class="st">"A oposição propôs uma nova lei orçamentária."</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(textos_exemplo, <span class="at">pos =</span> <span class="cn">TRUE</span>, <span class="at">dependency =</span> <span class="cn">TRUE</span>, <span class="at">nounphrase =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>textos_exemplo <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc1 =</span> <span class="st">"O governo cortou os gastos públicos ontem."</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc2 =</span> <span class="st">"Os gastos públicos foram cortados pela inflação."</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">doc3 =</span> <span class="st">"A oposição propôs uma nova lei orçamentária."</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(textos_exemplo, <span class="at">pos =</span> <span class="cn">TRUE</span>, <span class="at">dependency =</span> <span class="cn">TRUE</span>, <span class="at">nounphrase =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in spacy_parse.character(textos_exemplo, pos = TRUE, dependency = TRUE,
 : lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   doc_id sentence_id token_id        token        lemma   pos head_token_id
 1    doc1           1        1            O            o   DET             2
@@ -1206,11 +1201,11 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
 <p>Para identificar atores podemos filtrar por tipo de relação “sujeito nominal” <code>nsubj:</code></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>atores <span class="ot">&lt;-</span> sintaxe_exemplo <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"nsubj"</span>) <span class="sc">|&gt;</span> <span class="co"># sujeitos nominais</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, <span class="at">ator =</span> token, <span class="at">verbo_id =</span> head_token_id)</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>atores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>atores <span class="ot">&lt;-</span> sintaxe_exemplo <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"nsubj"</span>) <span class="sc">|&gt;</span> <span class="co"># sujeitos nominais</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, <span class="at">ator =</span> token, <span class="at">verbo_id =</span> head_token_id)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>atores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  doc_id sentence_id     ator verbo_id
 1   doc1           1  governo        3
@@ -1220,15 +1215,15 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 <p>Para associar às ações, precisamos obter o token relativo à <code>head_token_id</code> que aponta para o verbo do qual o sujeito nominal depende.</p>
 <p>Utilizamos a função <code>left_join</code> do tidyverse para unir novamente as colunas da tabela original sem filtro (<code>sintaxe_exemplo</code>) de acordo com os critérios: mesmo documento, mesma frase, com o token identificado pela coluna <code>verbo_id</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>acoes_atores <span class="ot">&lt;-</span> atores <span class="sc">|&gt;</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sintaxe_exemplo, <span class="at">by =</span> <span class="fu">c</span>( <span class="co"># juntando de volta para pegar o lema do verbo</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">"doc_id"</span> <span class="ot">=</span> <span class="st">"doc_id"</span>,</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"sentence_id"</span> <span class="ot">=</span> <span class="st">"sentence_id"</span>,</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"verbo_id"</span> <span class="ot">=</span> <span class="st">"token_id"</span></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>acoes_atores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>acoes_atores <span class="ot">&lt;-</span> atores <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(sintaxe_exemplo, <span class="at">by =</span> <span class="fu">c</span>( <span class="co"># juntando de volta para pegar o lema do verbo</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">"doc_id"</span> <span class="ot">=</span> <span class="st">"doc_id"</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"sentence_id"</span> <span class="ot">=</span> <span class="st">"sentence_id"</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"verbo_id"</span> <span class="ot">=</span> <span class="st">"token_id"</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>acoes_atores</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  doc_id sentence_id     ator verbo_id  token  lemma  pos head_token_id dep_rel
 1   doc1           1  governo        3 cortou cortar VERB             3    ROOT
@@ -1240,9 +1235,9 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
 <p>Selecionando as colunas de interesse:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>acoes_atores <span class="sc">|&gt;</span> </span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, ator, <span class="at">verbo_acao =</span> lemma) <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ator =</span> <span class="fu">tolower</span>(ator))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>acoes_atores <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, ator, <span class="at">verbo_acao =</span> lemma) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ator =</span> <span class="fu">tolower</span>(ator))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  doc_id sentence_id     ator verbo_acao
 1   doc1           1  governo     cortar
@@ -1251,8 +1246,8 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
 <p>Vejamos outro exemplo de como detectar frases com linguagem passiva:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"nsubj:pass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>sintaxe_exemplo <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"nsubj:pass"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  doc_id sentence_id token_id  token lemma  pos head_token_id    dep_rel entity
 1   doc2           1        2 gastos gasto NOUN             5 nsubj:pass       
@@ -1288,18 +1283,18 @@ not work properly in model 'pt_core_news_sm'</code></pre>
 <li><p>concentradas em poucos discursos: termos que aparecem em até 10% dos discursos</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>tm_dfm <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="co"># descarta os 80% de termos menos frequentes</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>,  <span class="co"># descarta palavras que apareçem em mais de 10% dos documentos</span></span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
-<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a>tm_dfm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>tm_dfm <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="co"># descarta os 80% de termos menos frequentes</span></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>,  <span class="co"># descarta palavras que apareçem em mais de 10% dos documentos</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a>tm_dfm</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Document-feature matrix of: 1,527 documents, 5,063 features (98.39% sparse) and 20 docvars.
                             features
@@ -1323,16 +1318,16 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>Para construir o modelo utilizamos <code>textmodel_lda</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># semente para gerador de números aleatórios</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>numero_de_topicos <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>tmod_discursos <span class="ot">&lt;-</span> <span class="fu">textmodel_lda</span>(tm_dfm, numero_de_topicos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># semente para gerador de números aleatórios</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>numero_de_topicos <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>tmod_discursos <span class="ot">&lt;-</span> <span class="fu">textmodel_lda</span>(tm_dfm, numero_de_topicos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A função <code>terms</code> retorna a matriz com as palavras mais relevantes de cada tópico:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(tmod_discursos) <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(tmod_discursos) <span class="sc">|&gt;</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            topic1      topic2        topic3    topic4     topic5     topic6
 1  desenvolvimento     glauber trabalhadores francisco      golpe        pec
@@ -1360,9 +1355,9 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>A função <code>topics</code> traz o tópico mais relevante para cada documento:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topics</span>(tmod_discursos) <span class="sc">|&gt;</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topics</span>(tmod_discursos) <span class="sc">|&gt;</span> </span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           topics(tmod_discursos)
 1_Acácio Favacho_MDB                       topic1
@@ -1403,9 +1398,9 @@ docs                         caros sistema comunicações boa tarde
 <li><p><code>phi</code>: probabilidades de cada tópico por palavra (linhas = tópicos, colunas = palavras)</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>theta <span class="sc">|&gt;</span> </span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>theta <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                topic1      topic2      topic3      topic4
 1_Acácio Favacho_MDB       0.503289474 0.009868421 0.167763158 0.095394737
@@ -1432,11 +1427,11 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>Por exemplo, para relacionar os discursos mais pertinentes ao tópico 4:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>theta <span class="sc">|&gt;</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(topic4)) <span class="sc">|&gt;</span>  <span class="co"># ordena documentos mais relevantes do tópico 4</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(topic4) <span class="sc">|&gt;</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>theta <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(topic4)) <span class="sc">|&gt;</span>  <span class="co"># ordena documentos mais relevantes do tópico 4</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(topic4) <span class="sc">|&gt;</span></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                 topic4
 281_Chris Tonietto_PL         0.9495114
@@ -1453,9 +1448,9 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>Da mesma forma, podemos utilizar <code>phi</code> para investigar os tópicos mais relevantes para as palavras “católica” e “católico”:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>phi <span class="sc">|&gt;</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"Tópico"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tópico, católica, católico)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>tmod_discursos<span class="sc">$</span>phi <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>(<span class="at">rownames =</span> <span class="st">"Tópico"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Tópico, católica, católico)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 3
    Tópico    católica   católico
@@ -1485,14 +1480,14 @@ docs                         caros sistema comunicações boa tarde
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="exemplo-de-análise-de-tópicos-guiada-com-seededlda"><span class="header-section-number">4.4.1</span> Exemplo de análise de tópicos guiada com seededlda</h3>
 <p>Para especificar as sementes, construímos um objeto dicionário da biblioteca <code>quanteda</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>topicos <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"golpe"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"anistia"</span>, <span class="st">"golp*"</span>, <span class="st">"ditatura"</span>, <span class="st">"stf"</span>, <span class="st">"janeiro"</span>),</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"papa"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"papa"</span>, <span class="st">"francisco"</span>, <span class="st">"igreja"</span>, <span class="st">"católica"</span>),</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"glauber"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"glauber"</span>, <span class="st">"cassação"</span>, <span class="st">"cpi"</span>, <span class="st">"ética"</span>, <span class="st">"mandato"</span>)</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>dicionario_topicos <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(topicos)</span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>dicionario_topicos</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>topicos <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"golpe"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"anistia"</span>, <span class="st">"golp*"</span>, <span class="st">"ditatura"</span>, <span class="st">"stf"</span>, <span class="st">"janeiro"</span>),</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"papa"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"papa"</span>, <span class="st">"francisco"</span>, <span class="st">"igreja"</span>, <span class="st">"católica"</span>),</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"glauber"</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"glauber"</span>, <span class="st">"cassação"</span>, <span class="st">"cpi"</span>, <span class="st">"ética"</span>, <span class="st">"mandato"</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>dicionario_topicos <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(topicos)</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>dicionario_topicos</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Dictionary object with 3 key entries.
 - [golpe]:
@@ -1505,9 +1500,9 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>As sementes são passadas como segundo argumento da função <code>textmodel_seededlda</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>stmod_discursos <span class="ot">&lt;-</span> <span class="fu">textmodel_seededlda</span>(tm_dfm, dicionario_topicos)</span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(stmod_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>stmod_discursos <span class="ot">&lt;-</span> <span class="fu">textmodel_seededlda</span>(tm_dfm, dicionario_topicos)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">terms</span>(stmod_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      golpe        papa        glauber          
  [1,] "golpe"      "francisco" "glauber"        
@@ -1524,9 +1519,9 @@ docs                         caros sistema comunicações boa tarde
 </div>
 <p>De forma similar ao LDA, utlizamos <code>topics</code> para determinar o tópico de cada documento:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topics</span>(stmod_discursos) <span class="sc">|&gt;</span></span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">topics</span>(stmod_discursos) <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                           topics(stmod_discursos)
 1_Acácio Favacho_MDB                       glauber
