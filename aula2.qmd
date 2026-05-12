@@ -340,6 +340,349 @@ dfm_final |>
 -   Leia mais sobre morfemas, tokenização no Capítulo 2 do livro "Speech and Language Processing" [@jurafsky_speech_2026] e os Capítulos 4 e 5 do livro "Processamento de Linguagem Natural" [@processa2024].
 -   Estude os tutoriais completos da biblioteca `quanteda` em <https://tutorials.quanteda.io/>. Saiba mais sobre a biblioteca lendo o artigo de @benoit2018.
 
+## Estudos guidados
+
+Criando corpus a partir de uma planilha CSV:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+# Imprimindo detalhes sobre a leitura do arquivo (show_col_types)
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = TRUE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Imprimir um resumo do corpus carregado
+print(corpus_discursos)
+```
+
+Quebrando o corpus em palavras (tokens):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar tokens
+tokens_discursos <- corpus_discursos |>
+  tokens()
+
+# Imprimir tokens do primeiro discurso
+print(tokens_discursos)
+```
+
+Pré-processamento de tokens: removendo stopwords e stematização
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+# stematizando palavras (tokens_wordstem)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords) |>
+  tokens_wordstem(language = "portuguese")
+
+# Imprimir tokens do primeiro discurso
+print(tokens_discursos)
+```
+
+Construindo DFM a partir de tokens:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords)
+
+# Construir DFM:
+dfm_discursos <- dfm(tokens_discursos)
+
+# Imprimir DFM:
+print(dfm_discursos)
+```
+
+Contando palavras mais utilizadas (em todos os discursos):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords)
+
+# Construir DFM:
+dfm_discursos <- dfm(tokens_discursos)
+
+# Construir tabela com 20 palavras mais utilizadas:
+palavras_discursos <- dfm_discursos |>
+  textstat_frequency(n = 20)
+
+# Imprimir tabela:
+print(palavras_discursos)
+```
+
+Contando palavras mais utilizadas por grupos (ex: partido):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords)
+
+# Construir DFM:
+dfm_discursos <- dfm(tokens_discursos)
+
+# Construir tabela com 3 palavras mais utilizadas por partidos:
+palavras_discursos <- dfm_discursos |>
+  textstat_frequency(n = 3, groups = partido)
+
+# Imprimir tabela:
+print(palavras_discursos)
+```
+
+Núvem de palavras:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda", ...))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords)
+
+# Construir DFM:
+dfm_discursos <- dfm(tokens_discursos)
+
+# Desenhar núvem de palavras:
+textplot_wordcloud(dfm_discursos, max_words = 100)
+```
+
+Núvem de palavras comparativa:
+
+```{r}
+#| warning: false
+
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(stopwords)
+# caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda", ...))
+
+# Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+
+# Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
+tabela_discursos <- tabela_discursos |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)
+corpus_discursos <- corpus(
+  tabela_discursos, 
+  text_field = "transcricao", 
+  docid_field = "doc_id"
+)
+
+# Criar lista de stopwords comuns em português
+lista_stopwords <- stopwords("portuguese")
+
+# Adicionar novas palavras comuns de discursos na lista de stopwords
+lista_stopwords <- c(lista_stopwords, "é", "sr", "sra", "senhor", "senhora", "senhores", "senhoras", "obrigado", "obrigada", "presidente", "orador", "oradora")
+
+# Criar tokens:
+# removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)
+# transformando tokens para minúsculo (tokens_tolower)
+# removendo stopwords (tokens_remove)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |> 
+  tokens_tolower() |>
+  tokens_remove(lista_stopwords)
+
+# Construir DFM:
+dfm_discursos <- dfm(tokens_discursos) |>
+  dfm_group(groups = sexo)
+
+# Desenhar núvem de palavras comparando grupos (gêneros):
+textplot_wordcloud(
+  dfm_discursos, 
+  comparison = TRUE,
+  max_words = 100,
+  color = c("red", "blue"),
+)
+```
+
 ## Atividade prática
 
 1.  Carregue o arquivo `discursos.csv` e familiarize-se com as colunas.
