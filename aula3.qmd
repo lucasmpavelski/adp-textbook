@@ -405,6 +405,304 @@ Veja como collocations são utilizadas para estudos sociais no artigos:
 
 -   Indicador de similaridade do discurso parlamentar: análise do comportamento das coalizões partidárias de @schwartz2022.
 
+## Estudos guiados
+
+Análise de temas com dicionários:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+tabela_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar um dicionário temático (ex: Saúde e Educação)
+meu_dicionario <- dictionary(list(
+  saude = c("saúde", "hospital", "hospitais", "médico", "médicos", "enfermeiro", "sus"),
+  educacao = c("educação", "escola", "escolas", "professor", "professores", "ensino", "universidade")
+))
+
+# Aplicar dicionário e criar DFM para contar as menções
+dfm_temas <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_lookup(dictionary = meu_dicionario) |>
+  dfm()
+
+# Contar a mensão de cada termo
+tabela_contagem_temas <- dfm_temas |>
+  textstat_frequency()
+
+# Imprimir tabela
+print(tabela_contagem_temas)
+```
+
+Gerando n-gramas (sequências de palavras):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+tabela_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Gerar trigramas (sequências de 3 palavras contíguas)
+tokens_trigramas <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_ngrams(n = 3)
+
+# Calcular a frequência dos trigramas mais comuns
+dfm_trigramas <- dfm(tokens_trigramas)
+
+# Criar tabela com os 10 trigramas mais frequentes
+freq_trigramas <- dfm_trigramas |>
+  textstat_frequency(n = 10)
+
+# Imprimir tabela
+print(freq_trigramas)
+```
+
+Skip-grams para capturar relações entre palavras não adjacentes:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(stopwords)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+tabela_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Gerar skip-grams (bi-gramas que podem pular até 2 palavras entre si) contendo a palavra "francisco"
+tokens_skip <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_remove(stopwords("portuguese")) |>
+  tokens_ngrams(n = 2, skip = 0:2)  |>
+  tokens_select("*francisco*")
+
+# Criar DFM com skip-grams
+dfm_skipgrams <- tokens_skip |>
+  dfm()
+
+# Criar tabela com frequências de skipgramas
+freq_skip <- dfm_skipgrams |>
+  textstat_frequency(10)
+
+print(freq_skip)
+```
+
+Redes de co-ocorrência de palavras (FCM):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textplots)
+library(stopwords)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens removendo pontuação e stopwords
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_remove(stopwords("portuguese"))
+
+# Criar DFM
+dfm_discursos <- tokens_discursos |>
+  dfm()
+
+# Selecionar as 30 palavras mais frequentes para visualizar a rede
+palavras_mais_citadas <- dfm_discursos |>
+  textstat_frequency(30) |>
+  pull(feature)
+
+# Criar FCM (Feature Co-occurrence Matrix)
+fcm_discursos <- dfm_discursos |>
+  dfm_select(palavras_mais_citadas) |>
+  fcm()
+
+# Desenhar rede semântica
+textplot_network(fcm_discursos)
+```
+
+Identificando Collocations (expressões típicas):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens (filtrando stopwords)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_remove(stopwords("portuguese"), padding = TRUE)
+
+# Criar tabela de collocations (expressões de duas palavras que ocorrem juntas frequentemente)
+collocs <- tokens_discursos |>
+  textstat_collocations(size = 2, min_count = 15) |>
+  head(20)  # filtrar 20 primeiras linhas
+
+# Visualizar as principais collocations estatisticamente significativas
+print(collocs)
+```
+
+Calculando TF-IDF para destacar termos distintivos:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens (removendo stopwords)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_remove(stopwords("portuguese"))
+
+# Calcular TF-IDF agrupando os discursos por partido
+dfm_tfidf <- tokens_discursos |>
+  dfm() |>
+  dfm_group(groups = partido) |>
+  dfm_tfidf()
+
+# Extrair termos com maior peso TF-IDF para um partido específico (ex: PT)
+dfm_tfidf |> 
+  convert(to = "data.frame") |>
+  filter(doc_id == "PT") |>
+  pivot_longer(-doc_id, names_to = "termo", values_to = "tfidf") |>
+  arrange(desc(tfidf)) |>
+  head(10)
+```
+
+Medindo a diversidade léxica (vocabulário):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tabela com TTR (Type-Token Ratio) para cada documento
+ttr_discursos <- corpus_discursos |>
+  tokens() |>
+  textstat_lexdiv(measure = "TTR")
+
+# Criar tabela com 10 maiores TTRs
+top_10_ttr_discursos <- ttr_discursos |>
+  arrange(desc(TTR)) |> # ordenar por TTR decrescente (utilizar arrange(TTR) crescente)
+  head(10)              # primeiras 10 linhas
+
+# Imprimir os 10 discursos com maior TTR
+print(top_10_ttr_discursos)
+```
+
+Análise de leiturabilidade (complexidade do texto):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Calcular o índice Flesch de facilidade de leitura
+leiturabilidade <- corpus_discursos |>
+  textstat_readability(measure = "Flesch")
+
+# Criar tabela com os 10 maiores índices de Flesch
+top_10_leiturabilidade <- leiturabilidade |>
+  arrange(desc(Flesch)) |>
+  head(10)
+
+# Imprimir tabela
+print(top_10_leiturabilidade)
+```
+
+Identificando keyness entre grupos:
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens (removendo stopwords)
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower() |>
+  tokens_remove(stopwords("portuguese"))
+
+# Criar DFM agrupada por uma variável (ex: partido)
+dfm_partidos <- tokens_discursos |>
+  dfm() |>
+  dfm_group(groups = partido)
+
+# Comparar o vocabulário de um partido contra todos os outros (Keyness)
+# Exemplo comparando o PL contra os demais
+keyness_pl <- dfm_partidos |>
+  textstat_keyness(target = "PL")
+
+# Criar tabela com as 20 palavras com maior estatística de keyness do PL
+top_20_keyness_pl <- keyness_pl |>
+  arrange(desc(chi2)) |>  # ordenar pela estatística chi-quadrado
+  head(20)                # 20 primeiras linhas
+
+# Listar palavras significativamente mais frequentes no grupo alvo
+print(top_20_keyness_pl)
+```
+
 ## Atividade prática
 
 Analise os discursos vistos em aula utilizando:
