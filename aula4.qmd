@@ -592,6 +592,213 @@ Sobre análise de tópicos e LDA, leia o capítulo 6 do livro [@silge2017].
 
 Para uma discussão sobre análise de tópicos guiada em estudos sociais, veja o artigo de @schweinberger2025.
 
+## Estudos guiados
+
+Inicialização do Spacy para Português:
+
+```{r}
+library(spacyr)
+
+# Instalar spacy (se necessário) e baixar modelo em português
+# spacy_install()
+# spacy_download_langmodel("pt_core_news_sm")
+
+# Inicializar o spacy com o modelo de língua portuguesa
+spacy_initialize(model = "pt_core_news_sm")
+
+print(reticulate::py_config())
+```
+
+Análise de classes gramaticais (POS Tagging):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(spacyr)
+
+spacy_initialize(model = "pt_core_news_sm")
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus (amostra para rapidez)
+corpus_amostra <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  head(50) |> # limitar a 50 discursos para este exemplo
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Realizar análise sintática (extraindo classes gramaticais e lemas)
+# Resultado é uma tabela, com um token por linha, o lemma e sua classe gramatical (pos)
+analise_pos <- spacy_parse(corpus_amostra, pos = TRUE, lemma = TRUE, entity = FALSE)
+
+# Filtrar e contar os substantivos próprios (PROPN) mais comuns
+top_propn <- analise_pos |>
+  filter(pos == "PROPN") |>     # filtra linhas de substantivos próprios
+  count(token, sort = TRUE) |>  # conta cada token e ordena (maior para menor)
+  head(20)                      # filtra 20 primeiras linhas
+
+print(top_propn)
+```
+
+Extraindo Relações de Dependência (Atores e Ações):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(spacyr)
+
+spacy_initialize(model = "pt_core_news_sm")
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_amostra <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  head(50) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Parse com relações de dependência
+analise_dep <- spacy_parse(corpus_amostra, dependency = TRUE, pos = TRUE)
+
+# Criar tabela com verbos
+acoes <- analise_dep |>
+  filter(dep_rel == "ROOT", pos == "VERB") |>
+  select(doc_id, sentence_id, token_id, verbo = lemma)
+
+atores <- analise_dep |>
+  filter(dep_rel == "nsubj", pos %in% c("NOUN", "PROPN")) |>
+  select(doc_id, sentence_id, ator = lemma, head_token_id)
+
+# Criar tabela unindo sujeitos (atores) e seus respectivos verbos (ações)
+ # unir (inner_join) verbos e atores do mesmo documento (doc_id), frase (sentence_id) e onde o ator aponta para o verbo pai (head_token_id do ator igual token_id do verbo)
+atores_acoes <- atores |>
+  inner_join(acoes, by = c("doc_id", "sentence_id", "head_token_id" = "token_id"))
+
+# Criar tabela com 10 verbos principais mais frequentes
+top_acoes <- acoes |>
+  count(verbo, sort = TRUE) |>
+  head(10)
+
+# Criar tabela com 10 substantivos principais mais frequentes
+top_atores <- atores |>
+  count(ator, sort = TRUE) |>
+  head(10)
+
+# Criar tabela com 10 combinações ação-ator mais comuns
+top_acoes_atores <- atores_acoes |>
+  count(ator, verbo, sort = TRUE) |>
+  head(10)
+
+# Exibir os primeiros pares ator-ação encontrados
+print("Principais ações:")
+print(top_acoes)
+
+print("Principais atores:")
+print(top_atores)
+
+print("Principais ações-atores:")
+print(top_acoes_atores)
+```
+
+Modelagem de Tópicos (LDA):
+
+```{r cache=TRUE}
+library(tidyverse)
+library(quanteda)
+library(seededlda)
+library(stopwords)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |>
+  tokens_remove(stopwords("portuguese"))
+
+# Criar DFM e aplicar filtros de frequência (mínimo de 5 ocorrências, máximo de 50% dos documentos)
+dfm_discursos <- tokens_discursos |>
+  dfm() |>
+  dfm_trim(min_termfreq = 5, max_docfreq = 0.5, docfreq_type = "prop")
+
+# Treinar modelo LDA com 5 tópicos
+set.seed(123) # semente para reprodutibilidade
+modelo_lda <- textmodel_lda(dfm_discursos, k = 5)
+
+# Criar tabela com os 10 principais termos de cada tópico
+termos_topicos <- modelo_lda |>
+  terms(10) |>
+  as.data.frame()
+
+# Imprimir termos
+print(termos_topicos)
+
+# Atribuir o tópico mais provável a cada discurso
+topicos_10_docs <- modelo_lda |>
+  topics() |>
+  as.data.frame() |>
+  head(10)
+
+# Imprimir tópicos dos discursos
+print(topicos_10_docs)
+```
+
+Modelagem de Tópicos Guiada (Seeded LDA):
+
+```{r}
+library(tidyverse)
+library(quanteda)
+library(seededlda)
+library(stopwords)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |>
+  tokens_remove(stopwords("portuguese"))
+
+# Criar DFM
+dfm_discursos <- tokens_discursos |>
+  dfm() |>
+  dfm_trim(min_termfreq = 5, max_docfreq = 0.5, docfreq_type = "prop")
+
+# Definir sementes para tópicos específicos
+sementes <- dictionary(list(
+  economia = c("inflação", "juros", "economia", "mercado", "fiscal"),
+  seguranca = c("polícia", "crime", "segurança", "violência", "presídio"),
+  saude = c("saúde", "hospital", "sus", "médico", "vacina")
+))
+
+# Treinar Seeded LDA
+set.seed(123) # semente para reprodutibilidade
+modelo_seeded <- textmodel_seededlda(dfm_discursos, dictionary = sementes)
+
+# Criar tabela com os 10 principais termos de cada tópico (incluindo os descobertos pelo modelo)
+termos_topicos <- modelo_seeded |>
+  terms(10) |>
+  as.data.frame()
+
+# Imprimir termos de cada tópico
+print(termos_topicos)
+
+# Ver o tópico mais provável para os primeiros 10 documentos
+topicos_seeded_10_docs <- topics(modelo_seeded) |>
+  as.data.frame() |>
+  head(10)
+
+# Imprimir tópicos dos primeiros 10 discursos
+print(topicos_seeded_10_docs)
+```
+
 ## Atividade prática
 
 Utilizando o corpus de discursos de abril de 2025 da câmara:
