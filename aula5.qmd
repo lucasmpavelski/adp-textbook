@@ -1,23 +1,104 @@
-# Classificação de Textos e Modelos de Linguagem
+# Análise de tópicos estruturada e modelos de escala
 
-{r} dfm_stm_discursos \<- corpus_discursos \|\> tokens(remove_numbers = TRUE, remove_punct = TRUE, remove_symbols = TRUE) \|\> tokens_remove(c(stopwords("portuguese"), "é", "senhor", "senhora", "sr", "sra")) \|\> dfm() \|\> dfm_trim(min_termfreq = 0.8, termfreq_type = "quantile", max_docfreq = 0.1, docfreq_type = "prop")
+## Análise de tópicos estruturada
 
-dfm_stm_discursos
+Na LDA assumimos que os tópicos advém de uma mistura de palavras, mas não levamos em consideração outras informações que podem influenciar ou relevar determinados tópicos.
 
-topic.count \<- 10 dfm2stm \<- convert(dfm_stm_discursos, to = "stm") model.stm \<- stm(dfm2stm$documents, dfm2stm$vocab, K = topic.count, data = dfm2stm\$meta, init.type = "Spectral") \# this is the actual stm call
+Outra extensão dos modelos de tópicos LDA são os Modelos de Tópicos Estruturados (STM, do inglês *structured topic models*). Este método incorpora informações adicionais (metadados, `docvars`) do texto para orientar a análise.
 
-data.frame(t(labelTopics(model.stm, n = 10)\$prob))
+::: callout-tip
+Quais outras variáveis que influenciam os tópicos dos discursos políticos?
+:::
 
-TODO: outros atributos spacy
+Algumas estruturas que podem influenciar análise de discurso político seriam, por exemplo:
 
-{r} tokens_ulysses \<- spacy_parse(frases_ulysses, additional_attributes = "morph")
+-   data do discurso: Tópicos podem variar ao longo do tempo, e a data que o discurso foi proferido pode ajudar a identificar tendências ou mudanças nos temas discutidos.
+-   locutor: diferentes políticos podem ter interesses ou perspectivas diferentes, e isso pode influenciar os temas debatidos
+-   partido político: os partidos podem ter plataformas ou agendas diferentes, e isso pode influenciar os temas discutidos nos discursos dos seus membros.
 
-tokens_ulyses \|\> mutate(morph = map(morph, (x) x\$to_dict())) \|\> unnest_wider(morph)
+Modelos de tópicos estruturados permitem:
 
-## Reconhecimento de entidades nomeadas
+-   incorporar informações qualitativas na análise
+-   examinar o **efeito estimado** de uma ou mais variáveis nos tópicos: como uma variável influencia nos tópicos (ex: como o tema "saúde" é abordado ao longo do tempo)
+-   examinar **perspectivas**: como palavras mudam de acordo com uma variável ou entre dois tópicos (ex: como partidos de esquerda e direita tratam o tema "segurança")
+-   modelar **correlação entre tópicos** (em LDA, os tópicos geralmente são independentes)
 
-## Embeddings
+![](images/clipboard-4287621089.png){width="100%"}
+
+Algumas fragilidades do STM, e também do LDA, são:
+
+-   utilizam a abordagem "bag-of-words" (saco de palavras), ou seja, não há informação sobre a ordem, sintaxe ou semântica das palavras, apenas quantas vezes elas foram utilizadas em cada discurso
+-   as escolhas de pré-processamento, número de tópicos, variáveis dependentes e interpretação dos termos é experimental e sujeitas à interpretação
+
+Assim como em outros modelos, o resultado mostra uma visão ampla dos dados, cabe ao pesquisador investigar a fundo os discursos relevantes.
+
+## Escalonamento de texto
+
+**Escalonamento de texto** (text scalling) é a tarefa de derivar posições para textos ou autores ao longo de um contínuo ideológico ou temático.
+
+![](images/clipboard-3550866451.png)
+
+Exemplos de aplicações em análise de conteúdo:
+
+-   estimativa de posição ideológica: de partidos/políticos em um espectro de "progressista/esquerda" e "conservador/direita"
+-   medir polarização política ao longo do tempo: como o conjunto de discursos são posicionados entre mais ou menos polarizados
+-   analisar coesão de bancada: como os integrantes de um partido se estão alinhados ideologicamente dentro de um partido
+-   mudanças de agenda: como os discursos de um político ou grupo se alteram ao longo do tempo
+-   enquadramento de assuntos: como um assunto é tratado por diferentes discursos (ex: reforma tributária é tratada como "carga tributária" ou "justiça fiscal")
+
+Existem diversos métodos de estimar posicionamentos a partir de textos.
+
+### Wordscore
+
+O modelo *wordscore* é um método de escalonamento *supervisionado* de texto que atribui uma pontuação a cada palavra com base em sua frequência em um conjunto de textos de referência (seed).
+
+O conjuto de referência possui uma pontuação (score) definido _a priori_ pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.
+
+As pontuações de cada palavra são estimadas com probabilidade condicional Bayesiana simples. Cada texto é estimado com a média ponderada da pontuação de cada palavra.
+
+### Wordfish
+
+Modelos *wordfish* são *não-supervisionados*, ou seja, não necessitam de um conjunto de referência. Eles estimam a posição ideológica dos textos com base na frequência das palavras, assumindo que as palavras mais frequentes em um texto são mais representativas do seu conteúdo.
+
+O modelo estatístico do wordfish é baseado em um modelo de Poisson mais sofisticado, onde a frequência de cada palavra em um texto é modelada como uma função da posição ideológica do texto e da importância da palavra.
+
+### Análise de correspondência
+
+A *análise de correspondência* (CA, do inglês _correspondence analysis_) é uma técnica para redução de dimensionalidade que funciona com variáveis categóricas (tabela de contingência).
+
+caso de textos, podemos aplicar a análise de correspondência a uma matriz de frequência de palavras, onde as linhas representam os textos e as colunas representam as palavras (transposta da DFM).
+
+A análise de correspondência pode ser utilizada para identificar padrões de coocorrência entre palavras e textos, e para visualizar a relação entre eles em um espaço bidimensional.
 
 ## Similaridade textual
 
-## 
+Uma tarefa comum em análise de conteúdo é medir a similaridade entre textos, ou seja, o quão semelhantes são dois ou mais textos em termos de conteúdo.
+
+Existem diversas métricas para medir a similaridade textual, como:
+
+-   *Correspodência de palavras*: textos similares utilizam as memas palavras.
+-   *Distância de Jaccard*: mede a similaridade entre dois conjuntos de palavras, calculando a razão entre a interseção e a união dos conjuntos.
+-   *Similaridade de cosseno*: mede a similaridade entre dois vetores de palavras, calculando o cosseno do ângulo entre eles. Quanto mais próximo de 1, mais semelhantes são os textos.
+
+A similaridade de cossenno é muito utilizada em análise de conteúdo, especialmente quando os textos são representados como vetores de palavras (por exemplo, usando TF-IDF ou embeddings). Ela é útil para identificar textos que são semanticamente semelhantes, mesmo que não compartilhem muitas palavras em comum.
+
+O resultado da similaridade textual pode ser utilizado para diversas análises, como:
+
+- Agrupamento de textos: textos similares podem ser agrupados para identificar temas ou tópicos comuns.
+- Análise de redes: textos similares podem ser conectados em uma rede para visualizar as relações entre eles.
+- Busca de documentos: textos similares podem ser utilizados para encontrar documentos relevantes em um grande conjunto de dados.
+
+# Estudos guiados
+
+## STM
+
+
+```{r}
+install.packages("stm")
+
+quanteda.textstats::textstat_dist()
+```
+
+
+
+
