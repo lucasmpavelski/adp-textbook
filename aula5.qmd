@@ -90,13 +90,143 @@ O resultado da similaridade textual pode ser utilizado para diversas análises, 
 
 # Estudos guiados
 
-## STM
+## Preparação dos dados
 
+Nesta aula, utilizaremos o pacote `stm` para modelos estruturados e `quanteda.textmodels` para modelos de escala e similaridade. Seguiremos o padrão de carregamento e pré-processamento visto na aula anterior.
 
 ```{r}
-install.packages("stm")
+#| message: false
+#| warning: false
 
-quanteda.textstats::textstat_dist()
+# Instalação de pacotes necessários (caso não estejam presentes)
+pacotes <- c("tidyverse", "quanteda", "quanteda.textstats", 
+             "quanteda.textplots", "quanteda.textmodels", "stm", "stopwords")
+
+for (pkg in pacotes) {
+  if (!pkg %in% installed.packages()) install.packages(pkg)
+}
+
+library(tidyverse)
+library(quanteda)
+library(quanteda.textstats)
+library(quanteda.textplots)
+library(quanteda.textmodels)
+library(stm)
+library(stopwords)
+
+# Carregamento consistente dos dados
+dados_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_"))
+
+# Criação do corpus
+corpus_discursos <- corpus(dados_discursos, text_field = "transcricao")
+
+# Pré-processamento e DFM
+# Removemos pontuação, números, símbolos e stopwords
+dfm_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |>
+  tokens_remove(stopwords("portuguese")) |>
+  dfm() |>
+  # Filtramos palavras muito frequentes ou muito raras para otimizar os modelos
+  dfm_trim(min_termfreq = 5, max_docfreq = 0.5, docfreq_type = "prop")
+
+print(dfm_discursos)
+```
+
+## Modelo de Tópicos Estruturado (STM)
+
+O STM permite incorporar metadados. Aqui, usaremos o `partido` como uma variável que influencia a prevalência dos tópicos (o quanto cada partido fala de cada tema).
+
+```{r}
+#| cache: true
+
+# 1. Converter DFM do quanteda para o formato esperado pelo pacote STM
+stm_data <- convert(dfm_discursos, to = "stm")
+
+# 2. Treinar o modelo STM
+# K = 5 tópicos para este exemplo
+# prevalence =~ partido: indica que a escolha do tópico depende do partido
+modelo_stm <- stm(
+  documents = stm_data$documents, 
+  vocab = stm_data$vocab,
+  data = stm_data$meta, 
+  K = 5, 
+  prevalence =~ partido,
+  verbose = FALSE
+)
+
+# 3. Visualizar resumo dos tópicos e sua frequência relativa
+plot(modelo_stm, type = "summary", main = "Principais Tópicos (Modelo STM)")
+```
+
+## Escalonamento não-supervisionado (Wordfish)
+
+O Wordfish estima as posições ideológicas dos documentos apenas com base na frequência das palavras, sem precisar de rótulos prévios.
+
+```{r}
+# 1. Treinar modelo Wordfish
+modelo_wf <- textmodel_wordfish(dfm_discursos)
+
+# 2. Visualizar o posicionamento médio dos partidos na dimensão estimada
+textplot_scale1d(modelo_wf, groups = dfm_discursos$partido) +
+  labs(title = "Escalonamento Wordfish por Partido", 
+       subtitle = "Posicionamento latente estimado a partir dos discursos",
+       x = "Dimensão Estimada (Ideologia)", y = "Densidade")
+```
+
+## Escalonamento supervisionado (Wordscores)
+
+No Wordscores, definimos pontuações para documentos de referência (ex: PT como esquerda e PL como direita) e o modelo estima a posição dos demais.
+
+```{r}
+# 1. Definir scores de referência: PT (-1) e PL (1)
+# NAs indicam documentos cuja posição queremos estimar
+scores_referencia <- rep(NA, ndoc(dfm_discursos))
+scores_referencia[docvars(dfm_discursos, "partido") == "PT"] <- -1
+scores_referencia[docvars(dfm_discursos, "partido") == "PL"] <- 1
+
+# 2. Treinar o modelo Wordscores
+modelo_ws <- textmodel_wordscores(dfm_discursos, y = scores_referencia)
+
+# 3. Predizer posições para todos os discursos
+pred_ws <- predict(modelo_ws, se.fit = TRUE)
+
+# 4. Visualizar resultados agrupados por partido
+textplot_scale1d(pred_ws, groups = dfm_discursos$partido) +
+  labs(title = "Escalonamento Wordscores", 
+       subtitle = "Referência: PT (-1) e PL (1)",
+       x = "Score Estimado", y = "Densidade")
+```
+
+## Análise de Correspondência (CA)
+
+A CA é uma técnica de redução de dimensionalidade que permite visualizar a "distância" entre categorias (partidos) e palavras em um espaço comum.
+
+```{r}
+# 1. Agrupar discursos por partido para uma visualização mais clara
+dfm_partidos <- dfm_group(dfm_discursos, groups = partido)
+
+# 2. Executar Análise de Correspondência
+modelo_ca <- textmodel_ca(dfm_partidos)
+
+# 3. Visualizar a primeira dimensão da CA
+textplot_scale1d(modelo_ca) + 
+  labs(title = "Análise de Correspondência: 1ª Dimensão",
+       subtitle = "Agrupamento por partido")
+```
+
+## Similaridade Textual
+
+A similaridade de cosseno mede o quão parecido é o vocabulário utilizado por diferentes grupos.
+
+```{r}
+# 1. Calcular similaridade entre os 'centroids' de cada partido
+simil_cosseno <- textstat_simil(dfm_partidos, method = "cosine")
+
+# 2. Exibir como uma matriz de similaridade (ex: os 5 mais similares ao PT)
+matriz_simil <- as.matrix(simil_cosseno)
+print("Similaridade de Cosseno com o PT:")
+sort(matriz_simil[, "PT"], decreasing = TRUE) |> head(5)
 ```
 
 
