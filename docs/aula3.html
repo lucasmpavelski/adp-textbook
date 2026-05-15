@@ -224,6 +224,12 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./aula5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossário</span></a>
   </div>
@@ -279,7 +285,8 @@ window.Quarto = {
   <li><a href="#leiturabilidade-readability" id="toc-leiturabilidade-readability" class="nav-link" data-scroll-target="#leiturabilidade-readability"><span class="header-section-number">3.6</span> Leiturabilidade (readability)</a></li>
   <li><a href="#palavras-chave-keyness" id="toc-palavras-chave-keyness" class="nav-link" data-scroll-target="#palavras-chave-keyness"><span class="header-section-number">3.7</span> Palavras-chave (Keyness)</a></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">3.8</span> Para saber mais</a></li>
-  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">3.9</span> Atividade prática</a></li>
+  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">3.9</span> Estudos guiados</a></li>
+  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">3.10</span> Atividade prática</a></li>
   </ul>
 </nav>
     </div>
@@ -1314,8 +1321,417 @@ docs                    saudar v.exa
 <li><p>Indicador de similaridade do discurso parlamentar: análise do comportamento das coalizões partidárias de <span class="citation" data-cites="schwartz2022">Schwartz (<a href="references.html#ref-schwartz2022" role="doc-biblioref">2022</a>)</span>.</p></li>
 </ul>
 </section>
-<section id="atividade-prática" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">3.9</span> Atividade prática</h2>
+<section id="estudos-guiados" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="estudos-guiados"><span class="header-section-number">3.9</span> Estudos guiados</h2>
+<p>Análise de temas com dicionários:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>()</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar um dicionário temático (ex: Saúde e Educação)</span></span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>meu_dicionario <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(<span class="fu">list</span>(</span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">saude =</span> <span class="fu">c</span>(<span class="st">"saúde"</span>, <span class="st">"hospital"</span>, <span class="st">"hospitais"</span>, <span class="st">"médico"</span>, <span class="st">"médicos"</span>, <span class="st">"enfermeiro"</span>, <span class="st">"sus"</span>),</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">educacao =</span> <span class="fu">c</span>(<span class="st">"educação"</span>, <span class="st">"escola"</span>, <span class="st">"escolas"</span>, <span class="st">"professor"</span>, <span class="st">"professores"</span>, <span class="st">"ensino"</span>, <span class="st">"universidade"</span>)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar dicionário e criar DFM para contar as menções de cada tema</span></span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>dfm_temas <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_lookup</span>(<span class="at">dictionary =</span> meu_dicionario) <span class="sc">|&gt;</span></span>
+<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
+<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar a mensão de cada termo</span></span>
+<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a>tabela_contagem_temas <span class="ot">&lt;-</span> dfm_temas <span class="sc">|&gt;</span></span>
+<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>()</span>
+<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tabela</span></span>
+<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tabela_contagem_temas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   feature frequency rank docfreq group
+1    saude       908    1     309   all
+2 educacao       736    2     258   all</code></pre>
+</div>
+</div>
+<p>Gerando n-gramas (sequências de palavras):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar trigramas (sequências de 3 palavras contíguas)</span></span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>tokens_trigramas <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_ngrams</span>(<span class="at">n =</span> <span class="dv">3</span>)</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular a frequência dos trigramas mais comuns</span></span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>dfm_trigramas <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_trigramas)</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com os 10 trigramas mais frequentes</span></span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>freq_trigramas <span class="ot">&lt;-</span> dfm_trigramas <span class="sc">|&gt;</span></span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">n =</span> <span class="dv">10</span>)</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tabela</span></span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freq_trigramas)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                feature frequency rank docfreq group
+1        sem_revisão_do      1103    1    1102   all
+2     revisão_do_orador      1103    1    1102   all
+3     ordem_sem_revisão       742    3     741   all
+4        pela_ordem_sem       728    4     727   all
+5          do_orador_sr       448    5     448   all
+6  orador_sr_presidente       448    5     448   all
+7        projeto_de_lei       330    7     185   all
+8        sem_revisão_da       262    8     261   all
+9    revisão_da_oradora       262    8     261   all
+10 câmara_dos_deputados       224   10     171   all</code></pre>
+</div>
+</div>
+<p>Skip-grams para capturar relações entre palavras não adjacentes:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar skip-grams (bi-gramas que podem pular até 2 palavras entre si) contendo a palavra "francisco"</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>tokens_skip <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_ngrams</span>(<span class="at">n =</span> <span class="dv">2</span>, <span class="at">skip =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">2</span>)  <span class="sc">|&gt;</span></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*francisco*"</span>)</span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM com skip-grams</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>dfm_skipgrams <span class="ot">&lt;-</span> tokens_skip <span class="sc">|&gt;</span></span>
+<span id="cb44-23"><a href="#cb44-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
+<span id="cb44-24"><a href="#cb44-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-25"><a href="#cb44-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com frequências de skipgramas</span></span>
+<span id="cb44-26"><a href="#cb44-26" aria-hidden="true" tabindex="-1"></a>freq_skip <span class="ot">&lt;-</span> dfm_skipgrams <span class="sc">|&gt;</span></span>
+<span id="cb44-27"><a href="#cb44-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>)</span>
+<span id="cb44-28"><a href="#cb44-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-29"><a href="#cb44-29" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(freq_skip)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                 feature frequency rank docfreq group
+1         papa_francisco       196    1      62   all
+2         francisco_papa        23    2      17   all
+3            francisco_é        20    3      15   all
+4    francisco_francisco        13    4      11   all
+5        morte_francisco        10    5       8   all
+6        francisco_assis        10    5       6   all
+7  falecimento_francisco         9    7       8   all
+8            é_francisco         9    7       9   all
+9       francisco_deixou         9    7       6   all
+10   homenagem_francisco         8   10       8   all</code></pre>
+</div>
+</div>
+<p>Redes de co-ocorrência de palavras (FCM):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens removendo pontuação e stopwords</span></span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM</span></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>()</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Selecionar as 30 palavras mais frequentes para visualizar a rede</span></span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a>palavras_mais_citadas <span class="ot">&lt;-</span> dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-25"><a href="#cb46-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">30</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-26"><a href="#cb46-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(feature)</span>
+<span id="cb46-27"><a href="#cb46-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-28"><a href="#cb46-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar FCM (Feature Co-occurrence Matrix)</span></span>
+<span id="cb46-29"><a href="#cb46-29" aria-hidden="true" tabindex="-1"></a>fcm_discursos <span class="ot">&lt;-</span> dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-30"><a href="#cb46-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_select</span>(palavras_mais_citadas) <span class="sc">|&gt;</span></span>
+<span id="cb46-31"><a href="#cb46-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fcm</span>()</span>
+<span id="cb46-32"><a href="#cb46-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-33"><a href="#cb46-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar rede semântica</span></span>
+<span id="cb46-34"><a href="#cb46-34" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_network</span>(fcm_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula3_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Identificando Collocations (expressões típicas):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens (filtrando stopwords)</span></span>
+<span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>), <span class="at">padding =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela de collocations (expressões de duas palavras que ocorrem juntas frequentemente)</span></span>
+<span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a>collocs <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb47-20"><a href="#cb47-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_collocations</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">min_count =</span> <span class="dv">15</span>) <span class="sc">|&gt;</span></span>
+<span id="cb47-21"><a href="#cb47-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)  <span class="co"># filtrar 20 primeiras linhas</span></span>
+<span id="cb47-22"><a href="#cb47-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-23"><a href="#cb47-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar as principais collocations estatisticamente significativas</span></span>
+<span id="cb47-24"><a href="#cb47-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(collocs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>           collocation count count_nested length   lambda         z
+1        sr presidente  1606            0      2 5.542681 133.13009
+2    segurança pública   341            0      2 7.689422  77.82226
+3            orador sr   448            0      2 4.951940  77.16461
+4             bloco pl   397            0      2 6.687782  76.72034
+5      povo brasileiro   317            0      2 6.847499  76.23346
+6           desta casa   337            0      2 6.981374  70.66551
+7             bloco pt   353            0      2 6.894202  69.95841
+8           nesta casa   264            0      2 6.547219  65.95347
+9        neste momento   170            0      2 6.862600  61.87973
+10          rio grande   174            0      2 6.527853  60.88333
+11     presidente lula   287            0      2 4.536320  59.80079
+12              lei nº   186            0      2 7.144808  58.77372
+13     governo federal   203            0      2 4.850408  57.61622
+14 obrigado presidente   266            0      2 4.596799  56.86728
+15        muitas vezes   142            0      2 8.287803  56.82921
+16      papa francisco   185            0      2 9.516792  56.39894
+17           mil reais   137            0      2 6.431336  55.64574
+18     polícia federal   153            0      2 5.883158  55.47569
+19  congresso nacional   157            0      2 7.726140  55.22283
+20       srs deputados   212            0      2 7.871286  54.27577</code></pre>
+</div>
+</div>
+<p>Calculando TF-IDF para destacar termos distintivos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens (removendo stopwords)</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular TF-IDF agrupando os discursos por partido</span></span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>dfm_tfidf <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> partido) <span class="sc">|&gt;</span></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_tfidf</span>()</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extrair termos com maior peso TF-IDF para um partido específico (ex: PT)</span></span>
+<span id="cb49-24"><a href="#cb49-24" aria-hidden="true" tabindex="-1"></a>dfm_tfidf <span class="sc">|&gt;</span> </span>
+<span id="cb49-25"><a href="#cb49-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">convert</span>(<span class="at">to =</span> <span class="st">"data.frame"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-26"><a href="#cb49-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(doc_id <span class="sc">==</span> <span class="st">"PT"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-27"><a href="#cb49-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>doc_id, <span class="at">names_to =</span> <span class="st">"termo"</span>, <span class="at">values_to =</span> <span class="st">"tfidf"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(tfidf)) <span class="sc">|&gt;</span></span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 3
+   doc_id termo         tfidf
+   &lt;chr&gt;  &lt;chr&gt;         &lt;dbl&gt;
+ 1 PT     pt             99.4
+ 2 PT     golpe          49.0
+ 3 PT     glauber        45.3
+ 4 PT     anistia        39.1
+ 5 PT     imposto        33.1
+ 6 PT     lula           30.8
+ 7 PT     papa           24.5
+ 8 PT     bolsonaristas  22.5
+ 9 PT     querem         22.4
+10 PT     braga          22.1</code></pre>
+</div>
+</div>
+<p>Medindo a diversidade léxica (vocabulário):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com TTR (Type-Token Ratio) para cada documento</span></span>
+<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>ttr_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>() <span class="sc">|&gt;</span></span>
+<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_lexdiv</span>(<span class="at">measure =</span> <span class="st">"TTR"</span>)</span>
+<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com 10 maiores TTRs</span></span>
+<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>top_10_ttr_discursos <span class="ot">&lt;-</span> ttr_discursos <span class="sc">|&gt;</span></span>
+<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(TTR)) <span class="sc">|&gt;</span> <span class="co"># ordenar por TTR decrescente (utilizar arrange(TTR) crescente)</span></span>
+<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)              <span class="co"># primeiras 10 linhas</span></span>
+<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir os 10 discursos com maior TTR</span></span>
+<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_10_ttr_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       document       TTR
+1      1431_Tarcísio Motta_PSOL 0.9487179
+2        827_Laura Carneiro_PSD 0.9473684
+3           1057_Nilto Tatto_PT 0.9361702
+4           649_Helena Lima_MDB 0.9275362
+5         54_Alencar Santana_PT 0.9250000
+6  436_Dr. Victor Linhalis_PODE 0.9189189
+7  1109_Pauderney Avelino_UNIÃO 0.9189189
+8     719_Jandira Feghali_PCdoB 0.9122807
+9         1139_Pedro Campos_PSB 0.9117647
+10          1058_Nilto Tatto_PT 0.9076923</code></pre>
+</div>
+</div>
+<p>Análise de leiturabilidade (complexidade do texto):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular o índice Flesch de facilidade de leitura</span></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>leiturabilidade <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_readability</span>(<span class="at">measure =</span> <span class="st">"Flesch"</span>)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com os 10 maiores índices de Flesch</span></span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>top_10_leiturabilidade <span class="ot">&lt;-</span> leiturabilidade <span class="sc">|&gt;</span></span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Flesch)) <span class="sc">|&gt;</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tabela</span></span>
+<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_10_leiturabilidade)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        document   Flesch
+1       1434_Tarcísio Motta_PSOL 58.14795
+2              161_Bibo Nunes_PL 54.53661
+3             1024_Max Lemos_PDT 51.86750
+4    498_Enfermeira Rejane_PCdoB 50.32569
+5     424_Dorinaldo Malafaia_PDT 49.26133
+6              162_Bibo Nunes_PL 47.45642
+7              157_Bibo Nunes_PL 46.86574
+8  1451_Tenente Coronel Zucco_PL 46.18336
+9                  1525_Zucco_PL 46.18336
+10     1153_Pompeo de Mattos_PDT 45.56941</code></pre>
+</div>
+</div>
+<p>Identificando keyness entre grupos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens (removendo stopwords)</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM agrupada por uma variável (ex: partido)</span></span>
+<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a>dfm_partidos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb55-21"><a href="#cb55-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> partido)</span>
+<span id="cb55-22"><a href="#cb55-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar o vocabulário de um partido contra todos os outros (Keyness)</span></span>
+<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo comparando o PL contra os demais</span></span>
+<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a>keyness_pl <span class="ot">&lt;-</span> dfm_partidos <span class="sc">|&gt;</span></span>
+<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_keyness</span>(<span class="at">target =</span> <span class="st">"PL"</span>)</span>
+<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com as 20 palavras com maior estatística de keyness do PL</span></span>
+<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a>top_20_keyness_pl <span class="ot">&lt;-</span> keyness_pl <span class="sc">|&gt;</span></span>
+<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(chi2)) <span class="sc">|&gt;</span>  <span class="co"># ordenar pela estatística chi-quadrado</span></span>
+<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)                <span class="co"># 20 primeiras linhas</span></span>
+<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-33"><a href="#cb55-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Listar palavras significativamente mais frequentes no grupo alvo</span></span>
+<span id="cb55-34"><a href="#cb55-34" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_20_keyness_pl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        feature       chi2            p n_target n_reference
+1            pl 1119.29289 0.000000e+00      500         134
+2      esquerda  195.88254 0.000000e+00      146          93
+3       polícia  185.83239 0.000000e+00      220         216
+4           stf  180.34922 0.000000e+00      106          49
+5         zucco  150.99558 0.000000e+00       51           4
+6     policiais  147.26364 0.000000e+00       84          37
+7      monteiro  138.08000 0.000000e+00       51           7
+8         fahur  110.99378 0.000000e+00       45           9
+9      sargento  105.61020 0.000000e+00       64          31
+10     policial   99.05324 0.000000e+00       64          34
+11      capitão   95.26546 0.000000e+00       30           1
+12    segurança   92.27695 0.000000e+00      241         372
+13          pai   88.20171 0.000000e+00       68          45
+14      anistia   88.03191 0.000000e+00      243         384
+15     oposição   86.19807 0.000000e+00       80          64
+16      alberto   85.95111 0.000000e+00       36           8
+17      minoria   83.60135 0.000000e+00       33           6
+18 descondenado   81.90058 0.000000e+00       26           1
+19   desgoverno   74.48401 0.000000e+00       41          17
+20  assinaturas   69.20840 1.110223e-16       48          28</code></pre>
+</div>
+</div>
+</section>
+<section id="atividade-prática" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">3.10</span> Atividade prática</h2>
 <p>Analise os discursos vistos em aula utilizando:</p>
 <ul>
 <li>Crie um dicionário de termos com temas de seu interesse e analise a frequência nos discursos da câmara</li>

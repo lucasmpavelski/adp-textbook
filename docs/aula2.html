@@ -195,6 +195,12 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./aula5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossário</span></a>
   </div>
@@ -253,7 +259,8 @@ div.csl-indent {
   <li><a href="#palavras-no-contexto-keywords-in-context" id="toc-palavras-no-contexto-keywords-in-context" class="nav-link" data-scroll-target="#palavras-no-contexto-keywords-in-context"><span class="header-section-number">2.6</span> Palavras no contexto (Keywords-in-context)</a></li>
   <li><a href="#exemplo-prático-nuvem-de-palavras-por-partido" id="toc-exemplo-prático-nuvem-de-palavras-por-partido" class="nav-link" data-scroll-target="#exemplo-prático-nuvem-de-palavras-por-partido"><span class="header-section-number">2.7</span> Exemplo Prático: Nuvem de Palavras por Partido</a></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">2.8</span> Para saber mais</a></li>
-  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">2.9</span> Atividade prática</a></li>
+  <li><a href="#estudos-guidados" id="toc-estudos-guidados" class="nav-link" data-scroll-target="#estudos-guidados"><span class="header-section-number">2.9</span> Estudos guidados</a></li>
+  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">2.10</span> Atividade prática</a></li>
   </ul>
 </nav>
     </div>
@@ -1512,8 +1519,563 @@ docs                         acácio favacho sem
 <li>Estude os tutoriais completos da biblioteca <code>quanteda</code> em <a href="https://tutorials.quanteda.io/" class="uri">https://tutorials.quanteda.io/</a>. Saiba mais sobre a biblioteca lendo o artigo de <span class="citation" data-cites="benoit2018">Benoit et al. (<a href="references.html#ref-benoit2018" role="doc-biblioref">2018</a>)</span>.</li>
 </ul>
 </section>
-<section id="atividade-prática" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">2.9</span> Atividade prática</h2>
+<section id="estudos-guidados" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="estudos-guidados"><span class="header-section-number">2.9</span> Estudos guidados</h2>
+<p>Criando corpus a partir de uma planilha CSV:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimindo detalhes sobre a leitura do arquivo (show_col_types)</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 1527 Columns: 21
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr  (16): nome, uf, partido, uri, nome_civil, sexo, uf_nascimento, municipi...
+dbl   (1): id
+lgl   (1): data_falecimento
+dttm  (1): hora_inicio
+date  (2): data_nascimento, data_situacao
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir um resumo do corpus carregado</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(corpus_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Corpus consisting of 1,527 documents and 20 docvars.
+1_Acácio Favacho_MDB :
+"DISCURSO NA ÍNTEGRA ENCAMINHADO PELO SR. DEPUTADO ACÁCIO FAV..."
+
+2_Acácio Favacho_MDB :
+"O SR. ACÁCIO FAVACHO (Bloco/MDB - AP. Sem revisão do orador...."
+
+3_Acácio Favacho_MDB :
+"DISCURSO NA ÍNTEGRA ENCAMINHADO PELO SR. DEPUTADO ACÁCIO FAV..."
+
+4_Adail Filho_REPUBLICANOS :
+"O SR. ADAIL FILHO (Bloco/REPUBLICANOS - AM. Pela ordem. Sem ..."
+
+5_Adilson Barroso_PL :
+"O SR. ADILSON BARROSO (Bloco/PL - SP. Sem revisão do orador...."
+
+6_Adilson Barroso_PL :
+"O SR. ADILSON BARROSO (Bloco/PL - SP. Sem revisão do orador...."
+
+[ reached max_ndoc ... 1,521 more documents ]</code></pre>
+</div>
+</div>
+<p>Quebrando o corpus em palavras (tokens):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb46-17"><a href="#cb46-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb46-18"><a href="#cb46-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-19"><a href="#cb46-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb46-20"><a href="#cb46-20" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb46-21"><a href="#cb46-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>()</span>
+<span id="cb46-22"><a href="#cb46-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-23"><a href="#cb46-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tokens do primeiro discurso</span></span>
+<span id="cb46-24"><a href="#cb46-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tokens_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 1,527 documents and 20 docvars.
+1_Acácio Favacho_MDB :
+ [1] "DISCURSO"    "NA"          "ÍNTEGRA"     "ENCAMINHADO" "PELO"       
+ [6] "SR"          "."           "DEPUTADO"    "ACÁCIO"      "FAVACHO"    
+[11] "("           "SEM"        
+[ ... and 416 more ]
+
+2_Acácio Favacho_MDB :
+ [1] "O"       "SR"      "."       "ACÁCIO"  "FAVACHO" "("       "Bloco"  
+ [8] "/"       "MDB"     "-"       "AP"      "."      
+[ ... and 647 more ]
+
+3_Acácio Favacho_MDB :
+ [1] "DISCURSO"    "NA"          "ÍNTEGRA"     "ENCAMINHADO" "PELO"       
+ [6] "SR"          "."           "DEPUTADO"    "ACÁCIO"      "FAVACHO"    
+[11] "("           "SEM"        
+[ ... and 576 more ]
+
+4_Adail Filho_REPUBLICANOS :
+ [1] "O"            "SR"           "."            "ADAIL"        "FILHO"       
+ [6] "("            "Bloco"        "/"            "REPUBLICANOS" "-"           
+[11] "AM"           "."           
+[ ... and 248 more ]
+
+5_Adilson Barroso_PL :
+ [1] "O"       "SR"      "."       "ADILSON" "BARROSO" "("       "Bloco"  
+ [8] "/"       "PL"      "-"       "SP"      "."      
+[ ... and 489 more ]
+
+6_Adilson Barroso_PL :
+ [1] "O"       "SR"      "."       "ADILSON" "BARROSO" "("       "Bloco"  
+ [8] "/"       "PL"      "-"       "SP"      "."      
+[ ... and 474 more ]
+
+[ reached max_ndoc ... 1,521 more documents ]</code></pre>
+</div>
+</div>
+<p>Pré-processamento de tokens: removendo stopwords e stematização</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb48-14"><a href="#cb48-14" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb48-15"><a href="#cb48-15" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb48-16"><a href="#cb48-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb48-17"><a href="#cb48-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb48-18"><a href="#cb48-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-19"><a href="#cb48-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-20"><a href="#cb48-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb48-21"><a href="#cb48-21" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb48-22"><a href="#cb48-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-23"><a href="#cb48-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb48-24"><a href="#cb48-24" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>)</span>
+<span id="cb48-25"><a href="#cb48-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-26"><a href="#cb48-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb48-27"><a href="#cb48-27" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb48-28"><a href="#cb48-28" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb48-29"><a href="#cb48-29" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb48-30"><a href="#cb48-30" aria-hidden="true" tabindex="-1"></a><span class="co"># stematizando palavras (tokens_wordstem)</span></span>
+<span id="cb48-31"><a href="#cb48-31" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb48-32"><a href="#cb48-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb48-33"><a href="#cb48-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb48-34"><a href="#cb48-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords) <span class="sc">|&gt;</span></span>
+<span id="cb48-35"><a href="#cb48-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_wordstem</span>(<span class="at">language =</span> <span class="st">"portuguese"</span>)</span>
+<span id="cb48-36"><a href="#cb48-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-37"><a href="#cb48-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tokens do primeiro discurso</span></span>
+<span id="cb48-38"><a href="#cb48-38" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tokens_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tokens consisting of 1,527 documents and 20 docvars.
+1_Acácio Favacho_MDB :
+ [1] "discurs"   "íntegr"    "encaminh"  "deput"     "acáci"     "favach"   
+ [7] "registr"   "taquigráf" "nobr"      "coleg"     "car"       "telespect"
+[ ... and 209 more ]
+
+2_Acácio Favacho_MDB :
+ [1] "acáci"   "favach"  "bloc"    "mdb"     "ap"      "revisã"  "orador" 
+ [8] "bom"     "dia"     "gentil"  "quer"    "agradec"
+[ ... and 266 more ]
+
+3_Acácio Favacho_MDB :
+ [1] "discurs"   "íntegr"    "encaminh"  "deput"     "acáci"     "favach"   
+ [7] "registr"   "taquigráf" "deput"     "car"       "telespect" "sistem"   
+[ ... and 279 more ]
+
+4_Adail Filho_REPUBLICANOS :
+ [1] "adail"      "filh"       "bloc"       "republican" "am"        
+ [6] "ordem"      "revisã"     "orador"     "sras"       "srs"       
+[11] "deput"      "venh"      
+[ ... and 104 more ]
+
+5_Adilson Barroso_PL :
+ [1] "adilson"  "barros"   "bloc"     "pl"       "sp"       "revisã"  
+ [7] "orador"   "coleg"    "deput"    "tod"      "acompanh" "ouv"     
+[ ... and 211 more ]
+
+6_Adilson Barroso_PL :
+ [1] "adilson"  "barros"   "bloc"     "pl"       "sp"       "revisã"  
+ [7] "orador"   "coleg"    "venh"     "aqu"      "dar"      "justific"
+[ ... and 190 more ]
+
+[ reached max_ndoc ... 1,521 more documents ]</code></pre>
+</div>
+</div>
+<p>Construindo DFM a partir de tokens:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>)</span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-34"><a href="#cb50-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords)</span>
+<span id="cb50-35"><a href="#cb50-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-36"><a href="#cb50-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir DFM:</span></span>
+<span id="cb50-37"><a href="#cb50-37" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_discursos)</span>
+<span id="cb50-38"><a href="#cb50-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-39"><a href="#cb50-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir DFM:</span></span>
+<span id="cb50-40"><a href="#cb50-40" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dfm_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Document-feature matrix of: 1,527 documents, 23,772 features (99.41% sparse) and 20 docvars.
+                            features
+docs                         discurso íntegra encaminhado deputado acácio
+  1_Acácio Favacho_MDB              1       1           1        2      1
+  2_Acácio Favacho_MDB              0       0           0        1      1
+  3_Acácio Favacho_MDB              1       1           1        1      1
+  4_Adail Filho_REPUBLICANOS        0       0           0        0      0
+  5_Adilson Barroso_PL              0       0           0        0      0
+  6_Adilson Barroso_PL              0       0           0        2      0
+                            features
+docs                         favacho registro taquigráfico nobres colegas
+  1_Acácio Favacho_MDB             1        1            1      1       1
+  2_Acácio Favacho_MDB             1        0            0      0       0
+  3_Acácio Favacho_MDB             1        1            1      0       0
+  4_Adail Filho_REPUBLICANOS       0        0            0      0       0
+  5_Adilson Barroso_PL             0        0            0      0       2
+  6_Adilson Barroso_PL             0        0            0      0       1
+[ reached max_ndoc ... 1,521 more documents, reached max_nfeat ... 23,762 more features ]</code></pre>
+</div>
+</div>
+<p>Contando palavras mais utilizadas (em todos os discursos):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb52-25"><a href="#cb52-25" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>)</span>
+<span id="cb52-26"><a href="#cb52-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-27"><a href="#cb52-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb52-28"><a href="#cb52-28" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb52-29"><a href="#cb52-29" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb52-30"><a href="#cb52-30" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb52-31"><a href="#cb52-31" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb52-32"><a href="#cb52-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb52-33"><a href="#cb52-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb52-34"><a href="#cb52-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords)</span>
+<span id="cb52-35"><a href="#cb52-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-36"><a href="#cb52-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir DFM:</span></span>
+<span id="cb52-37"><a href="#cb52-37" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_discursos)</span>
+<span id="cb52-38"><a href="#cb52-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-39"><a href="#cb52-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir tabela com 20 palavras mais utilizadas:</span></span>
+<span id="cb52-40"><a href="#cb52-40" aria-hidden="true" tabindex="-1"></a>palavras_discursos <span class="ot">&lt;-</span> dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb52-41"><a href="#cb52-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">n =</span> <span class="dv">20</span>)</span>
+<span id="cb52-42"><a href="#cb52-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-43"><a href="#cb52-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tabela:</span></span>
+<span id="cb52-44"><a href="#cb52-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(palavras_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    feature frequency rank docfreq group
+1    brasil      2032    1     819   all
+2      aqui      2012    2     860   all
+3     bloco      1546    3    1336   all
+4  deputado      1518    4     661   all
+5   revisão      1377    5    1369   all
+6      casa      1338    6     649   all
+7   governo      1324    7     526   all
+8      hoje      1314    8     730   all
+9    porque      1253    9     659   all
+10      ser      1209   10     590   all
+11    todos      1204   11     626   all
+12  projeto      1165   12     484   all
+13   orador      1112   13    1102   all
+14    quero      1097   14     637   all
+15  pessoas      1091   15     467   all
+16   estado      1088   16     480   all
+17     país      1066   17     551   all
+18  federal       984   18     490   all
+19    ordem       941   19     797   all
+20     povo       929   20     434   all</code></pre>
+</div>
+</div>
+<p>Contando palavras mais utilizadas por grupos (ex: partido):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda"))</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb54-9"><a href="#cb54-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="#cb54-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb54-11"><a href="#cb54-11" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb54-12"><a href="#cb54-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb54-13"><a href="#cb54-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-14"><a href="#cb54-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb54-15"><a href="#cb54-15" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb54-16"><a href="#cb54-16" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb54-17"><a href="#cb54-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb54-18"><a href="#cb54-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb54-19"><a href="#cb54-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb54-20"><a href="#cb54-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-21"><a href="#cb54-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb54-22"><a href="#cb54-22" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb54-23"><a href="#cb54-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-24"><a href="#cb54-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb54-25"><a href="#cb54-25" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>)</span>
+<span id="cb54-26"><a href="#cb54-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-27"><a href="#cb54-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb54-28"><a href="#cb54-28" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb54-29"><a href="#cb54-29" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb54-30"><a href="#cb54-30" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb54-31"><a href="#cb54-31" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb54-32"><a href="#cb54-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb54-33"><a href="#cb54-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb54-34"><a href="#cb54-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords)</span>
+<span id="cb54-35"><a href="#cb54-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-36"><a href="#cb54-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir DFM:</span></span>
+<span id="cb54-37"><a href="#cb54-37" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_discursos)</span>
+<span id="cb54-38"><a href="#cb54-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-39"><a href="#cb54-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir tabela com 3 palavras mais utilizadas por partidos:</span></span>
+<span id="cb54-40"><a href="#cb54-40" aria-hidden="true" tabindex="-1"></a>palavras_discursos <span class="ot">&lt;-</span> dfm_discursos <span class="sc">|&gt;</span></span>
+<span id="cb54-41"><a href="#cb54-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="at">n =</span> <span class="dv">3</span>, <span class="at">groups =</span> partido)</span>
+<span id="cb54-42"><a href="#cb54-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-43"><a href="#cb54-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tabela:</span></span>
+<span id="cb54-44"><a href="#cb54-44" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(palavras_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    feature frequency rank docfreq         group
+1    avante        30    1      17        AVANTE
+2      aqui        26    2      10        AVANTE
+3      casa        23    3       9        AVANTE
+4   projeto        21    1       3     CIDADANIA
+5      aqui        18    2       3     CIDADANIA
+6  deputado        17    3       3     CIDADANIA
+7       mdb       101    1      67           MDB
+8      aqui        85    2      38           MDB
+9      casa        72    3      26           MDB
+10  supremo        43    1       4        MISSÃO
+11  governo        33    2       4        MISSÃO
+12    gente        21    3       5        MISSÃO
+13     novo       101    1      56          NOVO
+14     aqui       101    1      45          NOVO
+15      ser        86    3      37          NOVO
+16      lei        80    1      13         PCdoB
+17   brasil        74    2      28         PCdoB
+18    pcdob        68    3      55         PCdoB
+19      pdt        54    1      36           PDT
+20   brasil        43    2      17           PDT
+21     aqui        42    3      14           PDT
+22     aqui       510    1     212            PL
+23   brasil       507    2     185            PL
+24       pl       500    3     322            PL
+25   brasil        99    1      23          PODE
+26     aqui        93    2      21          PODE
+27    todos        70    3      22          PODE
+28   estado        95    1      26            PP
+29     aqui        66    2      29            PP
+30   brasil        60    3      30            PP
+31  pessoas        21    1       5           PRD
+32   brasil        20    2       6           PRD
+33   muitas        19    3       6           PRD
+34     acre       126    1      16           PSB
+35   brasil        84    2      35           PSB
+36      psb        70    3      40           PSB
+37      psd       125    1      77           PSD
+38   estado        89    2      31           PSD
+39   brasil        84    3      41           PSD
+40  federal        55    1      12          PSDB
+41   estado        36    2      11          PSDB
+42     aqui        34    3      13          PSDB
+43 deputado       194    1      41          PSOL
+44     aqui       142    2      65          PSOL
+45     psol       134    3      96          PSOL
+46   brasil       485    1     203            PT
+47     aqui       460    2     201            PT
+48  governo       414    3     156            PT
+49  governo        24    1       9            PV
+50   brasil        23    2       7            PV
+51     aqui        21    3      11            PV
+52  cultura        13    1       2          REDE
+53  partido         3    2       1          REDE
+54     viva         3    2       1          REDE
+55   brasil       126    1      52  REPUBLICANOS
+56      ser        89    2      32  REPUBLICANOS
+57 deputado        88    3      54  REPUBLICANOS
+58  pessoas        18    1       3 SOLIDARIEDADE
+59  autismo        11    2       1 SOLIDARIEDADE
+60      lei        11    2       5 SOLIDARIEDADE
+61   brasil       176    1      69         UNIÃO
+62  pessoas       141    2      39         UNIÃO
+63    união       123    3      89         UNIÃO</code></pre>
+</div>
+</div>
+<p>Núvem de palavras:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda", ...))</span></span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>)</span>
+<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords)</span>
+<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir DFM:</span></span>
+<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_discursos)</span>
+<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar núvem de palavras:</span></span>
+<span id="cb56-41"><a href="#cb56-41" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(dfm_discursos, <span class="at">max_words =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula2_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Núvem de palavras comparativa:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># caso não tenha as bibliotecas instaladas, execute install.packages(c("tidyverse", "quanteda", ...))</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>tabela_discursos <span class="ot">&lt;-</span> tabela_discursos <span class="sc">|&gt;</span></span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus, indicando a coluna com texto (transcricao) e identificador (doc_id)</span></span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(</span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>  tabela_discursos, </span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">text_field =</span> <span class="st">"transcricao"</span>, </span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">docid_field =</span> <span class="st">"doc_id"</span></span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar lista de stopwords comuns em português</span></span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">stopwords</span>(<span class="st">"portuguese"</span>)</span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar novas palavras comuns de discursos na lista de stopwords</span></span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>lista_stopwords <span class="ot">&lt;-</span> <span class="fu">c</span>(lista_stopwords, <span class="st">"é"</span>, <span class="st">"sr"</span>, <span class="st">"sra"</span>, <span class="st">"senhor"</span>, <span class="st">"senhora"</span>, <span class="st">"senhores"</span>, <span class="st">"senhoras"</span>, <span class="st">"obrigado"</span>, <span class="st">"obrigada"</span>, <span class="st">"presidente"</span>, <span class="st">"orador"</span>, <span class="st">"oradora"</span>)</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens:</span></span>
+<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo pontuação (remove_punct), números (remove_numbers) e símbolos (remove_symbols)</span></span>
+<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a><span class="co"># transformando tokens para minúsculo (tokens_tolower)</span></span>
+<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a><span class="co"># removendo stopwords (tokens_remove)</span></span>
+<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_tolower</span>() <span class="sc">|&gt;</span></span>
+<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(lista_stopwords)</span>
+<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir DFM:</span></span>
+<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> <span class="fu">dfm</span>(tokens_discursos) <span class="sc">|&gt;</span></span>
+<span id="cb57-39"><a href="#cb57-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(<span class="at">groups =</span> sexo)</span>
+<span id="cb57-40"><a href="#cb57-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-41"><a href="#cb57-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar núvem de palavras comparando grupos (gêneros):</span></span>
+<span id="cb57-42"><a href="#cb57-42" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_wordcloud</span>(</span>
+<span id="cb57-43"><a href="#cb57-43" aria-hidden="true" tabindex="-1"></a>  dfm_discursos, </span>
+<span id="cb57-44"><a href="#cb57-44" aria-hidden="true" tabindex="-1"></a>  <span class="at">comparison =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb57-45"><a href="#cb57-45" aria-hidden="true" tabindex="-1"></a>  <span class="at">max_words =</span> <span class="dv">100</span>,</span>
+<span id="cb57-46"><a href="#cb57-46" aria-hidden="true" tabindex="-1"></a>  <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>),</span>
+<span id="cb57-47"><a href="#cb57-47" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula2_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="atividade-prática" class="level2" data-number="2.10">
+<h2 data-number="2.10" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">2.10</span> Atividade prática</h2>
 <ol type="1">
 <li>Carregue o arquivo <code>discursos.csv</code> e familiarize-se com as colunas.</li>
 <li>Crie um <em>corpus</em> filtrando apenas os discursos de deputados de um gênero ou estado.</li>

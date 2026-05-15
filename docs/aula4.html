@@ -85,7 +85,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./glossario.html" rel="next">
+<link href="./aula5.html" rel="next">
 <link href="./aula3.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -195,6 +195,12 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./aula5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./glossario.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossário</span></a>
   </div>
@@ -249,7 +255,8 @@ div.csl-indent {
   <li><a href="#exemplo-de-análise-de-tópicos-guiada-com-seededlda" id="toc-exemplo-de-análise-de-tópicos-guiada-com-seededlda" class="nav-link" data-scroll-target="#exemplo-de-análise-de-tópicos-guiada-com-seededlda"><span class="header-section-number">4.4.1</span> Exemplo de análise de tópicos guiada com seededlda</a></li>
   </ul></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">4.5</span> Para saber mais</a></li>
-  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">4.6</span> Atividade prática</a></li>
+  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">4.6</span> Estudos guiados</a></li>
+  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">4.7</span> Atividade prática</a></li>
   </ul>
 </nav>
     </div>
@@ -807,13 +814,20 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_sintaxe_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>               doc_id sentence_id token_id    token    lemma   pos
-1 1086_Padovani_UNIÃO           1        1        O        o   DET
-2 1086_Padovani_UNIÃO           1        2       SR       SR PROPN
-3 1086_Padovani_UNIÃO           1        3        .        . PUNCT
-4 1086_Padovani_UNIÃO           2        1 PADOVANI PADOVANI PROPN
-5 1086_Padovani_UNIÃO           2        2        (        ( PUNCT
-6 1086_Padovani_UNIÃO           2        3    Bloco    Bloco PROPN</code></pre>
+<pre><code>                            doc_id sentence_id token_id       token       lemma
+1 1228_Roberto Duarte_REPUBLICANOS           1        1    DISCURSO    DISCURSO
+2 1228_Roberto Duarte_REPUBLICANOS           2        1          NA          NA
+3 1228_Roberto Duarte_REPUBLICANOS           2        2     ÍNTEGRA     ÍNTEGRA
+4 1228_Roberto Duarte_REPUBLICANOS           3        1 ENCAMINHADO ENCAMINHADO
+5 1228_Roberto Duarte_REPUBLICANOS           3        2        PELO        PELO
+6 1228_Roberto Duarte_REPUBLICANOS           3        3          SR          SR
+    pos
+1  NOUN
+2   ADP
+3  NOUN
+4  NOUN
+5   ADP
+6 PROPN</code></pre>
 </div>
 </div>
 <p>Contagem de classes gramaticais:</p>
@@ -822,22 +836,22 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pos, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contagem de classes gramaticais</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pos    n
-1   NOUN 7737
-2  PUNCT 6840
-3    ADP 5796
-4   VERB 4684
-5    DET 4529
-6  PROPN 4035
-7   PRON 2355
-8    ADV 2175
-9    ADJ 1894
-10   AUX 1546
-11 SCONJ 1326
-12 CCONJ 1112
-13   NUM  652
-14     X   36
-15   SYM   23
-16  INTJ   14</code></pre>
+1   NOUN 6863
+2  PUNCT 6051
+3    ADP 5193
+4  PROPN 3855
+5   VERB 3840
+6    DET 3778
+7   PRON 1938
+8    ADV 1759
+9    ADJ 1687
+10   AUX 1303
+11 SCONJ 1084
+12 CCONJ  968
+13   NUM  500
+14   SYM   33
+15     X   33
+16  INTJ   10</code></pre>
 </div>
 </div>
 <p>Verbos mais utilizados:</p>
@@ -848,16 +862,16 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      lemma   n
-1       ter 259
-2     fazer 175
-3    querer 145
-4     dizer 116
-5     poder 104
-6     haver  92
-7     falar  76
-8  precisar  69
-9       dar  62
-10    saber  50</code></pre>
+1       ter 214
+2     fazer 135
+3    querer 109
+4     haver  95
+5     dizer  92
+6     poder  84
+7     falar  65
+8       dar  47
+9  precisar  40
+10    saber  39</code></pre>
 </div>
 </div>
 <p>A função <code>as.tokens</code> permite converter a tabela novamente em objeto tokens da biblioteca <code>quanteda</code> concatenando a informação de classe gramatical (opcionalmente utilizando lemas no lugar do token original):</p>
@@ -868,42 +882,41 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/VERB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 100 documents.
-1086_Padovani_UNIÃO :
- [1] "aprovar/VERB"   "tratar/VERB"    "haver/VERB"     "ficar/VERB"    
- [5] "saber/VERB"     "Imaginem/VERB"  "instituir/VERB" "colocar/VERB"  
- [9] "durar/VERB"     "requerer/VERB"  "fazer/VERB"     "poder/VERB"    
-[ ... and 4 more ]
+1228_Roberto Duarte_REPUBLICANOS :
+ [1] "venho/VERB"       "comemorar/VERB"   "celebrar/VERB"    "transformar/VERB"
+ [5] "constrói/VERB"    "projetar/VERB"    "basear/VERB"      "refleter/VERB"   
+ [9] "superar/VERB"     "impor/VERB"       "integrar/VERB"    "atraemr/VERB"    
+[ ... and 41 more ]
 
-37_Airton Faleiro_PT :
- [1] "querer/VERB"     "tratar/VERB"     "abrigar/VERB"    "querer/VERB"    
- [5] "tratar/VERB"     "chamar/VERB"     "viver/VERB"      "comemorarr/VERB"
- [9] "faltar/VERB"     "faltar/VERB"     "pesar/VERB"      "ter/VERB"       
-[ ... and 25 more ]
+936_Marcel van Hattem_NOVO :
+ [1] "MARCEL/VERB" "timing/VERB" "votar/VERB"  "enter/VERB"  "fazer/VERB" 
+ [6] "enter/VERB"  "venho/VERB"  "lixar/VERB"  "lixam/VERB"  "lixam/VERB" 
+[11] "mandar/VERB" "fazer/VERB" 
+[ ... and 40 more ]
 
-585_Gilson Marques_NOVO :
- [1] "pensar/VERB"   "pensar/VERB"   "vagabur/VERB"  "explicar/VERB"
- [5] "van/VERB"      "Olhem/VERB"    "dizer/VERB"    "saber/VERB"   
- [9] "ler/VERB"      "lê-lo/VERB"    "usar/VERB"     "pagar/VERB"   
-[ ... and 129 more ]
-
-146_Bia Kicis_PL :
- [1] "adorar/VERB"       "orientar/VERB"     "ter/VERB"         
- [4] "orientar/VERB"     "haver/VERB"        "entender/VERB"    
- [7] "votar/VERB"        "viver/VERB"        "votar/VERB"       
-[10] "haver/VERB"        "injustiçadas/VERB" "morrer/VERB"      
+1514_Zé Trovão_PL :
+ [1] "Agradeço/VERB" "viver/VERB"    "segurar/VERB"  "lutar/VERB"   
+ [5] "falar/VERB"    "parecer/VERB"  "falar/VERB"    "absurr/VERB"  
+ [9] "querer/VERB"   "passar/VERB"   "rodar/VERB"    "haver/VERB"   
 [ ... and 13 more ]
 
-1066_Osmar Terra_PL :
- [1] "pude/VERB"        "votar/VERB"       "conseguir/VERB"   "registrar/VERB"  
- [5] "pegar/VERB"       "pegar/VERB"       "querer/VERB"      "deixar/VERB"     
- [9] "querer/VERB"      "fazer/VERB"       "acontecer/VERB"   "Descobriram/VERB"
-[ ... and 9 more ]
+464_Duarte Jr._PSB :
+ [1] "venho/VERB"       "abordar/VERB"     "reformar/VERB"    "privilegiar/VERB"
+ [5] "abrigar/VERB"     "garantir/VERB"    "estabelecer/VERB" "cobrir/VERB"     
+ [9] "abrigar/VERB"     "demarcar/VERB"    "manter/VERB"      "receber/VERB"    
+[ ... and 57 more ]
 
-1439_Tarcísio Motta_PSOL :
- [1] "saber/VERB"       "continuar/VERB"   "dar/VERB"         "Deputadas/VERB"  
- [5] "votar/VERB"       "transferer/VERB"  "aprovar/VERB"     "deixar/VERB"     
- [9] "significar/VERB"  "interromper/VERB" "ter/VERB"         "aumentar/VERB"   
-[ ... and 4 more ]
+318_Coronel Chrisóstomo_PL :
+ [1] "CORONEL/VERB"  "afastar/VERB"  "ficar/VERB"    "puxar/VERB"   
+ [5] "fugir/VERB"    "manchar/VERB"  "saber/VERB"    "tirar/VERB"   
+ [9] "imaginar/VERB" "receber/VERB"  "tirar/VERB"    "tirar/VERB"   
+[ ... and 20 more ]
+
+885_Luiz Carlos Hauly_PODE :
+ [1] "envergonhar/VERB" "Tomar/VERB"       "aposentado/VERB"  "haver/VERB"      
+ [5] "deixeir/VERB"     "apreciar/VERB"    "ouvir/VERB"       "dizer/VERB"      
+ [9] "escolher/VERB"    "escolher/VERB"    "indicar/VERB"     "cair/VERB"       
+[ ... and 17 more ]
 
 [ reached max_ndoc ... 94 more documents ]</code></pre>
 </div>
@@ -921,26 +934,26 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            feature frequency rank docfreq group
-1      brasil/propn        45    1      16    PL
-2          pl/propn        34    2      23    PL
-3    deputado/propn        32    3       7    PL
-4          sr/propn        31    4      27    PL
-5       bloco/propn        31    4      27    PL
-6     governo/propn        26    6      11    PL
-7   bolsonaro/propn        26    6       7    PL
-8           "/propn        24    8      13    PL
-9     federal/propn        24    8       9    PL
-10    espanha/propn        24    8       2    PL
-11    governo/propn        39    1      16    PT
-12         pt/propn        31    2      22    PT
-13       lula/propn        31    2      13    PT
-14     brasil/propn        29    4      12    PT
-15      bloco/propn        25    5      23    PT
-16         sr/propn        20    6      18    PT
-17 presidente/propn        17    7      12    PT
-18          "/propn        16    8       8    PT
-19  bolsonaro/propn        14    9       8    PT
-20    federal/propn        14    9       7    PT</code></pre>
+1          pl/propn        35    1      22    PL
+2          sr/propn        29    2      23    PL
+3       bloco/propn        28    3      23    PL
+4        lula/propn        20    4       5    PL
+5    deputado/propn        19    5      10    PL
+6           "/propn        19    5       9    PL
+7      brasil/propn        17    7      11    PL
+8     governo/propn        15    8       6    PL
+9   deputados/propn        13    9       6    PL
+10        stf/propn        12   10       4    PL
+11  francisco/propn        31    1       4    PT
+12    governo/propn        30    2       9    PT
+13       papa/propn        25    3       4    PT
+14         pt/propn        25    3      20    PT
+15      bloco/propn        24    5      20    PT
+16     brasil/propn        24    5      10    PT
+17    federal/propn        22    7      11    PT
+18       lula/propn        22    7       8    PT
+19         sr/propn        15    9      13    PT
+20 presidente/propn        12   10       7    PT</code></pre>
 </div>
 </div>
 </section>
@@ -1562,8 +1575,362 @@ docs                         caros sistema comunicações boa tarde
 <p>Sobre análise de tópicos e LDA, leia o capítulo 6 do livro <span class="citation" data-cites="silge2017">(<a href="references.html#ref-silge2017" role="doc-biblioref">Silge and Robinson 2017</a>)</span>.</p>
 <p>Para uma discussão sobre análise de tópicos guiada em estudos sociais, veja o artigo de <span class="citation" data-cites="schweinberger2025">Schweinberger (<a href="references.html#ref-schweinberger2025" role="doc-biblioref">2025</a>)</span>.</p>
 </section>
-<section id="atividade-prática" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">4.6</span> Atividade prática</h2>
+<section id="estudos-guiados" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="estudos-guiados"><span class="header-section-number">4.6</span> Estudos guiados</h2>
+<p>Inicialização do Spacy para Português:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar spacy (se necessário) e baixar modelo em português</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a><span class="co"># spacy_install()</span></span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a><span class="co"># spacy_download_langmodel("pt_core_news_sm")</span></span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Inicializar o spacy com o modelo de língua portuguesa</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="at">model =</span> <span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>spaCy is already initialized</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(reticulate<span class="sc">::</span><span class="fu">py_config</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>python:         /home/lucasmp/.virtualenvs/r-spacyr/bin/python
+libpython:      /home/lucasmp/.pyenv/versions/3.10.12/lib/libpython3.10.so
+pythonhome:     /home/lucasmp/.virtualenvs/r-spacyr:/home/lucasmp/.virtualenvs/r-spacyr
+version:        3.10.12 (main, Aug 23 2023, 07:28:31) [GCC 12.2.0]
+numpy:          /home/lucasmp/.virtualenvs/r-spacyr/lib/python3.10/site-packages/numpy
+numpy_version:  2.2.6
+
+NOTE: Python version was forced by use_python() function</code></pre>
+</div>
+</div>
+<p>Análise de classes gramaticais (POS Tagging):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="at">model =</span> <span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>spaCy is already initialized</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus (amostra para rapidez)</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>corpus_amostra <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">|&gt;</span> <span class="co"># limitar a 50 discursos para este exemplo</span></span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Realizar análise sintática (extraindo classes gramaticais e lemas)</span></span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado é uma tabela, com um token por linha, o lemma e sua classe gramatical (pos)</span></span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>analise_pos <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(corpus_amostra, <span class="at">pos =</span> <span class="cn">TRUE</span>, <span class="at">lemma =</span> <span class="cn">TRUE</span>, <span class="at">entity =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in spacy_parse.character(corpus_amostra, pos = TRUE, lemma = TRUE, :
+lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtrar e contar os substantivos próprios (PROPN) mais comuns</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>top_propn <span class="ot">&lt;-</span> analise_pos <span class="sc">|&gt;</span></span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pos <span class="sc">==</span> <span class="st">"PROPN"</span>) <span class="sc">|&gt;</span>     <span class="co"># filtra linhas de substantivos próprios</span></span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(token, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span>  <span class="co"># conta cada token e ordena (maior para menor)</span></span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">20</span>)                      <span class="co"># filtra 20 primeiras linhas</span></span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_propn)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        token  n
+1     Governo 52
+2      Brasil 49
+3          SR 41
+4       Bloco 39
+5  Presidente 36
+6        Casa 24
+7           " 22
+8    Obrigada 20
+9          PL 20
+10       Lula 19
+11         SP 19
+12    Federal 17
+13     \u0097 17
+14         RS 16
+15        Sul 16
+16    ADRIANA 15
+17     AFONSO 15
+18       NOVO 15
+19   Nacional 15
+20        SRA 15</code></pre>
+</div>
+</div>
+<p>Extraindo Relações de Dependência (Atores e Ações):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">spacy_initialize</span>(<span class="at">model =</span> <span class="st">"pt_core_news_sm"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>spaCy is already initialized</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>corpus_amostra <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">50</span>) <span class="sc">|&gt;</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse com relações de dependência</span></span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>analise_dep <span class="ot">&lt;-</span> <span class="fu">spacy_parse</span>(corpus_amostra, <span class="at">dependency =</span> <span class="cn">TRUE</span>, <span class="at">pos =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in spacy_parse.character(corpus_amostra, dependency = TRUE, pos =
+TRUE): lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com verbos</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>acoes <span class="ot">&lt;-</span> analise_dep <span class="sc">|&gt;</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"ROOT"</span>, pos <span class="sc">==</span> <span class="st">"VERB"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, token_id, <span class="at">verbo =</span> lemma)</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>atores <span class="ot">&lt;-</span> analise_dep <span class="sc">|&gt;</span></span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(dep_rel <span class="sc">==</span> <span class="st">"nsubj"</span>, pos <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"NOUN"</span>, <span class="st">"PROPN"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(doc_id, sentence_id, <span class="at">ator =</span> lemma, head_token_id)</span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela unindo sujeitos (atores) e seus respectivos verbos (ações)</span></span>
+<span id="cb85-11"><a href="#cb85-11" aria-hidden="true" tabindex="-1"></a> <span class="co"># unir (inner_join) verbos e atores do mesmo documento (doc_id), frase (sentence_id) e onde o ator aponta para o verbo pai (head_token_id do ator igual token_id do verbo)</span></span>
+<span id="cb85-12"><a href="#cb85-12" aria-hidden="true" tabindex="-1"></a>atores_acoes <span class="ot">&lt;-</span> atores <span class="sc">|&gt;</span></span>
+<span id="cb85-13"><a href="#cb85-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(acoes, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"doc_id"</span>, <span class="st">"sentence_id"</span>, <span class="st">"head_token_id"</span> <span class="ot">=</span> <span class="st">"token_id"</span>))</span>
+<span id="cb85-14"><a href="#cb85-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-15"><a href="#cb85-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com 10 verbos principais mais frequentes</span></span>
+<span id="cb85-16"><a href="#cb85-16" aria-hidden="true" tabindex="-1"></a>top_acoes <span class="ot">&lt;-</span> acoes <span class="sc">|&gt;</span></span>
+<span id="cb85-17"><a href="#cb85-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(verbo, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb85-18"><a href="#cb85-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb85-19"><a href="#cb85-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-20"><a href="#cb85-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com 10 substantivos principais mais frequentes</span></span>
+<span id="cb85-21"><a href="#cb85-21" aria-hidden="true" tabindex="-1"></a>top_atores <span class="ot">&lt;-</span> atores <span class="sc">|&gt;</span></span>
+<span id="cb85-22"><a href="#cb85-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ator, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb85-23"><a href="#cb85-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb85-24"><a href="#cb85-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-25"><a href="#cb85-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com 10 combinações ação-ator mais comuns</span></span>
+<span id="cb85-26"><a href="#cb85-26" aria-hidden="true" tabindex="-1"></a>top_acoes_atores <span class="ot">&lt;-</span> atores_acoes <span class="sc">|&gt;</span></span>
+<span id="cb85-27"><a href="#cb85-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(ator, verbo, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb85-28"><a href="#cb85-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb85-29"><a href="#cb85-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb85-30"><a href="#cb85-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir os primeiros pares ator-ação encontrados</span></span>
+<span id="cb85-31"><a href="#cb85-31" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Principais ações:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Principais ações:"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_acoes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      verbo  n
+1    querer 46
+2       ter 40
+3     achar 20
+4     falar 20
+5     saber 19
+6     fazer 18
+7  precisar 18
+8     poder 16
+9       dar 15
+10    haver 14</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Principais atores:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Principais atores:"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_atores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         ator  n
+1       gente 29
+2  presidente 19
+3     Governo 17
+4      Brasil 15
+5  Presidente 11
+6        País  9
+7       mundo  9
+8    educação  8
+9     projeto  7
+10   Deputado  6</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Principais ações-atores:"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Principais ações-atores:"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(top_acoes_atores)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         ator       verbo n
+1       gente       saber 4
+2  presidente      querer 3
+3      Brasil    precisar 2
+4        agro comprometer 2
+5        dado     mostrar 2
+6       dança       pedir 2
+7       mundo       achar 2
+8       mundo       saber 2
+9      BR-163      faltar 1
+10     Brasil     crescer 1</code></pre>
+</div>
+</div>
+<p>Modelagem de Tópicos (LDA):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-13"><a href="#cb97-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb97-14"><a href="#cb97-14" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb97-15"><a href="#cb97-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb97-17"><a href="#cb97-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-18"><a href="#cb97-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM e aplicar filtros de frequência (80% das palavras mais frequentes, máximo de 50% dos documentos)</span></span>
+<span id="cb97-19"><a href="#cb97-19" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb97-20"><a href="#cb97-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb97-21"><a href="#cb97-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb97-24"><a href="#cb97-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb97-25"><a href="#cb97-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-26"><a href="#cb97-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Treinar modelo LDA com 5 tópicos</span></span>
+<span id="cb97-27"><a href="#cb97-27" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># semente para reprodutibilidade</span></span>
+<span id="cb97-28"><a href="#cb97-28" aria-hidden="true" tabindex="-1"></a>modelo_lda <span class="ot">&lt;-</span> <span class="fu">textmodel_lda</span>(dfm_discursos, <span class="at">k =</span> <span class="dv">5</span>)</span>
+<span id="cb97-29"><a href="#cb97-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-30"><a href="#cb97-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com os 10 principais termos de cada tópico</span></span>
+<span id="cb97-31"><a href="#cb97-31" aria-hidden="true" tabindex="-1"></a>termos_topicos <span class="ot">&lt;-</span> modelo_lda <span class="sc">|&gt;</span></span>
+<span id="cb97-32"><a href="#cb97-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">terms</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb97-33"><a href="#cb97-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb97-34"><a href="#cb97-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-35"><a href="#cb97-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir termos</span></span>
+<span id="cb97-36"><a href="#cb97-36" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(termos_topicos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          topic1          topic2   topic3      topic4     topic5
+1       direitos desenvolvimento  matéria     glauber  francisco
+2       crianças           renda     voto    esquerda       papa
+3        autismo            acre    pauta       golpe       deus
+4        sistema          região    fundo      querem  município
+5            pec        economia    votar     supremo   prefeito
+6       inclusão   trabalhadores urgência        inss      bahia
+7             nº       ambiental       nº     direita      santa
+8        combate         imposto     hugo aposentados     igreja
+9  profissionais  infraestrutura  votação         stf   parabéns
+10      públicas       indígenas    texto       ética governador</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Atribuir o tópico mais provável a cada discurso</span></span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>topicos_10_docs <span class="ot">&lt;-</span> modelo_lda <span class="sc">|&gt;</span></span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">topics</span>() <span class="sc">|&gt;</span></span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb99-7"><a href="#cb99-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tópicos dos discursos</span></span>
+<span id="cb99-8"><a href="#cb99-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(topicos_10_docs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           topics(modelo_lda)
+1_Acácio Favacho_MDB                   topic2
+2_Acácio Favacho_MDB                   topic1
+3_Acácio Favacho_MDB                   topic2
+4_Adail Filho_REPUBLICANOS             topic2
+5_Adilson Barroso_PL                   topic4
+6_Adilson Barroso_PL                   topic3
+7_Adilson Barroso_PL                   topic4
+8_Adriana Ventura_NOVO                 topic3
+9_Adriana Ventura_NOVO                 topic5
+10_Adriana Ventura_NOVO                topic4</code></pre>
+</div>
+</div>
+<p>Modelagem de Tópicos Guiada (Seeded LDA):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(seededlda)</span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-6"><a href="#cb101-6" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb101-7"><a href="#cb101-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-8"><a href="#cb101-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb101-9"><a href="#cb101-9" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb101-10"><a href="#cb101-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb101-11"><a href="#cb101-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb101-12"><a href="#cb101-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-13"><a href="#cb101-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb101-14"><a href="#cb101-14" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb101-15"><a href="#cb101-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb101-16"><a href="#cb101-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb101-17"><a href="#cb101-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-18"><a href="#cb101-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM</span></span>
+<span id="cb101-19"><a href="#cb101-19" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb101-20"><a href="#cb101-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb101-21"><a href="#cb101-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb101-22"><a href="#cb101-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb101-23"><a href="#cb101-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb101-24"><a href="#cb101-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb101-25"><a href="#cb101-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-26"><a href="#cb101-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Definir sementes para tópicos específicos</span></span>
+<span id="cb101-27"><a href="#cb101-27" aria-hidden="true" tabindex="-1"></a>sementes <span class="ot">&lt;-</span> <span class="fu">dictionary</span>(<span class="fu">list</span>(</span>
+<span id="cb101-28"><a href="#cb101-28" aria-hidden="true" tabindex="-1"></a>  <span class="at">economia =</span> <span class="fu">c</span>(<span class="st">"inflação"</span>, <span class="st">"juros"</span>, <span class="st">"economia"</span>, <span class="st">"mercado"</span>, <span class="st">"fiscal"</span>),</span>
+<span id="cb101-29"><a href="#cb101-29" aria-hidden="true" tabindex="-1"></a>  <span class="at">seguranca =</span> <span class="fu">c</span>(<span class="st">"polícia"</span>, <span class="st">"crime"</span>, <span class="st">"segurança"</span>, <span class="st">"violência"</span>, <span class="st">"presídio"</span>),</span>
+<span id="cb101-30"><a href="#cb101-30" aria-hidden="true" tabindex="-1"></a>  <span class="at">saude =</span> <span class="fu">c</span>(<span class="st">"saúde"</span>, <span class="st">"hospital"</span>, <span class="st">"sus"</span>, <span class="st">"médico"</span>, <span class="st">"vacina"</span>)</span>
+<span id="cb101-31"><a href="#cb101-31" aria-hidden="true" tabindex="-1"></a>))</span>
+<span id="cb101-32"><a href="#cb101-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-33"><a href="#cb101-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Treinar Seeded LDA</span></span>
+<span id="cb101-34"><a href="#cb101-34" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># semente para reprodutibilidade</span></span>
+<span id="cb101-35"><a href="#cb101-35" aria-hidden="true" tabindex="-1"></a>modelo_seeded <span class="ot">&lt;-</span> <span class="fu">textmodel_seededlda</span>(dfm_discursos, <span class="at">dictionary =</span> sementes)</span>
+<span id="cb101-36"><a href="#cb101-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-37"><a href="#cb101-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela com os 10 principais termos de cada tópico (incluindo os descobertos pelo modelo)</span></span>
+<span id="cb101-38"><a href="#cb101-38" aria-hidden="true" tabindex="-1"></a>termos_topicos <span class="ot">&lt;-</span> modelo_seeded <span class="sc">|&gt;</span></span>
+<span id="cb101-39"><a href="#cb101-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">terms</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb101-40"><a href="#cb101-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span>
+<span id="cb101-41"><a href="#cb101-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb101-42"><a href="#cb101-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir termos de cada tópico</span></span>
+<span id="cb101-43"><a href="#cb101-43" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(termos_topicos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          economia seguranca      saude
+1         economia francisco        pec
+2               nº violência    glauber
+3  desenvolvimento      papa   esquerda
+4            renda  mulheres      golpe
+5           fiscal      deus     querem
+6             acre município    supremo
+7            fundo  prefeito judiciário
+8              sul   autismo      votar
+9          mercado  parabéns       inss
+10          acesso     bahia      pauta</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ver o tópico mais provável para os primeiros 10 documentos</span></span>
+<span id="cb103-2"><a href="#cb103-2" aria-hidden="true" tabindex="-1"></a>topicos_seeded_10_docs <span class="ot">&lt;-</span> <span class="fu">topics</span>(modelo_seeded) <span class="sc">|&gt;</span></span>
+<span id="cb103-3"><a href="#cb103-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">|&gt;</span></span>
+<span id="cb103-4"><a href="#cb103-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb103-5"><a href="#cb103-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb103-6"><a href="#cb103-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir tópicos dos primeiros 10 discursos</span></span>
+<span id="cb103-7"><a href="#cb103-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(topicos_seeded_10_docs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                           topics(modelo_seeded)
+1_Acácio Favacho_MDB                    economia
+2_Acácio Favacho_MDB                   seguranca
+3_Acácio Favacho_MDB                    economia
+4_Adail Filho_REPUBLICANOS              economia
+5_Adilson Barroso_PL                       saude
+6_Adilson Barroso_PL                       saude
+7_Adilson Barroso_PL                       saude
+8_Adriana Ventura_NOVO                     saude
+9_Adriana Ventura_NOVO                     saude
+10_Adriana Ventura_NOVO                    saude</code></pre>
+</div>
+</div>
+</section>
+<section id="atividade-prática" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">4.7</span> Atividade prática</h2>
 <p>Utilizando o corpus de discursos de abril de 2025 da câmara:</p>
 <ul>
 <li><p>Utilize o procedimento para identificar atores e ações no corpus dos discursos da câmara e identifique os principais verbos relacionados ao governo.</p></li>
@@ -1999,8 +2366,8 @@ Silge, Julia, and David Robinson. 2017. <em>Text mining with R: a tidy approach<
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./glossario.html" class="pagination-link" aria-label="Glossário">
-        <span class="nav-page-text">Glossário</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./aula5.html" class="pagination-link" aria-label="Análise de tópicos estruturada e modelos de escala">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

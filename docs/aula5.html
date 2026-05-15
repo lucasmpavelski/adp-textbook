@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.27">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Análise de tópicos estruturada e modelos de escala – Laboratórios de Análise de Discurso Político</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./glossario.html" rel="next">
+<link href="./aula4.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-915e59248b86391700dc2323402d4dc9.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./aula5.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Laboratórios de Análise de Discurso Político</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introdução</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Linguagem R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Palavras, morfemas e tokens</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">N-gramas, Collocations e TF-IDF</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análise Sintática e Modelos de Tópicos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula5.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./glossario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossário</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendice_dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">Coletando Dados do legislativo</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#análise-de-tópicos-estruturada" id="toc-análise-de-tópicos-estruturada" class="nav-link active" data-scroll-target="#análise-de-tópicos-estruturada"><span class="header-section-number">5.1</span> Análise de tópicos estruturada</a></li>
+  <li><a href="#escalonamento-de-texto" id="toc-escalonamento-de-texto" class="nav-link" data-scroll-target="#escalonamento-de-texto"><span class="header-section-number">5.2</span> Escalonamento de texto</a>
+  <ul class="collapse">
+  <li><a href="#wordscore" id="toc-wordscore" class="nav-link" data-scroll-target="#wordscore"><span class="header-section-number">5.2.1</span> Wordscore</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">5.2.2</span> Wordfish</a></li>
+  <li><a href="#análise-de-correspondência" id="toc-análise-de-correspondência" class="nav-link" data-scroll-target="#análise-de-correspondência"><span class="header-section-number">5.2.3</span> Análise de correspondência</a></li>
+  </ul></li>
+  <li><a href="#similaridade-textual" id="toc-similaridade-textual" class="nav-link" data-scroll-target="#similaridade-textual"><span class="header-section-number">5.3</span> Similaridade textual</a></li>
+  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">6</span> Estudos guiados</a>
+  <ul class="collapse">
+  <li><a href="#stm" id="toc-stm" class="nav-link" data-scroll-target="#stm"><span class="header-section-number">6.1</span> STM</a></li>
+  <li><a href="#escalonamento-não-supervisionado-wordfish" id="toc-escalonamento-não-supervisionado-wordfish" class="nav-link" data-scroll-target="#escalonamento-não-supervisionado-wordfish"><span class="header-section-number">6.2</span> Escalonamento não-supervisionado (Wordfish)</a></li>
+  <li><a href="#escalonamento-supervisionado-wordscores" id="toc-escalonamento-supervisionado-wordscores" class="nav-link" data-scroll-target="#escalonamento-supervisionado-wordscores"><span class="header-section-number">6.3</span> Escalonamento supervisionado (Wordscores)</a></li>
+  <li><a href="#análise-de-correspondência-ca" id="toc-análise-de-correspondência-ca" class="nav-link" data-scroll-target="#análise-de-correspondência-ca"><span class="header-section-number">6.4</span> Análise de Correspondência (CA)</a></li>
+  <li><a href="#similaridade-textual-1" id="toc-similaridade-textual-1" class="nav-link" data-scroll-target="#similaridade-textual-1"><span class="header-section-number">6.5</span> Similaridade Textual</a></li>
+  <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">6.6</span> Atividade prática</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="análise-de-tópicos-estruturada" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="análise-de-tópicos-estruturada"><span class="header-section-number">5.1</span> Análise de tópicos estruturada</h2>
+<p>Na LDA assumimos que os tópicos advém de uma mistura de palavras, mas não levamos em consideração outras informações que podem influenciar ou relevar determinados tópicos.</p>
+<p>Outra extensão dos modelos de tópicos LDA são os Modelos de Tópicos Estruturados (STM, do inglês <em>structured topic models</em>). Este método incorpora informações adicionais (metadados, <code>docvars</code>) do texto para orientar a análise.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quais outras variáveis que influenciam os tópicos dos discursos políticos?</p>
+</div>
+</div>
+<p>Algumas estruturas que podem influenciar análise de discurso político seriam, por exemplo:</p>
+<ul>
+<li>data do discurso: Tópicos podem variar ao longo do tempo, e a data que o discurso foi proferido pode ajudar a identificar tendências ou mudanças nos temas discutidos.</li>
+<li>locutor: diferentes políticos podem ter interesses ou perspectivas diferentes, e isso pode influenciar os temas debatidos</li>
+<li>partido político: os partidos podem ter plataformas ou agendas diferentes, e isso pode influenciar os temas discutidos nos discursos dos seus membros.</li>
+</ul>
+<p>Modelos de tópicos estruturados permitem:</p>
+<ul>
+<li>incorporar informações qualitativas na análise</li>
+<li>examinar o <strong>efeito estimado</strong> de uma ou mais variáveis nos tópicos: como uma variável influencia nos tópicos (ex: como o tema “saúde” é abordado ao longo do tempo)</li>
+<li>examinar <strong>perspectivas</strong>: como palavras mudam de acordo com uma variável ou entre dois tópicos (ex: como partidos de esquerda e direita tratam o tema “segurança”)</li>
+<li>modelar <strong>correlação entre tópicos</strong> (em LDA, os tópicos geralmente são independentes)</li>
+</ul>
+<p><img src="images/clipboard-4287621089.png" class="img-fluid" style="width:100.0%"></p>
+<p>Algumas fragilidades do STM, e também do LDA, são:</p>
+<ul>
+<li>utilizam a abordagem “bag-of-words” (saco de palavras), ou seja, não há informação sobre a ordem, sintaxe ou semântica das palavras, apenas quantas vezes elas foram utilizadas em cada discurso</li>
+<li>as escolhas de pré-processamento, número de tópicos, variáveis dependentes e interpretação dos termos é experimental e sujeitas à interpretação</li>
+</ul>
+<p>Assim como em outros modelos, o resultado mostra uma visão ampla dos dados, cabe ao pesquisador investigar a fundo os discursos relevantes.</p>
+</section>
+<section id="escalonamento-de-texto" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="escalonamento-de-texto"><span class="header-section-number">5.2</span> Escalonamento de texto</h2>
+<p><strong>Escalonamento de texto</strong> (text scalling) é a tarefa de derivar posições para textos ou autores ao longo de um contínuo ideológico ou temático.</p>
+<p><img src="images/clipboard-3550866451.png" class="img-fluid"></p>
+<p>Exemplos de aplicações em análise de conteúdo:</p>
+<ul>
+<li>estimativa de posição ideológica: de partidos/políticos em um espectro de “progressista/esquerda” e “conservador/direita”</li>
+<li>medir polarização política ao longo do tempo: como o conjunto de discursos são posicionados entre mais ou menos polarizados</li>
+<li>analisar coesão de bancada: como os integrantes de um partido se estão alinhados ideologicamente dentro de um partido</li>
+<li>mudanças de agenda: como os discursos de um político ou grupo se alteram ao longo do tempo</li>
+<li>enquadramento de assuntos: como um assunto é tratado por diferentes discursos (ex: reforma tributária é tratada como “carga tributária” ou “justiça fiscal”)</li>
+</ul>
+<p>Existem diversos métodos de estimar posicionamentos a partir de textos.</p>
+<section id="wordscore" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="wordscore"><span class="header-section-number">5.2.1</span> Wordscore</h3>
+<p>O modelo <em>wordscore</em> é um método de escalonamento <em>supervisionado</em> de texto que atribui uma pontuação a cada palavra com base em sua frequência em um conjunto de textos de referência (seed).</p>
+<p>O conjuto de referência possui uma pontuação (score) definido <em>a priori</em> pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.</p>
+<p>As pontuações de cada palavra são estimadas com probabilidade condicional Bayesiana simples. Cada texto é estimado com a média ponderada da pontuação de cada palavra.</p>
+</section>
+<section id="wordfish" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">5.2.2</span> Wordfish</h3>
+<p>Modelos <em>wordfish</em> são <em>não-supervisionados</em>, ou seja, não necessitam de um conjunto de referência. Eles estimam a posição ideológica dos textos com base na frequência das palavras, assumindo que as palavras mais frequentes em um texto são mais representativas do seu conteúdo.</p>
+<p>O modelo estatístico do wordfish é baseado em um modelo de Poisson mais sofisticado, onde a frequência de cada palavra em um texto é modelada como uma função da posição ideológica do texto e da importância da palavra.</p>
+</section>
+<section id="análise-de-correspondência" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="análise-de-correspondência"><span class="header-section-number">5.2.3</span> Análise de correspondência</h3>
+<p>A <em>análise de correspondência</em> (CA, do inglês <em>correspondence analysis</em>) é uma técnica para redução de dimensionalidade que funciona com variáveis categóricas (tabela de contingência).</p>
+<p>caso de textos, podemos aplicar a análise de correspondência a uma matriz de frequência de palavras, onde as linhas representam os textos e as colunas representam as palavras (transposta da DFM).</p>
+<p>A análise de correspondência pode ser utilizada para identificar padrões de coocorrência entre palavras e textos, e para visualizar a relação entre eles em um espaço bidimensional.</p>
+</section>
+</section>
+<section id="similaridade-textual" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="similaridade-textual"><span class="header-section-number">5.3</span> Similaridade textual</h2>
+<p>Uma tarefa comum em análise de conteúdo é medir a similaridade entre textos, ou seja, o quão semelhantes são dois ou mais textos em termos de conteúdo.</p>
+<p>Existem diversas métricas para medir a similaridade textual, como:</p>
+<ul>
+<li><em>Correspodência de palavras</em>: textos similares utilizam as memas palavras.</li>
+</ul>
+<p><span class="math display">\[
+C(A, B) = |A \cap B|
+\]</span></p>
+<ul>
+<li><em>Distância de Jaccard</em>: mede a similaridade entre dois conjuntos de palavras, calculando a razão entre a interseção e a união dos conjuntos.</li>
+</ul>
+<p><span class="math display">\[
+J(A, B) = \frac{|A \cap B|}{|A \cup B|}
+\]</span></p>
+<ul>
+<li><em>Distância </em>euclidiana: medae distância entre dois vetores de palavras, calculando a raiz quadrada da soma das diferenças ao quadrado.</li>
+</ul>
+<p><span class="math display">\[
+E(A, B) = \sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}
+\]</span></p>
+<ul>
+<li><em>Similaridade de cosseno</em>: mede a similaridade entre dois vetores de palavras, calculando o cosseno do ângulo entre eles. Quanto mais próximo de 1, mais semelhantes são os textos.</li>
+</ul>
+<p><span class="math display">\[
+S(A, B) = cos(A,B) = \frac{A \cdot B}{\|A \| \|B\|}
+\]</span></p>
+<p>A similaridade de cosseno é muito utilizada em análise de conteúdo, especialmente quando os textos são representados como vetores de palavras (por exemplo, usando contagens, TF-IDF ou embeddings). Ela é útil para identificar textos que são semanticamente semelhantes, mesmo que não compartilhem muitas palavras em comum.</p>
+<p>O resultado da similaridade textual pode ser utilizado para diversas análises, como:</p>
+<ul>
+<li>Agrupamento de textos: textos similares podem ser agrupados para identificar temas ou tópicos comuns.</li>
+<li>Análise de redes: textos similares podem ser conectados em uma rede para visualizar as relações entre eles.</li>
+<li>Busca de documentos: textos similares podem ser utilizados para encontrar documentos relevantes em um grande conjunto de dados.</li>
+</ul>
+</section>
+<section id="estudos-guiados" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Estudos guiados</h1>
+<section id="stm" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="stm"><span class="header-section-number">6.1</span> STM</h2>
+<p>O STM permite incorporar metadados. Aqui, usaremos o <code>partido</code> como uma variável que influencia a prevalência dos tópicos (o quanto cada partido fala de cada tema).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.0     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Package version: 4.3.1
+Unicode version: 15.0
+ICU version: 72.1
+Parallel computing: 12 of 12 threads used.
+See https://quanteda.io for tutorials and examples.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>stm v1.3.8 successfully loaded. See ?stm for help. 
+ Papers, resources, and other materials at structuraltopicmodel.com</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PT"</span>, <span class="st">"PL"</span>, <span class="st">"PSOL"</span>, <span class="st">"REPUBLICANOS"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM, removendo palavras muito frequentes e muito raras </span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter DFM do quanteda para o formato esperado pelo pacote STM</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>stm_data <span class="ot">&lt;-</span> <span class="fu">convert</span>(dfm_discursos, <span class="at">to =</span> <span class="st">"stm"</span>)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Treinar o modelo STM</span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co"># K = 5 tópicos para este exemplo</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co"># prevalence =~ partido: indica que a escolha do tópico depende do partido</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>modelo_stm <span class="ot">&lt;-</span> <span class="fu">stm</span>(</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>  <span class="at">documents =</span> stm_data<span class="sc">$</span>documents, </span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>  <span class="at">vocab =</span> stm_data<span class="sc">$</span>vocab,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> stm_data<span class="sc">$</span>meta, </span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> <span class="dv">5</span>, </span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>  <span class="at">prevalence =</span> <span class="sc">~</span>partido <span class="sc">+</span> fase_evento,</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>  <span class="at">verbose =</span> <span class="cn">FALSE</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resumo dos tópicos e sua frequência relativa</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo_stm, <span class="at">type =</span> <span class="st">"summary"</span>, <span class="at">main =</span> <span class="st">"Principais Tópicos (Modelo STM)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Continuando com o mesmo modelo, podemos invesgitar os textos mais pertinentes a cada tópico:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imprimir os 2 textos mais relevantes do tópico 5</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">findThoughts</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  modelo_stm,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">texts =</span> <span class="fu">as.character</span>(corpus_discursos), <span class="co"># vetor de textos</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">topics =</span> <span class="fu">c</span>(<span class="dv">4</span>), <span class="co"># tópicos</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">n =</span> <span class="dv">2</span> <span class="co"># número de textos</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Topic 4: 
+     A SRA. CHRIS TONIETTO (Bloco/PL - RJ. Sem revisão da oradora.) - Muito obrigada, Sr. Presidente Luiz Gastão. Quero cumprimentar o querido Padre Omar e também o Reverendíssimo Padre Wagner, da Canção Nova, na pessoa de quem cumprimento todos os sacerdotes presentes. Cumprimento também todo o povo brasileiro que está aqui representado, todos os fiéis que estão aqui e fazem parte do povo de Deus. É uma alegria muito grande estar aqui celebrando este dia, nesta sessão solene. A Cruz, Padre Omar, está muito bem posicionada, até porque daqui da Câmara dos Deputados, do Congresso Nacional, emanam as principais e mais importantes decisões deste País. Nós travamos grandes batalhas aqui, de fato, nós decidimos muitas questões que são importantes e impactam a vida de muitos brasileiros. Por que eu disse que a Cruz está muito bem posicionada? Porque ela está no centro. Quando celebramos a primeira Santa Missa, no dia 26 de abril, o primeiro ato solene, o primeiro ato público aqui, quando os portugueses chegaram a estas terras, ao solo brasileiro e tivemos a primeira Santa Missa, a Cruz de Cristo estava aqui fincada. Então essa é a nossa tradição, a tradição católica. Essas são as nossas raízes, as nossas bases. O nosso Brasil não se converteu. Ele nasceu um país cristão, ele nasceu um país sob a estandarte da Cruz de Cristo. E, da mesma forma, nós tivemos aqui os jesuítas, que povoaram esta terra, catequizando, evangelizando, expandindo a fé. Quando os 13 navios da frota de Cabral, que era cavaleiro da Ordem de Cristo, atracaram nesta terra, eles vieram para desbravar a terra e também para expandir a fé, para evangelizar. Que bom podermos celebrar este dia aqui na Câmara dos Deputados. O que eu mais peço a Deus, o que eu mais rogo a Deus é justamente que Ele possa iluminar todos os brasileiros, iluminar todas as famílias, para que cada brasileiro, na sua casa, possa verdadeiramente adorar a Santa Cruz, porque dela veio a nossa salvação. Do madeiro, do lenho da cruz, pendeu a salvação do mundo. Então, que bom poder celebrar este dia, com esta sessão solene nesta Casa, a Casa do Povo, onde todos vocês são muito bem-vindos. Quero cumprimentar também a indígena pataxó que está aqui. Como muito bem disse o Padre Omar, este é um momento emblemático, porque demonstra também a união dos povos. Esta Cruz é esse símbolo de unidade. A Cruz é símbolo de esperança, num tempo tão difícil como o que estamos vivendo, com tantas crises, tantas guerras, inclusive crises morais. Uma crise moral se instala na nossa sociedade. Então, que bom podermos celebrar a Cruz de Cristo! A partir dela, nós tivemos também a nossa salvação. Depois da cruz, tivemos a ressurreição. Estamos ainda no tempo pascal. Nós estamos ainda na Oitava de Páscoa. Então, quero também felicitar todos. Feliz Santa Páscoa a todos vocês! Peço ao Nosso Senhor Jesus Cristo que, todos os dias, ilumine esta Casa, todos os Deputados, todos os Senadores do Congresso Nacional, todos os Parlamentares. Que a Santa Cruz possa nos iluminar, possa nos guiar. E, como São Bento dizia: "Crux sacra sit mihi lux", ou seja, que a Cruz seja a nossa luz. Que possamos ter esse ardor missionário no nosso coração, como aqueles portugueses que chegaram ao solo brasileiro. Eles tiveram esse ardor missionário para desbravar esta terra, para evangelizar, para levar Cristo para as nações. Da mesma forma, Simeão e Ana, o profeta e a profetisa, no dia da circuncisão de Nosso Senhor Jesus Cristo, disseram que Jesus seria sinal de contradição do mundo. Ele viria para governar as nações. Quem governa é o Senhor. Ele é o rei dos reis. Ele é o senhor dos senhores. Ele é o Deus dos exércitos. Então, que possamos tributar a Ele toda honra e toda glória sempre. E que possamos nos lembrar desse símbolo de esperança que se chama Santa Cruz. Nós temos um nome de batismo. Nosso nome de batismo é Terra de Santa Cruz. Isso não é em vão. Isso tem a ver com a manifestação da Cruz, que se deu justamente na Santa Missa, dia 26 de abril. Hoje, dia 22 de abril, nós estamos celebrando esta sessão solene justamente porque estamos nos lembrando dos dias em que os portugueses aqui chegaram para estabelecer esse reinado de Cristo. Assim foi a nossa história. Isso faz parte da nossa tradição. Isso faz parte das nossas raízes. E nós não podemos nos esquecer delas. Então, muito obrigada a todos vocês pela presença. Que nós possamos, todos os dias, nos lembrar das nossas origens. Que nós possamos, todos os dias, olhar para a Santa Cruz e nos lembrar de que dessa Cruz veio a vitória: a vitória sobre o mal, a vitória sobre a guerra, a vitória sobre o pecado, a vitória sobre a morte, a vida que venceu a morte, a luz que dissipa as trevas. Essa é a luz de Cristo. Ele é o Cristo que tira todo o pecado do mundo, o Cordeiro imolado de Deus. Nesta Oitava de Páscoa, também temos que nos lembrar desse dia, celebrar a Páscoa. O que significa celebrar a Páscoa? Significa a passagem da morte para a vida que Nosso Senhor nos deu, a vida em abundância. Então, que todos os dias possamos nos lembrar, dentro do nosso coração, da nossa vida. Que possamos evangelizar também através das nossas atitudes, da catolicidade, das nossas ações. E é isto que eu desejo do fundo do coração: que esta Cruz possa iluminar todo este Congresso Nacional e que daqui, em nome de Jesus, possamos refundar o nosso Brasil, um Brasil que pode estar, de repente, envolto em tantas crises, como citei: crise moral, crise de fé, crise de santos. Muitas pessoas, talvez, tenham perdido o sentido da fé, tenham perdido até o sentido da vida. Muitas pessoas, talvez, acordem sem saber a razão da sua vida. Mas Ele nos deu razão. Ele nos deu sentido. Jesus é tudo. A graça dele nos basta. Então, que possamos nos lembrar disso, não só na nossa vida, mas também nas nossas ações. Que evangelizemos através das nossas ações e que isso possa aquecer os nossos corações. Que Deus abençoe a todos! Muito obrigada, Padre Omar, Padre Wagner, todos vocês que estão aqui. Celebremos a Santa Cruz de Cristo, celebremos o nosso Brasil, eterna Terra de Santa Cruz. Muito obrigada. Que Deus nos abençoe!
+    O SR. DIEGO GARCIA (Bloco/REPUBLICANOS - PR. Sem revisão do orador.) - Bom dia a todos. Quero cumprimentar a Deputada Chris Tonietto, que preside esta sessão solene em que recebemos a cruz diante da qual foi celebrada a primeira missa no nosso País, há 525 anos. Quero cumprimentar os Parlamentares aqui presentes, o Padre Omar, o Padre Wagner, as demais autoridades eclesiásticas presentes e também a população de Brasília que veio participar desta sessão solene. Este é um momento extremamente importante, um momento histórico para nós no Congresso Nacional, porque, depois de tanto tempo, recebemos essa relíquia, essa lembrança, que faz história e memória à nossa fé no nosso País. No ano passado, quando eu ainda presidia a Frente Parlamentar Católica, nós realizamos uma missa em memória aos 524 anos da celebração da primeira eucaristia no Brasil. E quis Deus que nós tivéssemos agora a honra de receber essa imagem. Eu faço memória à passagem bíblica da primeira Carta aos Coríntios, capítulo 1, versículo 18, que diz que a cruz é loucura para os que se perdem, mas para nós que fomos salvos ela é força divina. Eu tenho certeza de que todos aqueles que, mesmo de longe, acompanham esta sessão solene e olham para essa cruz, para essa lembrança, para essa memória, pelas imagens da TV Câmara, eu tenho certeza de que todos que estão aqui presentes e olham para essa imagem da cruz têm, neste momento, o prazer de receber essa força divina, essa força que vem do alto. Para aqueles que se perdem, que não conseguem compreender o mistério da cruz, é difícil conseguir olhar para ela e receber essa força, compreender o seu mistério. Mas para nós cristãos, para nós católicos, a cruz é o caminho, e não temos como fugir dela. Não posso deixar de, no meu pronunciamento, falar sobre o nosso Papa Francisco, que carregou a sua cruz até o fim, até o último momento. Ele fez questão de estar na linha de frente, liderando a nossa Igreja e nos abençoando, estando ao nosso lado. Quis Deus o chamar para que ele vivesse a sua Páscoa nesse momento. Nós devemos olhar para a cruz e seguir esse mesmo caminho. Não tem como ser católico de verdade sem cruz, não tem como. Então, que peçamos a Deus, nesta manhã, essa força que vem do alto, essa força divina para a nossa caminhada, junto à nossa família, junto aos nossos filhos, junto aos desafios que nós travamos, principalmente no Congresso Nacional. Obrigado, Padre Omar, por dar ao Parlamento, ao Congresso, esta oportunidade, este momento. Agradeço também ao meu partido, o Republicanos, por me dar a oportunidade de falar aqui, por toda a nossa bancada, por todo o nosso partido. Lembro a todos: não fujam da cruz. Abracem a sua cruz e carreguem-na até o fim, porque o final vai ser com vitória. Eu me lembro, no início da minha caminhada como cristão, como católico, de um programa da madrugada da TV Canção Nova. Eu assistia a esse programa, que passava a mensagem, no rodapé das imagens da TV, de que a cruz, para os que se perdem, é loucura; mas, para os que foram salvos, é força divina. Que nós possamos beber dessa força que está hoje aqui no plenário da Câmara dos Deputados. Obrigado a todos. Parabéns!</code></pre>
+</div>
+</div>
+<p>Estimando efeitos da variável dependente categórica (partidos) sobre um determinado tópico. O gráfico mostra proporção (e sua variância) que um tópico é coberto em cada partido.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ee_partido <span class="ot">&lt;-</span> <span class="fu">estimateEffect</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>partido, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  modelo_stm, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">documents =</span> stm_data, </span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">metadata =</span> <span class="fu">docvars</span>(corpus_discursos)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.estimateEffect</span>(</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  ee_partido,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariate =</span> <span class="st">"partido"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"pointestimate"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">topics =</span> <span class="dv">5</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Também podemos analisar a diferença entre dois polos (ex PT vs PL) em relação a cada tópico. Intervalos próximos de 0 (zero) são temas citados por ambos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.estimateEffect</span>(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  ee_partido,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">covariate =</span> <span class="st">"partido"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">method =</span> <span class="st">"difference"</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov.value1 =</span> <span class="st">"PT"</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">cov.value2 =</span> <span class="st">"PL"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">topics =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">5</span>),</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">labeltype =</span> <span class="st">"custom"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">custom.labels =</span> <span class="fu">c</span>(<span class="st">"INSS"</span>, <span class="st">"Papa"</span>, <span class="st">"Glauber"</span>),</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">"PT vs PL"</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="escalonamento-não-supervisionado-wordfish" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="escalonamento-não-supervisionado-wordfish"><span class="header-section-number">6.2</span> Escalonamento não-supervisionado (Wordfish)</h2>
+<p>O Wordfish estima as posições ideológicas dos documentos apenas com base na frequência das palavras, sem precisar de rótulos prévios.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textmodels)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados e criar corpus</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"PT"</span>, <span class="st">"PL"</span>, <span class="st">"PSOL"</span>, <span class="st">"REPUBLICANOS"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM, removendo palavras muito frequentes e muito raras </span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(partido)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Treinar modelo Wordfish</span></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>modelo_wf <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfm_discursos)</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar o posicionamento médio dos partidos na dimensão estimada</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(modelo_wf, <span class="at">groups =</span> dfm_discursos<span class="sc">$</span>partido) <span class="sc">+</span></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Posicionamento latente estimado a partir dos discursos"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="escalonamento-supervisionado-wordscores" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="escalonamento-supervisionado-wordscores"><span class="header-section-number">6.3</span> Escalonamento supervisionado (Wordscores)</h2>
+<p>No Wordscores, definimos pontuações para documentos de referência (ex: PT como esquerda e PL como direita) e o modelo estima a posição dos demais.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textmodels)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM, removendo palavras muito frequentes e muito raras </span></span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(partido)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar vetor com referências</span></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>mapeamento <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PSOL"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PT"</span> <span class="ot">=</span> <span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MDB"</span> <span class="ot">=</span> <span class="dv">0</span>,</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PP"</span> <span class="ot">=</span> <span class="fl">0.5</span>,</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"NOVO"</span> <span class="ot">=</span> <span class="dv">1</span>,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>  <span class="st">"PL"</span> <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>scores <span class="ot">&lt;-</span> mapeamento[<span class="fu">docid</span>(dfm_discursos)]</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a><span class="co"># Treinar o modelo Wordscores</span></span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>modelo_ws <span class="ot">&lt;-</span> <span class="fu">textmodel_wordscores</span>(dfm_discursos, <span class="at">y =</span> scores)</span>
+<span id="cb13-44"><a href="#cb13-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-45"><a href="#cb13-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Predizer posições para todos os discursos</span></span>
+<span id="cb13-46"><a href="#cb13-46" aria-hidden="true" tabindex="-1"></a>pred_ws <span class="ot">&lt;-</span> <span class="fu">predict</span>(modelo_ws, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 1037 features in newdata not used in prediction.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar resultados agrupados por partido</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(pred_ws) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Escalonamento Wordscores"</span>, </span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Score Estimado"</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="análise-de-correspondência-ca" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="análise-de-correspondência-ca"><span class="header-section-number">6.4</span> Análise de Correspondência (CA)</h2>
+<p>A CA é uma técnica de redução de dimensionalidade que permite visualizar a “distância” entre categorias (ex partidos) e palavras em um espaço comum.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textmodels)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM, removendo palavras muito frequentes e muito raras </span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_trim</span>(</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">min_termfreq =</span> <span class="fl">0.8</span>, <span class="at">termfreq_type =</span> <span class="st">"quantile"</span>,</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.1</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(partido)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Executar Análise de Correspondência</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>modelo_ca <span class="ot">&lt;-</span> <span class="fu">textmodel_ca</span>(dfm_discursos)</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizar a primeira dimensão da CA</span></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a><span class="fu">textplot_scale1d</span>(modelo_ca) <span class="sc">+</span> </span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Análise de Correspondência: 1ª Dimensão"</span>,</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Agrupamento por partido"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>CA permite extrair outras dimensões do modelo:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>coefs_ca_2d <span class="ot">&lt;-</span> <span class="fu">data_frame</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">partido =</span> modelo_ca<span class="sc">$</span>rownames,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">coef</span>(modelo_ca, <span class="at">doc_dim =</span> <span class="dv">1</span>)<span class="sc">$</span>coef_document,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">coef</span>(modelo_ca, <span class="at">doc_dim =</span> <span class="dv">2</span>)<span class="sc">$</span>coef_document</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `data_frame()` was deprecated in tibble 1.1.0.
+ℹ Please use `tibble()` instead.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coefs_ca_2d) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">label =</span> partido), <span class="at">position =</span> <span class="st">"nudge"</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">check_overlap =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="similaridade-textual-1" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="similaridade-textual-1"><span class="header-section-number">6.5</span> Similaridade Textual</h2>
+<p>A similaridade de cosseno mede o quão parecido é o vocabulário utilizado por diferentes grupos.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textstats)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda.textplots)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stopwords)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>nome_arquivo <span class="ot">&lt;-</span> <span class="st">"discursos_camara_abril_2025.csv"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(nome_arquivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doc_id =</span> <span class="fu">str_c</span>(<span class="fu">row_number</span>(), nome, partido, <span class="at">sep =</span> <span class="st">"_"</span>))</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar corpus</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">corpus</span>(<span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>tokens_discursos <span class="ot">&lt;-</span> corpus_discursos <span class="sc">|&gt;</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens</span>(<span class="at">remove_punct =</span> <span class="cn">TRUE</span>, <span class="at">remove_numbers =</span> <span class="cn">TRUE</span>, <span class="at">remove_symbols =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_remove</span>(<span class="fu">stopwords</span>(<span class="st">"portuguese"</span>))</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar DFM, removendo palavras muito frequentes e muito raras </span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>dfm_discursos <span class="ot">&lt;-</span> tokens_discursos <span class="sc">|&gt;</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_group</span>(partido) <span class="sc">|&gt;</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm_tfidf</span>()</span>
+<span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-28"><a href="#cb20-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular similaridade entre os textos cada partido</span></span>
+<span id="cb20-29"><a href="#cb20-29" aria-hidden="true" tabindex="-1"></a>simil_cosseno <span class="ot">&lt;-</span> <span class="fu">textstat_simil</span>(dfm_discursos, <span class="at">method =</span> <span class="st">"cosine"</span>)</span>
+<span id="cb20-30"><a href="#cb20-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir como uma matriz de similaridade</span></span>
+<span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>matriz_simil <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(simil_cosseno)</span>
+<span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>matriz_simil</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   AVANTE  CIDADANIA        MDB      MISSÃO       NOVO
+AVANTE        1.000000000 0.02787337 0.07380372 0.019631335 0.04485795
+CIDADANIA     0.027873371 1.00000000 0.04369623 0.022123361 0.04573593
+MDB           0.073803716 0.04369623 1.00000000 0.076356894 0.13200163
+MISSÃO        0.019631335 0.02212336 0.07635689 1.000000000 0.13640773
+NOVO          0.044857953 0.04573593 0.13200163 0.136407732 1.00000000
+PCdoB         0.044107047 0.04904823 0.09325166 0.064075783 0.09736563
+PDT           0.030919866 0.03348857 0.07546434 0.044773153 0.05749956
+PL            0.128066709 0.07693393 0.24724439 0.178480068 0.30444040
+PODE          0.068523881 0.07280090 0.14239923 0.048788652 0.11101765
+PP            0.063266160 0.06679444 0.11308537 0.069248009 0.10791410
+PRD           0.039376348 0.02456326 0.04924585 0.032951604 0.06735844
+PSB           0.041043911 0.04041095 0.08618435 0.042934493 0.08249229
+PSD           0.077358918 0.06454202 0.15889577 0.065271085 0.11145946
+PSDB          0.040073915 0.04277501 0.08300785 0.030581116 0.05185333
+PSOL          0.048683520 0.05073260 0.13940012 0.155322271 0.14754334
+PT            0.107756605 0.08901398 0.23754635 0.180877637 0.24790576
+PV            0.035220240 0.02268635 0.06747704 0.036841007 0.05868708
+REDE          0.005847773 0.01415298 0.02173596 0.003466535 0.03218736
+REPUBLICANOS  0.090222228 0.07820126 0.14204029 0.080380908 0.14666687
+SOLIDARIEDADE 0.027678226 0.03535256 0.03662918 0.013309865 0.03384708
+UNIÃO         0.088273252 0.08756866 0.16160667 0.091587775 0.15571983
+                   PCdoB        PDT         PL       PODE         PP
+AVANTE        0.04410705 0.03091987 0.12806671 0.06852388 0.06326616
+CIDADANIA     0.04904823 0.03348857 0.07693393 0.07280090 0.06679444
+MDB           0.09325166 0.07546434 0.24724439 0.14239923 0.11308537
+MISSÃO        0.06407578 0.04477315 0.17848007 0.04878865 0.06924801
+NOVO          0.09736563 0.05749956 0.30444040 0.11101765 0.10791410
+PCdoB         1.00000000 0.05717851 0.16735640 0.08683122 0.10017920
+PDT           0.05717851 1.00000000 0.10435286 0.07130165 0.07351838
+PL            0.16735640 0.10435286 1.00000000 0.18226007 0.20028036
+PODE          0.08683122 0.07130165 0.18226007 1.00000000 0.11097406
+PP            0.10017920 0.07351838 0.20028036 0.11097406 1.00000000
+PRD           0.04604957 0.02746630 0.11480949 0.05936028 0.04458288
+PSB           0.06144504 0.04166940 0.12017737 0.10256463 0.08499375
+PSD           0.11796589 0.06798925 0.23182487 0.12403827 0.14909714
+PSDB          0.05009437 0.03774048 0.10567578 0.06392002 0.07953645
+PSOL          0.15806005 0.06738889 0.27411020 0.09810549 0.11574245
+PT            0.23966729 0.11990024 0.46061379 0.19319766 0.20816439
+PV            0.05988489 0.04268525 0.10240486 0.06193345 0.08366903
+REDE          0.02124193 0.01007144 0.04120137 0.01826950 0.01207763
+REPUBLICANOS  0.10975239 0.07339669 0.24397837 0.14417155 0.15155496
+SOLIDARIEDADE 0.03179445 0.02067598 0.06110712 0.04106118 0.04353620
+UNIÃO         0.11510133 0.07723010 0.30377991 0.14272272 0.15609655
+                      PRD        PSB        PSD        PSDB       PSOL
+AVANTE        0.039376348 0.04104391 0.07735892 0.040073915 0.04868352
+CIDADANIA     0.024563258 0.04041095 0.06454202 0.042775011 0.05073260
+MDB           0.049245848 0.08618435 0.15889577 0.083007850 0.13940012
+MISSÃO        0.032951604 0.04293449 0.06527108 0.030581116 0.15532227
+NOVO          0.067358445 0.08249229 0.11145946 0.051853327 0.14754334
+PCdoB         0.046049571 0.06144504 0.11796589 0.050094372 0.15806005
+PDT           0.027466302 0.04166940 0.06798925 0.037740482 0.06738889
+PL            0.114809488 0.12017737 0.23182487 0.105675779 0.27411020
+PODE          0.059360284 0.10256463 0.12403827 0.063920017 0.09810549
+PP            0.044582882 0.08499375 0.14909714 0.079536452 0.11574245
+PRD           1.000000000 0.03003230 0.06276192 0.031295001 0.05632476
+PSB           0.030032305 1.00000000 0.10049483 0.053813205 0.07369789
+PSD           0.062761916 0.10049483 1.00000000 0.090908162 0.11961952
+PSDB          0.031295001 0.05381321 0.09090816 1.000000000 0.05022647
+PSOL          0.056324758 0.07369789 0.11961952 0.050226470 1.00000000
+PT            0.106773354 0.14793576 0.23107618 0.121368474 0.37676418
+PV            0.028869606 0.06556678 0.09436734 0.050131474 0.07788873
+REDE          0.003269991 0.01455187 0.01639078 0.006021034 0.02203964
+REPUBLICANOS  0.076520497 0.57069448 0.18142563 0.095010128 0.13027068
+SOLIDARIEDADE 0.055407839 0.02664754 0.04177005 0.027435881 0.03396576
+UNIÃO         0.108378480 0.13750687 0.20228906 0.104466945 0.16301463
+                      PT         PV        REDE REPUBLICANOS SOLIDARIEDADE
+AVANTE        0.10775661 0.03522024 0.005847773   0.09022223   0.027678226
+CIDADANIA     0.08901398 0.02268635 0.014152977   0.07820126   0.035352559
+MDB           0.23754635 0.06747704 0.021735959   0.14204029   0.036629178
+MISSÃO        0.18087764 0.03684101 0.003466535   0.08038091   0.013309865
+NOVO          0.24790576 0.05868708 0.032187359   0.14666687   0.033847078
+PCdoB         0.23966729 0.05988489 0.021241927   0.10975239   0.031794454
+PDT           0.11990024 0.04268525 0.010071442   0.07339669   0.020675978
+PL            0.46061379 0.10240486 0.041201367   0.24397837   0.061107123
+PODE          0.19319766 0.06193345 0.018269497   0.14417155   0.041061181
+PP            0.20816439 0.08366903 0.012077631   0.15155496   0.043536198
+PRD           0.10677335 0.02886961 0.003269991   0.07652050   0.055407839
+PSB           0.14793576 0.06556678 0.014551869   0.57069448   0.026647540
+PSD           0.23107618 0.09436734 0.016390780   0.18142563   0.041770048
+PSDB          0.12136847 0.05013147 0.006021034   0.09501013   0.027435881
+PSOL          0.37676418 0.07788873 0.022039636   0.13027068   0.033965756
+PT            1.00000000 0.14851140 0.031137059   0.26134259   0.068081275
+PV            0.14851140 1.00000000 0.030925006   0.09838080   0.022042157
+REDE          0.03113706 0.03092501 1.000000000   0.01436216   0.008185284
+REPUBLICANOS  0.26134259 0.09838080 0.014362164   1.00000000   0.049210784
+SOLIDARIEDADE 0.06808127 0.02204216 0.008185284   0.04921078   1.000000000
+UNIÃO         0.28740643 0.08940217 0.017001647   0.22259318   0.070512379
+                   UNIÃO
+AVANTE        0.08827325
+CIDADANIA     0.08756866
+MDB           0.16160667
+MISSÃO        0.09158777
+NOVO          0.15571983
+PCdoB         0.11510133
+PDT           0.07723010
+PL            0.30377991
+PODE          0.14272272
+PP            0.15609655
+PRD           0.10837848
+PSB           0.13750687
+PSD           0.20228906
+PSDB          0.10446695
+PSOL          0.16301463
+PT            0.28740643
+PV            0.08940217
+REDE          0.01700165
+REPUBLICANOS  0.22259318
+SOLIDARIEDADE 0.07051238
+UNIÃO         1.00000000</code></pre>
+</div>
+</div>
+<p>A matriz de distâncias pode ser apresentada como um dendograma:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Construir agrupamentos</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>agrupamentos <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">as.dist</span>(matriz_simil))</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar dendograma a partir dos agrupamentos</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(agrupamentos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="aula5_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="atividade-prática" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">6.6</span> Atividade prática</h2>
+<p>Utilizando o corpus de discursos de abril de 2025 da câmara:</p>
+<ul>
+<li><p>Treine um modelo STM para analisar a influência do estado dos parlamentares (coluna “uf”) e seu gênero (coluna “sexo”)</p></li>
+<li><p>Utilize diferentes distâncias de “textstat_dist” e “textstat_simil” da biblioteca quanteda para comparar discursos de diferentes estados. Existem relações entre distâncias geográficas e distâncias textuais?</p></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./aula4.html" class="pagination-link" aria-label="Análise Sintática e Modelos de Tópicos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Análise Sintática e Modelos de Tópicos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./glossario.html" class="pagination-link" aria-label="Glossário">
+        <span class="nav-page-text">Glossário</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

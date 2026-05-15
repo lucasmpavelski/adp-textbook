@@ -39,3 +39,65 @@ bpe_encode(model, c("adultização", "adultos", "eleitoreado", "eleitorado", "se
 Note que os tokens gerados pelo BPE não necessáriamente correspondem "significados".
 
 Porém, tokens BPE são muito útens em modelos que consideram sequências como entrada e modelos multi-línguas.
+
+```{r}
+# install.packages("bertopicr")
+library(bertopicr)
+library(reticulate)
+
+setup_python_environment(
+  envname = "r-bertopic",
+  method = "virtualenv"
+)
+
+use_virtualenv("r-bertopic", required = TRUE)
+py_config()
+```
+
+```{r}
+library(tidyverse)
+library(stopwords)
+
+dados_discursos <- read_csv("discursos_camara_abril_2025.csv")
+
+discursos_topicos <- dados_discursos |>
+  filter(str_detect(hora_inicio, "2025-04-29")) |>
+  pull(transcricao)
+
+topicos <- train_bertopic_model(
+  discursos_topicos,
+  #embedding_model = "sentence-transformers/all-MiniLM-L6-v2",
+  verbose = TRUE,
+  embedding_model = "neuralmind/bert-base-portuguese-cased",
+  min_df = 1,
+  max_df = 100
+)
+
+
+
+```
+
+```{r}
+```
+
+{r} dfm_stm_discursos \<- corpus_discursos \|\> tokens(remove_numbers = TRUE, remove_punct = TRUE, remove_symbols = TRUE) \|\> tokens_remove(c(stopwords("portuguese"), "é", "senhor", "senhora", "sr", "sra")) \|\> dfm() \|\> dfm_trim(min_termfreq = 0.8, termfreq_type = "quantile", max_docfreq = 0.1, docfreq_type = "prop")
+
+dfm_stm_discursos
+
+topic.count \<- 10 dfm2stm \<- convert(dfm_stm_discursos, to = "stm") model.stm \<- stm(dfm2stm$documents, dfm2stm$vocab, K = topic.count, data = dfm2stm\$meta, init.type = "Spectral") \# this is the actual stm call
+
+data.frame(t(labelTopics(model.stm, n = 10)\$prob))
+
+TODO: outros atributos spacy
+
+{r} tokens_ulysses \<- spacy_parse(frases_ulysses, additional_attributes = "morph")
+
+tokens_ulyses \|\> mutate(morph = map(morph, (x) x\$to_dict())) \|\> unnest_wider(morph)
+
+## Reconhecimento de entidades nomeadas
+
+## Embeddings
+
+## Similaridade textual
+
+## 

@@ -421,16 +421,19 @@ tabela_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
   mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
   corpus(text_field = "transcricao")
 
+# Criar tokens
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE) |>
+  tokens_tolower()
+
 # Criar um dicionário temático (ex: Saúde e Educação)
 meu_dicionario <- dictionary(list(
   saude = c("saúde", "hospital", "hospitais", "médico", "médicos", "enfermeiro", "sus"),
   educacao = c("educação", "escola", "escolas", "professor", "professores", "ensino", "universidade")
 ))
 
-# Aplicar dicionário e criar DFM para contar as menções
-dfm_temas <- corpus_discursos |>
-  tokens(remove_punct = TRUE) |>
-  tokens_tolower() |>
+# Aplicar dicionário e criar DFM para contar as menções de cada tema
+dfm_temas <- tokens_discursos |>
   tokens_lookup(dictionary = meu_dicionario) |>
   dfm()
 

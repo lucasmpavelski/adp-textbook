@@ -124,6 +124,16 @@ buscar_discursos <- function(id_deputado, data_inicio, data_fim) {
     buscar_todas_as_paginas()
 }
 
+buscar_dados_deputados <- function(id_legislatura) {
+  dt <- request(url_api) |>
+    req_url_path("api", "v2", "deputados") |>
+    req_url_query(
+      itens = 1000,
+      idLegislatura = id_legislatura
+    ) |>
+    buscar_todas_as_paginas()
+}
+
 buscar_discursos_cache <- function(id_deputado, data_inicio, data_fim) {
   cached("discursos", buscar_discursos, id_deputado, data_inicio, data_fim)
 }
@@ -142,7 +152,8 @@ library(furrr)
 #future::plan(multisession, workers = 10)
 future::plan(sequential)
 
-dt_deputados <- cached("deputados_legislaturas", buscar_deputados_legislaturas)
+dt_deputados <- cached("deputados_legislaturas", buscar_deputados_legislaturas) |> 
+  filter(id %in% 51:57)
 
 
 dt_discursos <- dt_deputados |>
@@ -153,10 +164,62 @@ dt_discursos <- dt_deputados |>
   ) |>
   filter(id_deputado != 160508) |> # dado retornando Erro do servidor
   mutate(discursos = pmap(
-    across(c("id_deputado", "data_inicio", "data_fim")), 
-    buscar_discursos_cache, 
+    across(c("id_deputado", "data_inicio", "data_fim")),
+    buscar_discursos_cache,
     .progress = TRUE
   ))
 
+dados_deputados <- map(dt_discursos$id |> unique(), buscar_dados_deputados)
 
+dados_deputados <- dados_deputados |>
+  bind_rows() |>
+  select(id, idLegislatura, nome, siglaPartido, siglaUf) |>
+  distinct() |>
+  group_by(id, idLegislatura) |>
+  slice_head(n = 1)
+
+dt_discursos <- dt_discursos |>
+  unnest(discursos) |>
+  unnest_wider(faseEvento, names_sep = "_") 
+
+
+dt_discursos <- dt_discursos |>
+  left_join(dados_deputados, by = c("id" = "idLegislatura", "id_deputado" = "id"))
+
+#|>
+#  left_join(dados_deputados, by = c("id_deputado" = "id", "id" = "idLegislatura"))
+
+dt_discursos2 <- dt_discursos |>
+  select(
+    id = id_deputado,
+    nome = deputados_nome,
+    uf = siglaUf,
+    partido = siglaPartido,
+    uri = deputados_uri,
+    nome_civil = deputados_nome,
+    sexo = NULL,
+    data_nascimento = NULL,
+    data_falecimento = NULL,
+    uf_nascimento = NULL,
+    municipio_nascimento = NULL,
+    escolaridade = NULL,
+    situacao = NULL,
+    data_situacao = NULL,
+    ultimo_partido = siglaPartido,
+    hora_inicio = dataHoraInicio,
+    hora_fim = dataHoraFim,
+    fase_evento = faseEvento_titulo,
+    tipo_discurso = tipoDiscurso,
+    keywords,
+    sumario,
+    transcricao
+  )
+
+anos <- year(dt_discursos2$hora_inicio) |> unique()
+
+for (a in anos) {
+  dt_discursos2 |>
+    filter(year(hora_inicio) == a) |>
+    write_csv(str_c("discursos_camara_", a, ".csv"))
+}
 

@@ -719,10 +719,13 @@ tokens_discursos <- corpus_discursos |>
   tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |>
   tokens_remove(stopwords("portuguese"))
 
-# Criar DFM e aplicar filtros de frequência (mínimo de 5 ocorrências, máximo de 50% dos documentos)
+# Criar DFM e aplicar filtros de frequência (80% das palavras mais frequentes, máximo de 50% dos documentos)
 dfm_discursos <- tokens_discursos |>
   dfm() |>
-  dfm_trim(min_termfreq = 5, max_docfreq = 0.5, docfreq_type = "prop")
+  dfm_trim(
+    min_termfreq = 0.8, termfreq_type = "quantile",
+    max_docfreq = 0.1, docfreq_type = "prop"
+  )
 
 # Treinar modelo LDA com 5 tópicos
 set.seed(123) # semente para reprodutibilidade
@@ -748,7 +751,7 @@ print(topicos_10_docs)
 
 Modelagem de Tópicos Guiada (Seeded LDA):
 
-```{r}
+```{r cache=TRUE}
 library(tidyverse)
 library(quanteda)
 library(seededlda)
@@ -769,7 +772,10 @@ tokens_discursos <- corpus_discursos |>
 # Criar DFM
 dfm_discursos <- tokens_discursos |>
   dfm() |>
-  dfm_trim(min_termfreq = 5, max_docfreq = 0.5, docfreq_type = "prop")
+  dfm_trim(
+    min_termfreq = 0.8, termfreq_type = "quantile",
+    max_docfreq = 0.1, docfreq_type = "prop"
+  )
 
 # Definir sementes para tópicos específicos
 sementes <- dictionary(list(
