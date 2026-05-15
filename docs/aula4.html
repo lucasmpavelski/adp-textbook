@@ -255,7 +255,14 @@ div.csl-indent {
   <li><a href="#exemplo-de-análise-de-tópicos-guiada-com-seededlda" id="toc-exemplo-de-análise-de-tópicos-guiada-com-seededlda" class="nav-link" data-scroll-target="#exemplo-de-análise-de-tópicos-guiada-com-seededlda"><span class="header-section-number">4.4.1</span> Exemplo de análise de tópicos guiada com seededlda</a></li>
   </ul></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">4.5</span> Para saber mais</a></li>
-  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">4.6</span> Estudos guiados</a></li>
+  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">4.6</span> Estudos guiados</a>
+  <ul class="collapse">
+  <li><a href="#inicialização-do-spacy-para-português" id="toc-inicialização-do-spacy-para-português" class="nav-link" data-scroll-target="#inicialização-do-spacy-para-português"><span class="header-section-number">4.6.1</span> Inicialização do Spacy para Português</a></li>
+  <li><a href="#análise-de-classes-gramaticais-pos-tagging" id="toc-análise-de-classes-gramaticais-pos-tagging" class="nav-link" data-scroll-target="#análise-de-classes-gramaticais-pos-tagging"><span class="header-section-number">4.6.2</span> Análise de classes gramaticais (POS Tagging)</a></li>
+  <li><a href="#extraindo-relações-de-dependência-atores-e-ações" id="toc-extraindo-relações-de-dependência-atores-e-ações" class="nav-link" data-scroll-target="#extraindo-relações-de-dependência-atores-e-ações"><span class="header-section-number">4.6.3</span> Extraindo Relações de Dependência (Atores e Ações)</a></li>
+  <li><a href="#modelagem-de-tópicos-lda" id="toc-modelagem-de-tópicos-lda" class="nav-link" data-scroll-target="#modelagem-de-tópicos-lda"><span class="header-section-number">4.6.4</span> Modelagem de Tópicos (LDA)</a></li>
+  <li><a href="#modelagem-de-tópicos-guiada-seeded-lda" id="toc-modelagem-de-tópicos-guiada-seeded-lda" class="nav-link" data-scroll-target="#modelagem-de-tópicos-guiada-seeded-lda"><span class="header-section-number">4.6.5</span> Modelagem de Tópicos Guiada (Seeded LDA)</a></li>
+  </ul></li>
   <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">4.7</span> Atividade prática</a></li>
   </ul>
 </nav>
@@ -814,20 +821,13 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_sintaxe_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                                doc_id sentence_id token_id    token    lemma
-1 1102_Pastor Sargento Isidório_AVANTE           1        1        O        o
-2 1102_Pastor Sargento Isidório_AVANTE           1        2       SR       SR
-3 1102_Pastor Sargento Isidório_AVANTE           1        3        .        .
-4 1102_Pastor Sargento Isidório_AVANTE           2        1   PASTOR   PASTOR
-5 1102_Pastor Sargento Isidório_AVANTE           3        1 SARGENTO SARGENTO
-6 1102_Pastor Sargento Isidório_AVANTE           3        2 ISIDÓRIO ISIDÓRIO
-    pos
-1   DET
-2 PROPN
-3 PUNCT
-4  NOUN
-5 PROPN
-6 PROPN</code></pre>
+<pre><code>                      doc_id sentence_id token_id       token       lemma   pos
+1 315_Coronel Chrisóstomo_PL           1        1           O           o   DET
+2 315_Coronel Chrisóstomo_PL           1        2          SR          SR PROPN
+3 315_Coronel Chrisóstomo_PL           1        3           .           . PUNCT
+4 315_Coronel Chrisóstomo_PL           2        1     CORONEL     CORONEL  VERB
+5 315_Coronel Chrisóstomo_PL           2        2 CHRISÓSTOMO CHRISÓSTOMO  NOUN
+6 315_Coronel Chrisóstomo_PL           2        3           (           ( PUNCT</code></pre>
 </div>
 </div>
 <p>Contagem de classes gramaticais:</p>
@@ -836,22 +836,22 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(pos, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contagem de classes gramaticais</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     pos    n
-1   NOUN 7600
-2  PUNCT 6137
-3    ADP 5506
-4   VERB 4227
-5    DET 4112
-6  PROPN 3547
-7   PRON 2012
-8    ADV 1935
-9    ADJ 1869
-10   AUX 1300
-11 CCONJ 1207
-12 SCONJ 1175
-13   NUM  459
-14     X   23
-15   SYM   13
-16  INTJ    8</code></pre>
+1   NOUN 7498
+2  PUNCT 6310
+3    ADP 5617
+4   VERB 4278
+5    DET 4224
+6  PROPN 3837
+7   PRON 2133
+8    ADV 2031
+9    ADJ 1926
+10   AUX 1400
+11 CCONJ 1171
+12 SCONJ 1124
+13   NUM  566
+14     X   28
+15   SYM   23
+16  INTJ    5</code></pre>
 </div>
 </div>
 <p>Verbos mais utilizados:</p>
@@ -862,16 +862,16 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      lemma   n
-1       ter 202
-2     fazer 151
-3    querer 132
-4     dizer  92
-5     poder  88
-6     haver  74
-7     falar  64
-8  precisar  53
-9       dar  52
-10    saber  48</code></pre>
+1       ter 227
+2     fazer 188
+3    querer 151
+4     poder  97
+5     dizer  83
+6     haver  78
+7     falar  70
+8  precisar  68
+9       dar  54
+10    dever  41</code></pre>
 </div>
 </div>
 <p>A função <code>as.tokens</code> permite converter a tabela novamente em objeto tokens da biblioteca <code>quanteda</code> concatenando a informação de classe gramatical (opcionalmente utilizando lemas no lugar do token original):</p>
@@ -882,40 +882,38 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tokens_select</span>(<span class="st">"*/VERB"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tokens consisting of 100 documents.
-1102_Pastor Sargento Isidório_AVANTE :
-[1] "\u0097/VERB"     "CGADB/VERB"      "apresentar/VERB" "deixar/VERB"    
-[5] "dizer/VERB"      "ser/VERB"        "vir/VERB"        "agradeço/VERB"  
-[9] "recebam/VERB"   
+315_Coronel Chrisóstomo_PL :
+ [1] "CORONEL/VERB"  "ter/VERB"      "falar/VERB"    "Faltam/VERB"  
+ [5] "divulgar/VERB" "defender/VERB" "roubar/VERB"   "informar/VERB"
+ [9] "declarar/VERB" "ir/VERB"       "aguardar/VERB" "faltar/VERB"  
+[ ... and 3 more ]
 
-221_Capitão Augusto_PL :
- [1] "Obrigado/VERB"   "divulgar/VERB"   "acabar/VERB"     "ser/VERB"       
- [5] "conseguir/VERB"  "segurar/VERB"    "ficar/VERB"      "piorar/VERB"    
- [9] "conseguir/VERB"  "colocar/VERB"    "pegar/VERB"      "considerar/VERB"
-[ ... and 9 more ]
+16_Adriana Ventura_NOVO :
+ [1] "buscar/VERB"    "fazer/VERB"     "avancer/VERB"   "tentar/VERB"   
+ [5] "fazer/VERB"     "trazer/VERB"    "partir/VERB"    "ficar/VERB"    
+ [9] "saber/VERB"     "existir/VERB"   "anteceder/VERB" "ouvir/VERB"    
+[ ... and 43 more ]
 
-319_Coronel Chrisóstomo_PL :
- [1] "CORONEL/VERB"     "querer/VERB"      "falar/VERB"       "existir/VERB"    
- [5] "cuidar/VERB"      "chegar/VERB"      "recuperar/VERB"   "vir/VERB"        
- [9] "trabalhar/VERB"   "entristecir/VERB" "dar/VERB"         "trazer/VERB"     
+1308_Rubens Pereira Júnior_PT :
+ [1] "dar/VERB"        "solicitar/VERB"  "dar/VERB"        "ler/VERB"       
+ [5] "reunir/VERB"     "debater/VERB"    "possar/VERB"     "ter/VERB"       
+ [9] "definir/VERB"    "merecer/VERB"    "apresentar/VERB" "propor/VERB"    
+[ ... and 61 more ]
+
+1159_Pompeo de Mattos_PDT :
+ [1] "apresentar/VERB"  "recriar/VERB"     "ter/VERB"         "incentir/VERB"   
+ [5] "existir/VERB"     "funcionar/VERB"   "envolv/VERB"      "extinta/VERB"    
+ [9] "existir/VERB"     "funcionando/VERB" "subsidiar/VERB"   "Existe/VERB"     
 [ ... and 56 more ]
 
-1121_Paulão_PT :
- [1] "gostar/VERB"      "parabenizar/VERB" "fazer/VERB"       "propor/VERB"     
- [5] "póstum/VERB"      "querer/VERB"      "ceifou/VERB"      "fazer/VERB"      
- [9] "Gostaria/VERB"    "destacar/VERB"    "realizar/VERB"    "encontrar/VERB"  
-[ ... and 42 more ]
+1148_Pezenti_MDB :
+ [1] "acompanhar/VERB" "abrir/VERB"      "dar/VERB"        "condenar/VERB"  
+ [5] "parecer/VERB"    "fugir/VERB"      "esconder/VERB"   "errado/VERB"    
+ [9] "cometer/VERB"    "acobertar/VERB"  "terminar/VERB"   "saber/VERB"     
+[ ... and 36 more ]
 
-309_Coronel Assis_UNIÃO :
- [1] "haver/VERB"      "parecer/VERB"    "acontecer/VERB"  "sair/VERB"      
- [5] "apostar/VERB"    "poder/VERB"      "salvar/VERB"     "poder/VERB"     
- [9] "salvar/VERB"     "viver/VERB"      "partir/VERB"     "interferir/VERB"
-[ ... and 15 more ]
-
-1359_Sidney Leite_PSD :
- [1] "fazer/VERB"       "ter/VERB"         "alagar/VERB"      "possibilito/VERB"
- [5] "ter/VERB"         "adentrar/VERB"    "dito/VERB"        "salientar/VERB"  
- [9] "organizar/VERB"   "ser/VERB"         "haver/VERB"       "flertar/VERB"    
-[ ... and 50 more ]
+853_Lídice da Mata_PSB :
+[1] "alavancar/VERB" "viver/VERB"     "permitir/VERB"  "acessar/VERB"  
 
 [ reached max_ndoc ... 94 more documents ]</code></pre>
 </div>
@@ -932,27 +930,27 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dfm</span>() <span class="sc">|&gt;</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">textstat_frequency</span>(<span class="dv">10</span>, <span class="at">groups =</span> partido)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           feature frequency rank docfreq group
-1     brasil/propn        35    1      14    PL
-2         pl/propn        28    2      21    PL
-3         sr/propn        25    3      25    PL
-4      bloco/propn        23    4      23    PL
-5    federal/propn        22    5       8    PL
-6    governo/propn        20    6      10    PL
-7  bolsonaro/propn        18    7       8    PL
-8          "/propn        15    8       7    PL
-9    supremo/propn        14    9       3    PL
-10      lula/propn        13   10       5    PL
-11    brasil/propn        43    1      20    PT
-12   governo/propn        29    2       9    PT
-13        sr/propn        27    3      19    PT
-14     bloco/propn        27    3      19    PT
-15        pt/propn        22    5      19    PT
-16   federal/propn        20    6      11    PT
-17 bolsonaro/propn        15    7       5    PT
-18        pl/propn        13    8       6    PT
-19  deputado/propn        12    9       8    PT
-20      lula/propn        12    9       9    PT</code></pre>
+<pre><code>            feature frequency rank docfreq group
+1          pl/propn        41    1      23    PL
+2      brasil/propn        40    2      13    PL
+3  presidente/propn        37    3      13    PL
+4          sr/propn        29    4      23    PL
+5       bloco/propn        29    4      23    PL
+6     governo/propn        22    6       8    PL
+7    deputado/propn        20    7       8    PL
+8        casa/propn        17    8      11    PL
+9     federal/propn        15    9       8    PL
+10    polícia/propn        15    9       4    PL
+11      bloco/propn        31    1      23    PT
+12       lula/propn        29    2       8    PT
+13         pt/propn        29    2      23    PT
+14         sr/propn        27    4      22    PT
+15     brasil/propn        26    5      12    PT
+16   deputado/propn        19    6       9    PT
+17    governo/propn        15    7      10    PT
+18 presidente/propn        15    7       8    PT
+19  deputados/propn        13    9      12    PT
+20       casa/propn        13    9       9    PT</code></pre>
 </div>
 </div>
 </section>
@@ -1576,7 +1574,8 @@ docs                         caros sistema comunicações boa tarde
 </section>
 <section id="estudos-guiados" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="estudos-guiados"><span class="header-section-number">4.6</span> Estudos guiados</h2>
-<p>Inicialização do Spacy para Português:</p>
+<section id="inicialização-do-spacy-para-português" class="level3" data-number="4.6.1">
+<h3 data-number="4.6.1" class="anchored" data-anchor-id="inicialização-do-spacy-para-português"><span class="header-section-number">4.6.1</span> Inicialização do Spacy para Português</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(spacyr)</span>
 <span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -1604,7 +1603,9 @@ numpy_version:  2.2.6
 NOTE: Python version was forced by use_python() function</code></pre>
 </div>
 </div>
-<p>Análise de classes gramaticais (POS Tagging):</p>
+</section>
+<section id="análise-de-classes-gramaticais-pos-tagging" class="level3" data-number="4.6.2">
+<h3 data-number="4.6.2" class="anchored" data-anchor-id="análise-de-classes-gramaticais-pos-tagging"><span class="header-section-number">4.6.2</span> Análise de classes gramaticais (POS Tagging)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1663,7 +1664,9 @@ lemmatization may not work properly in model 'pt_core_news_sm'</code></pre>
 20        SRA 15</code></pre>
 </div>
 </div>
-<p>Extraindo Relações de Dependência (Atores e Ações):</p>
+</section>
+<section id="extraindo-relações-de-dependência-atores-e-ações" class="level3" data-number="4.6.3">
+<h3 data-number="4.6.3" class="anchored" data-anchor-id="extraindo-relações-de-dependência-atores-e-ações"><span class="header-section-number">4.6.3</span> Extraindo Relações de Dependência (Atores e Ações)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1775,7 +1778,9 @@ TRUE): lemmatization may not work properly in model 'pt_core_news_sm'</code></pr
 10     Brasil     crescer 1</code></pre>
 </div>
 </div>
-<p>Modelagem de Tópicos (LDA):</p>
+</section>
+<section id="modelagem-de-tópicos-lda" class="level3" data-number="4.6.4">
+<h3 data-number="4.6.4" class="anchored" data-anchor-id="modelagem-de-tópicos-lda"><span class="header-section-number">4.6.4</span> Modelagem de Tópicos (LDA)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1848,7 +1853,9 @@ TRUE): lemmatization may not work properly in model 'pt_core_news_sm'</code></pr
 10_Adriana Ventura_NOVO                topic4</code></pre>
 </div>
 </div>
-<p>Modelagem de Tópicos Guiada (Seeded LDA):</p>
+</section>
+<section id="modelagem-de-tópicos-guiada-seeded-lda" class="level3" data-number="4.6.5">
+<h3 data-number="4.6.5" class="anchored" data-anchor-id="modelagem-de-tópicos-guiada-seeded-lda"><span class="header-section-number">4.6.5</span> Modelagem de Tópicos Guiada (Seeded LDA)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1927,6 +1934,7 @@ TRUE): lemmatization may not work properly in model 'pt_core_news_sm'</code></pr
 10_Adriana Ventura_NOVO                    saude</code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="atividade-prática" class="level2" data-number="4.7">
 <h2 data-number="4.7" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">4.7</span> Atividade prática</h2>

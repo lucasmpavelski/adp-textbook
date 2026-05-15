@@ -487,7 +487,7 @@ tm_dfm
 
 Para construir o modelo utilizamos `textmodel_lda`:
 
-```{r}
+```{r cache=TRUE}
 set.seed(42) # semente para gerador de números aleatórios
 
 numero_de_topicos <- 10
@@ -569,7 +569,7 @@ dicionario_topicos
 
 As sementes são passadas como segundo argumento da função `textmodel_seededlda`:
 
-```{r}
+```{r cache=TRUE}
 set.seed(42)
 stmod_discursos <- textmodel_seededlda(tm_dfm, dicionario_topicos)
 
@@ -594,7 +594,7 @@ Para uma discussão sobre análise de tópicos guiada em estudos sociais, veja o
 
 ## Estudos guiados
 
-Inicialização do Spacy para Português:
+### Inicialização do Spacy para Português
 
 ```{r}
 library(spacyr)
@@ -609,7 +609,7 @@ spacy_initialize(model = "pt_core_news_sm")
 print(reticulate::py_config())
 ```
 
-Análise de classes gramaticais (POS Tagging):
+### Análise de classes gramaticais (POS Tagging)
 
 ```{r}
 library(tidyverse)
@@ -639,7 +639,7 @@ top_propn <- analise_pos |>
 print(top_propn)
 ```
 
-Extraindo Relações de Dependência (Atores e Ações):
+### Extraindo Relações de Dependência (Atores e Ações)
 
 ```{r}
 library(tidyverse)
@@ -699,7 +699,7 @@ print("Principais ações-atores:")
 print(top_acoes_atores)
 ```
 
-Modelagem de Tópicos (LDA):
+### Modelagem de Tópicos (LDA)
 
 ```{r cache=TRUE}
 library(tidyverse)
@@ -749,7 +749,7 @@ topicos_10_docs <- modelo_lda |>
 print(topicos_10_docs)
 ```
 
-Modelagem de Tópicos Guiada (Seeded LDA):
+### Modelagem de Tópicos Guiada (Seeded LDA)
 
 ```{r cache=TRUE}
 library(tidyverse)

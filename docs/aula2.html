@@ -259,7 +259,17 @@ div.csl-indent {
   <li><a href="#palavras-no-contexto-keywords-in-context" id="toc-palavras-no-contexto-keywords-in-context" class="nav-link" data-scroll-target="#palavras-no-contexto-keywords-in-context"><span class="header-section-number">2.6</span> Palavras no contexto (Keywords-in-context)</a></li>
   <li><a href="#exemplo-prático-nuvem-de-palavras-por-partido" id="toc-exemplo-prático-nuvem-de-palavras-por-partido" class="nav-link" data-scroll-target="#exemplo-prático-nuvem-de-palavras-por-partido"><span class="header-section-number">2.7</span> Exemplo Prático: Nuvem de Palavras por Partido</a></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">2.8</span> Para saber mais</a></li>
-  <li><a href="#estudos-guidados" id="toc-estudos-guidados" class="nav-link" data-scroll-target="#estudos-guidados"><span class="header-section-number">2.9</span> Estudos guidados</a></li>
+  <li><a href="#estudos-guidados" id="toc-estudos-guidados" class="nav-link" data-scroll-target="#estudos-guidados"><span class="header-section-number">2.9</span> Estudos guidados</a>
+  <ul class="collapse">
+  <li><a href="#criando-corpus-a-partir-de-uma-planilha-csv" id="toc-criando-corpus-a-partir-de-uma-planilha-csv" class="nav-link" data-scroll-target="#criando-corpus-a-partir-de-uma-planilha-csv"><span class="header-section-number">2.9.1</span> Criando corpus a partir de uma planilha CSV</a></li>
+  <li><a href="#quebrando-o-corpus-em-palavras-tokens" id="toc-quebrando-o-corpus-em-palavras-tokens" class="nav-link" data-scroll-target="#quebrando-o-corpus-em-palavras-tokens"><span class="header-section-number">2.9.2</span> Quebrando o corpus em palavras (tokens)</a></li>
+  <li><a href="#pré-processamento-de-tokens-removendo-stopwords-e-stematização" id="toc-pré-processamento-de-tokens-removendo-stopwords-e-stematização" class="nav-link" data-scroll-target="#pré-processamento-de-tokens-removendo-stopwords-e-stematização"><span class="header-section-number">2.9.3</span> Pré-processamento de tokens: removendo stopwords e stematização</a></li>
+  <li><a href="#construindo-dfm-a-partir-de-tokens" id="toc-construindo-dfm-a-partir-de-tokens" class="nav-link" data-scroll-target="#construindo-dfm-a-partir-de-tokens"><span class="header-section-number">2.9.4</span> Construindo DFM a partir de tokens:</a></li>
+  <li><a href="#contando-palavras-mais-utilizadas-em-todos-os-discursos" id="toc-contando-palavras-mais-utilizadas-em-todos-os-discursos" class="nav-link" data-scroll-target="#contando-palavras-mais-utilizadas-em-todos-os-discursos"><span class="header-section-number">2.9.5</span> Contando palavras mais utilizadas (em todos os discursos)</a></li>
+  <li><a href="#contando-palavras-mais-utilizadas-por-grupos-ex-partido" id="toc-contando-palavras-mais-utilizadas-por-grupos-ex-partido" class="nav-link" data-scroll-target="#contando-palavras-mais-utilizadas-por-grupos-ex-partido"><span class="header-section-number">2.9.6</span> Contando palavras mais utilizadas por grupos (ex: partido)</a></li>
+  <li><a href="#núvem-de-palavras" id="toc-núvem-de-palavras" class="nav-link" data-scroll-target="#núvem-de-palavras"><span class="header-section-number">2.9.7</span> Núvem de palavras</a></li>
+  <li><a href="#núvem-de-palavras-comparativa" id="toc-núvem-de-palavras-comparativa" class="nav-link" data-scroll-target="#núvem-de-palavras-comparativa"><span class="header-section-number">2.9.8</span> Núvem de palavras comparativa</a></li>
+  </ul></li>
   <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">2.10</span> Atividade prática</a></li>
   </ul>
 </nav>
@@ -1521,7 +1531,8 @@ docs                         acácio favacho sem
 </section>
 <section id="estudos-guidados" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="estudos-guidados"><span class="header-section-number">2.9</span> Estudos guidados</h2>
-<p>Criando corpus a partir de uma planilha CSV:</p>
+<section id="criando-corpus-a-partir-de-uma-planilha-csv" class="level3" data-number="2.9.1">
+<h3 data-number="2.9.1" class="anchored" data-anchor-id="criando-corpus-a-partir-de-uma-planilha-csv"><span class="header-section-number">2.9.1</span> Criando corpus a partir de uma planilha CSV</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1579,7 +1590,9 @@ date  (2): data_nascimento, data_situacao
 [ reached max_ndoc ... 1,521 more documents ]</code></pre>
 </div>
 </div>
-<p>Quebrando o corpus em palavras (tokens):</p>
+</section>
+<section id="quebrando-o-corpus-em-palavras-tokens" class="level3" data-number="2.9.2">
+<h3 data-number="2.9.2" class="anchored" data-anchor-id="quebrando-o-corpus-em-palavras-tokens"><span class="header-section-number">2.9.2</span> Quebrando o corpus em palavras (tokens)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1643,7 +1656,9 @@ date  (2): data_nascimento, data_situacao
 [ reached max_ndoc ... 1,521 more documents ]</code></pre>
 </div>
 </div>
-<p>Pré-processamento de tokens: removendo stopwords e stematização</p>
+</section>
+<section id="pré-processamento-de-tokens-removendo-stopwords-e-stematização" class="level3" data-number="2.9.3">
+<h3 data-number="2.9.3" class="anchored" data-anchor-id="pré-processamento-de-tokens-removendo-stopwords-e-stematização"><span class="header-section-number">2.9.3</span> Pré-processamento de tokens: removendo stopwords e stematização</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1719,7 +1734,9 @@ date  (2): data_nascimento, data_situacao
 [ reached max_ndoc ... 1,521 more documents ]</code></pre>
 </div>
 </div>
-<p>Construindo DFM a partir de tokens:</p>
+</section>
+<section id="construindo-dfm-a-partir-de-tokens" class="level3" data-number="2.9.4">
+<h3 data-number="2.9.4" class="anchored" data-anchor-id="construindo-dfm-a-partir-de-tokens"><span class="header-section-number">2.9.4</span> Construindo DFM a partir de tokens:</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1782,7 +1799,9 @@ docs                         favacho registro taquigráfico nobres colegas
 [ reached max_ndoc ... 1,521 more documents, reached max_nfeat ... 23,762 more features ]</code></pre>
 </div>
 </div>
-<p>Contando palavras mais utilizadas (em todos os discursos):</p>
+</section>
+<section id="contando-palavras-mais-utilizadas-em-todos-os-discursos" class="level3" data-number="2.9.5">
+<h3 data-number="2.9.5" class="anchored" data-anchor-id="contando-palavras-mais-utilizadas-em-todos-os-discursos"><span class="header-section-number">2.9.5</span> Contando palavras mais utilizadas (em todos os discursos)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1852,7 +1871,9 @@ docs                         favacho registro taquigráfico nobres colegas
 20     povo       929   20     434   all</code></pre>
 </div>
 </div>
-<p>Contando palavras mais utilizadas por grupos (ex: partido):</p>
+</section>
+<section id="contando-palavras-mais-utilizadas-por-grupos-ex-partido" class="level3" data-number="2.9.6">
+<h3 data-number="2.9.6" class="anchored" data-anchor-id="contando-palavras-mais-utilizadas-por-grupos-ex-partido"><span class="header-section-number">2.9.6</span> Contando palavras mais utilizadas por grupos (ex: partido)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1965,7 +1986,9 @@ docs                         favacho registro taquigráfico nobres colegas
 63    união       123    3      89         UNIÃO</code></pre>
 </div>
 </div>
-<p>Núvem de palavras:</p>
+</section>
+<section id="núvem-de-palavras" class="level3" data-number="2.9.7">
+<h3 data-number="2.9.7" class="anchored" data-anchor-id="núvem-de-palavras"><span class="header-section-number">2.9.7</span> Núvem de palavras</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -2016,7 +2039,9 @@ docs                         favacho registro taquigráfico nobres colegas
 </div>
 </div>
 </div>
-<p>Núvem de palavras comparativa:</p>
+</section>
+<section id="núvem-de-palavras-comparativa" class="level3" data-number="2.9.8">
+<h3 data-number="2.9.8" class="anchored" data-anchor-id="núvem-de-palavras-comparativa"><span class="header-section-number">2.9.8</span> Núvem de palavras comparativa</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -2073,6 +2098,7 @@ docs                         favacho registro taquigráfico nobres colegas
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="atividade-prática" class="level2" data-number="2.10">
 <h2 data-number="2.10" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">2.10</span> Atividade prática</h2>

@@ -342,7 +342,7 @@ dfm_final |>
 
 ## Estudos guidados
 
-Criando corpus a partir de uma planilha CSV:
+### Criando corpus a partir de uma planilha CSV
 
 ```{r}
 library(tidyverse)
@@ -368,7 +368,7 @@ corpus_discursos <- corpus(
 print(corpus_discursos)
 ```
 
-Quebrando o corpus em palavras (tokens):
+### Quebrando o corpus em palavras (tokens)
 
 ```{r}
 library(tidyverse)
@@ -397,7 +397,7 @@ tokens_discursos <- corpus_discursos |>
 print(tokens_discursos)
 ```
 
-Pré-processamento de tokens: removendo stopwords e stematização
+### Pré-processamento de tokens: removendo stopwords e stematização
 
 ```{r}
 library(tidyverse)
@@ -440,7 +440,7 @@ tokens_discursos <- corpus_discursos |>
 print(tokens_discursos)
 ```
 
-Construindo DFM a partir de tokens:
+### Construindo DFM a partir de tokens:
 
 ```{r}
 library(tidyverse)
@@ -485,7 +485,7 @@ dfm_discursos <- dfm(tokens_discursos)
 print(dfm_discursos)
 ```
 
-Contando palavras mais utilizadas (em todos os discursos):
+### Contando palavras mais utilizadas (em todos os discursos)
 
 ```{r}
 library(tidyverse)
@@ -534,7 +534,7 @@ palavras_discursos <- dfm_discursos |>
 print(palavras_discursos)
 ```
 
-Contando palavras mais utilizadas por grupos (ex: partido):
+### Contando palavras mais utilizadas por grupos (ex: partido)
 
 ```{r}
 library(tidyverse)
@@ -583,7 +583,7 @@ palavras_discursos <- dfm_discursos |>
 print(palavras_discursos)
 ```
 
-Núvem de palavras:
+### Núvem de palavras
 
 ```{r}
 library(tidyverse)
@@ -629,7 +629,7 @@ dfm_discursos <- dfm(tokens_discursos)
 textplot_wordcloud(dfm_discursos, max_words = 100)
 ```
 
-Núvem de palavras comparativa:
+### Núvem de palavras comparativa
 
 ```{r}
 #| warning: false

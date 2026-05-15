@@ -285,7 +285,18 @@ window.Quarto = {
   <li><a href="#leiturabilidade-readability" id="toc-leiturabilidade-readability" class="nav-link" data-scroll-target="#leiturabilidade-readability"><span class="header-section-number">3.6</span> Leiturabilidade (readability)</a></li>
   <li><a href="#palavras-chave-keyness" id="toc-palavras-chave-keyness" class="nav-link" data-scroll-target="#palavras-chave-keyness"><span class="header-section-number">3.7</span> Palavras-chave (Keyness)</a></li>
   <li><a href="#para-saber-mais" id="toc-para-saber-mais" class="nav-link" data-scroll-target="#para-saber-mais"><span class="header-section-number">3.8</span> Para saber mais</a></li>
-  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">3.9</span> Estudos guiados</a></li>
+  <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">3.9</span> Estudos guiados</a>
+  <ul class="collapse">
+  <li><a href="#análise-de-temas-com-dicionários" id="toc-análise-de-temas-com-dicionários" class="nav-link" data-scroll-target="#análise-de-temas-com-dicionários"><span class="header-section-number">3.9.1</span> Análise de temas com dicionários</a></li>
+  <li><a href="#gerando-n-gramas-sequências-de-palavras" id="toc-gerando-n-gramas-sequências-de-palavras" class="nav-link" data-scroll-target="#gerando-n-gramas-sequências-de-palavras"><span class="header-section-number">3.9.2</span> Gerando n-gramas (sequências de palavras)</a></li>
+  <li><a href="#skip-grams-para-capturar-relações-entre-palavras-não-adjacentes" id="toc-skip-grams-para-capturar-relações-entre-palavras-não-adjacentes" class="nav-link" data-scroll-target="#skip-grams-para-capturar-relações-entre-palavras-não-adjacentes"><span class="header-section-number">3.9.3</span> Skip-grams para capturar relações entre palavras não adjacentes</a></li>
+  <li><a href="#redes-de-co-ocorrência-de-palavras-fcm" id="toc-redes-de-co-ocorrência-de-palavras-fcm" class="nav-link" data-scroll-target="#redes-de-co-ocorrência-de-palavras-fcm"><span class="header-section-number">3.9.4</span> Redes de co-ocorrência de palavras (FCM)</a></li>
+  <li><a href="#identificando-collocations-expressões-típicas" id="toc-identificando-collocations-expressões-típicas" class="nav-link" data-scroll-target="#identificando-collocations-expressões-típicas"><span class="header-section-number">3.9.5</span> Identificando Collocations (expressões típicas)</a></li>
+  <li><a href="#calculando-tf-idf-para-destacar-termos-distintivos" id="toc-calculando-tf-idf-para-destacar-termos-distintivos" class="nav-link" data-scroll-target="#calculando-tf-idf-para-destacar-termos-distintivos"><span class="header-section-number">3.9.6</span> Calculando TF-IDF para destacar termos distintivos</a></li>
+  <li><a href="#medindo-a-diversidade-léxica-vocabulário" id="toc-medindo-a-diversidade-léxica-vocabulário" class="nav-link" data-scroll-target="#medindo-a-diversidade-léxica-vocabulário"><span class="header-section-number">3.9.7</span> Medindo a diversidade léxica (vocabulário)</a></li>
+  <li><a href="#análise-de-leiturabilidade-complexidade-do-texto" id="toc-análise-de-leiturabilidade-complexidade-do-texto" class="nav-link" data-scroll-target="#análise-de-leiturabilidade-complexidade-do-texto"><span class="header-section-number">3.9.8</span> Análise de leiturabilidade (complexidade do texto)</a></li>
+  <li><a href="#identificando-keyness-entre-grupos" id="toc-identificando-keyness-entre-grupos" class="nav-link" data-scroll-target="#identificando-keyness-entre-grupos"><span class="header-section-number">3.9.9</span> Identificando keyness entre grupos</a></li>
+  </ul></li>
   <li><a href="#atividade-prática" id="toc-atividade-prática" class="nav-link" data-scroll-target="#atividade-prática"><span class="header-section-number">3.10</span> Atividade prática</a></li>
   </ul>
 </nav>
@@ -1323,7 +1334,8 @@ docs                    saudar v.exa
 </section>
 <section id="estudos-guiados" class="level2" data-number="3.9">
 <h2 data-number="3.9" class="anchored" data-anchor-id="estudos-guiados"><span class="header-section-number">3.9</span> Estudos guiados</h2>
-<p>Análise de temas com dicionários:</p>
+<section id="análise-de-temas-com-dicionários" class="level3" data-number="3.9.1">
+<h3 data-number="3.9.1" class="anchored" data-anchor-id="análise-de-temas-com-dicionários"><span class="header-section-number">3.9.1</span> Análise de temas com dicionários</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1364,7 +1376,9 @@ docs                    saudar v.exa
 2 educacao       736    2     258   all</code></pre>
 </div>
 </div>
-<p>Gerando n-gramas (sequências de palavras):</p>
+</section>
+<section id="gerando-n-gramas-sequências-de-palavras" class="level3" data-number="3.9.2">
+<h3 data-number="3.9.2" class="anchored" data-anchor-id="gerando-n-gramas-sequências-de-palavras"><span class="header-section-number">3.9.2</span> Gerando n-gramas (sequências de palavras)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1406,7 +1420,9 @@ docs                    saudar v.exa
 10 câmara_dos_deputados       224   10     171   all</code></pre>
 </div>
 </div>
-<p>Skip-grams para capturar relações entre palavras não adjacentes:</p>
+</section>
+<section id="skip-grams-para-capturar-relações-entre-palavras-não-adjacentes" class="level3" data-number="3.9.3">
+<h3 data-number="3.9.3" class="anchored" data-anchor-id="skip-grams-para-capturar-relações-entre-palavras-não-adjacentes"><span class="header-section-number">3.9.3</span> Skip-grams para capturar relações entre palavras não adjacentes</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1451,7 +1467,9 @@ docs                    saudar v.exa
 10   homenagem_francisco         8   10       8   all</code></pre>
 </div>
 </div>
-<p>Redes de co-ocorrência de palavras (FCM):</p>
+</section>
+<section id="redes-de-co-ocorrência-de-palavras-fcm" class="level3" data-number="3.9.4">
+<h3 data-number="3.9.4" class="anchored" data-anchor-id="redes-de-co-ocorrência-de-palavras-fcm"><span class="header-section-number">3.9.4</span> Redes de co-ocorrência de palavras (FCM)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1495,7 +1513,9 @@ docs                    saudar v.exa
 </div>
 </div>
 </div>
-<p>Identificando Collocations (expressões típicas):</p>
+</section>
+<section id="identificando-collocations-expressões-típicas" class="level3" data-number="3.9.5">
+<h3 data-number="3.9.5" class="anchored" data-anchor-id="identificando-collocations-expressões-típicas"><span class="header-section-number">3.9.5</span> Identificando Collocations (expressões típicas)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1545,7 +1565,9 @@ docs                    saudar v.exa
 20       srs deputados   212            0      2 7.871286  54.27577</code></pre>
 </div>
 </div>
-<p>Calculando TF-IDF para destacar termos distintivos:</p>
+</section>
+<section id="calculando-tf-idf-para-destacar-termos-distintivos" class="level3" data-number="3.9.6">
+<h3 data-number="3.9.6" class="anchored" data-anchor-id="calculando-tf-idf-para-destacar-termos-distintivos"><span class="header-section-number">3.9.6</span> Calculando TF-IDF para destacar termos distintivos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1592,7 +1614,9 @@ docs                    saudar v.exa
 10 PT     braga          22.1</code></pre>
 </div>
 </div>
-<p>Medindo a diversidade léxica (vocabulário):</p>
+</section>
+<section id="medindo-a-diversidade-léxica-vocabulário" class="level3" data-number="3.9.7">
+<h3 data-number="3.9.7" class="anchored" data-anchor-id="medindo-a-diversidade-léxica-vocabulário"><span class="header-section-number">3.9.7</span> Medindo a diversidade léxica (vocabulário)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1631,7 +1655,9 @@ docs                    saudar v.exa
 10          1058_Nilto Tatto_PT 0.9076923</code></pre>
 </div>
 </div>
-<p>Análise de leiturabilidade (complexidade do texto):</p>
+</section>
+<section id="análise-de-leiturabilidade-complexidade-do-texto" class="level3" data-number="3.9.8">
+<h3 data-number="3.9.8" class="anchored" data-anchor-id="análise-de-leiturabilidade-complexidade-do-texto"><span class="header-section-number">3.9.8</span> Análise de leiturabilidade (complexidade do texto)</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1669,7 +1695,9 @@ docs                    saudar v.exa
 10     1153_Pompeo de Mattos_PDT 45.56941</code></pre>
 </div>
 </div>
-<p>Identificando keyness entre grupos:</p>
+</section>
+<section id="identificando-keyness-entre-grupos" class="level3" data-number="3.9.9">
+<h3 data-number="3.9.9" class="anchored" data-anchor-id="identificando-keyness-entre-grupos"><span class="header-section-number">3.9.9</span> Identificando keyness entre grupos</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quanteda)</span>
@@ -1729,6 +1757,7 @@ docs                    saudar v.exa
 20  assinaturas   69.20840 1.110223e-16       48          28</code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="atividade-prática" class="level2" data-number="3.10">
 <h2 data-number="3.10" class="anchored" data-anchor-id="atividade-prática"><span class="header-section-number">3.10</span> Atividade prática</h2>

@@ -407,7 +407,7 @@ Veja como collocations são utilizadas para estudos sociais no artigos:
 
 ## Estudos guiados
 
-Análise de temas com dicionários:
+### Análise de temas com dicionários
 
 ```{r}
 library(tidyverse)
@@ -445,7 +445,7 @@ tabela_contagem_temas <- dfm_temas |>
 print(tabela_contagem_temas)
 ```
 
-Gerando n-gramas (sequências de palavras):
+### Gerando n-gramas (sequências de palavras)
 
 ```{r}
 library(tidyverse)
@@ -476,7 +476,7 @@ freq_trigramas <- dfm_trigramas |>
 print(freq_trigramas)
 ```
 
-Skip-grams para capturar relações entre palavras não adjacentes:
+### Skip-grams para capturar relações entre palavras não adjacentes
 
 ```{r}
 library(tidyverse)
@@ -510,7 +510,7 @@ freq_skip <- dfm_skipgrams |>
 print(freq_skip)
 ```
 
-Redes de co-ocorrência de palavras (FCM):
+### Redes de co-ocorrência de palavras (FCM)
 
 ```{r}
 library(tidyverse)
@@ -549,7 +549,7 @@ fcm_discursos <- dfm_discursos |>
 textplot_network(fcm_discursos)
 ```
 
-Identificando Collocations (expressões típicas):
+### Identificando Collocations (expressões típicas)
 
 ```{r}
 library(tidyverse)
@@ -578,7 +578,7 @@ collocs <- tokens_discursos |>
 print(collocs)
 ```
 
-Calculando TF-IDF para destacar termos distintivos:
+### Calculando TF-IDF para destacar termos distintivos
 
 ```{r}
 library(tidyverse)
@@ -612,7 +612,7 @@ dfm_tfidf |>
   head(10)
 ```
 
-Medindo a diversidade léxica (vocabulário):
+### Medindo a diversidade léxica (vocabulário)
 
 ```{r}
 library(tidyverse)
@@ -640,7 +640,7 @@ top_10_ttr_discursos <- ttr_discursos |>
 print(top_10_ttr_discursos)
 ```
 
-Análise de leiturabilidade (complexidade do texto):
+### Análise de leiturabilidade (complexidade do texto)
 
 ```{r}
 library(tidyverse)
@@ -667,7 +667,7 @@ top_10_leiturabilidade <- leiturabilidade |>
 print(top_10_leiturabilidade)
 ```
 
-Identificando keyness entre grupos:
+### Identificando keyness entre grupos
 
 ```{r}
 library(tidyverse)

@@ -2,7 +2,7 @@
 
 ## Análise de tópicos estruturada
 
-Na LDA assumimos que os tópicos advém de uma mistura de palavras, mas não levamos em consideração outras informações que podem influenciar ou relevar determinados tópicos.
+Na LDA assumimos que os tópicos advêm de uma mistura de palavras, mas não levamos em consideração outras informações que podem influenciar ou relevar determinados tópicos.
 
 Outra extensão dos modelos de tópicos LDA são os Modelos de Tópicos Estruturados (STM, do inglês **structured topic models**). Este método incorpora informações adicionais (metadados, `docvars`) do texto para orientar a análise.
 
@@ -12,9 +12,9 @@ Quais outras variáveis que influenciam os tópicos dos discursos políticos?
 
 Algumas estruturas que podem influenciar análise de discurso político seriam, por exemplo:
 
--   data do discurso: Tópicos podem variar ao longo do tempo, e a data que o discurso foi proferido pode ajudar a identificar tendências ou mudanças nos temas discutidos.
--   locutor: diferentes políticos podem ter interesses ou perspectivas diferentes, e isso pode influenciar os temas debatidos
--   partido político: os partidos podem ter plataformas ou agendas diferentes, e isso pode influenciar os temas discutidos nos discursos dos seus membros.
+-   Data do discurso: Tópicos podem variar ao longo do tempo, e a data que o discurso foi proferido pode ajudar a identificar tendências ou mudanças nos temas discutidos.
+-   Locutor: diferentes políticos podem ter interesses ou perspectivas diferentes, e isso pode influenciar os temas debatidos.
+-   Partido político: os partidos podem ter plataformas ou agendas diferentes, e isso pode influenciar os temas discutidos nos discursos dos seus membros.
 
 Modelos de tópicos estruturados permitem:
 
@@ -49,7 +49,7 @@ Seu funcionamento é baseado em três etapas principais:
 As capacidades do BERTopic incluem:
 
 -   *Tópicos guiados*: permite incorporar palavras-chave ou rótulos para orientar a identificação de tópicos.
--   *Tópicos supervisionados*: opermite incorporar rótulos de tópicos pré-definidos para orientar a análise. Por exemplo: partidos, onde o modelo constrói palavras pertinentes de acordo com os discursos.
+-   *Tópicos supervisionados*: permite incorporar rótulos de tópicos pré-definidos para orientar a análise. Por exemplo: partidos, onde o modelo constrói palavras pertinentes de acordo com os discursos.
 -   *Tópicos dinâmicos*: permite analisar a evolução dos tópicos ao longo do tempo, identificando como os temas mudam e se desenvolvem.
 -   *Tópicos hierárquicos*: permite identificar sub-tópicos dentro de tópicos maiores, criando uma estrutura hierárquica de temas.
 -   *Tópicos multimodais*: permite incorporar diferentes tipos de dados (texto, imagens, etc) para identificar tópicos que abrangem múltiplas modalidades.
@@ -63,7 +63,7 @@ Desvantagens de modelos de tópicos baseados em embeddings incluem:
 
 ## Escalonamento de texto
 
-**Escalonamento de texto** (text scalling) é a tarefa de derivar posições para textos ou autores ao longo de um contínuo ideológico ou temático.
+**Escalonamento de texto** (text scaling) é a tarefa de derivar posições para textos ou autores ao longo de um contínuo ideológico ou temático.
 
 ![](images/clipboard-3550866451.png)
 
@@ -71,7 +71,7 @@ Exemplos de aplicações em análise de conteúdo:
 
 -   estimativa de posição ideológica: de partidos/políticos em um espectro de "progressista/esquerda" e "conservador/direita"
 -   medir polarização política ao longo do tempo: como o conjunto de discursos são posicionados entre mais ou menos polarizados
--   analisar coesão de bancada: como os integrantes de um partido se estão alinhados ideologicamente dentro de um partido
+-   analisar coesão de bancada: como os integrantes de um partido estão alinhados ideologicamente dentro de um partido
 -   mudanças de agenda: como os discursos de um político ou grupo se alteram ao longo do tempo
 -   enquadramento de assuntos: como um assunto é tratado por diferentes discursos (ex: reforma tributária é tratada como "carga tributária" ou "justiça fiscal")
 
@@ -81,7 +81,7 @@ Existem diversos métodos de estimar posicionamentos a partir de textos.
 
 O modelo **wordscore** é um método de escalonamento **supervisionado** de texto que atribui uma pontuação a cada palavra com base em sua frequência em um conjunto de textos de referência (seed).
 
-O conjuto de referência possui uma pontuação (score) definido *a priori* pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.
+O conjunto de referência possui uma pontuação (score) definido *a priori* pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.
 
 As pontuações de cada palavra são estimadas com probabilidade condicional Bayesiana simples. Cada texto é estimado com a média ponderada da pontuação de cada palavra.
 
@@ -95,7 +95,7 @@ O modelo estatístico do wordfish é baseado em um modelo de Poisson mais sofist
 
 A **análise de correspondência** (CA, do inglês *correspondence analysis*) é uma técnica para redução de dimensionalidade que funciona com variáveis categóricas (tabela de contingência).
 
-caso de textos, podemos aplicar a análise de correspondência a uma matriz de frequência de palavras, onde as linhas representam os textos e as colunas representam as palavras (transposta da DFM).
+No caso de dados textuais, podemos aplicar a análise de correspondência a uma matriz de frequência de palavras, onde as linhas representam os textos e as colunas representam as palavras (transposta da DFM).
 
 A análise de correspondência pode ser utilizada para identificar padrões de coocorrência entre palavras e textos, e para visualizar a relação entre eles em um espaço bidimensional.
 
@@ -105,7 +105,7 @@ Uma tarefa comum em análise de conteúdo é medir a **similaridade entre textos
 
 Existem diversas métricas para medir a similaridade textual, como:
 
--   *Correspodência de palavras*: textos similares utilizam as memas palavras.
+-   *Correspondência de palavras*: textos similares utilizam as memas palavras.
 
 $$
 C(A, B) = |A \cap B|
@@ -117,7 +117,7 @@ $$
 J(A, B) = \frac{|A \cap B|}{|A \cup B|}
 $$
 
--   *Distância* euclidiana: medae distância entre dois vetores de palavras, calculando a raiz quadrada da soma das diferenças ao quadrado.
+-   *Distância* euclidiana: mede distância entre dois vetores de palavras, calculando a raiz quadrada da soma das diferenças ao quadrado.
 
 $$
 E(A, B) = \sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}
@@ -192,6 +192,7 @@ plot(modelo_stm, type = "summary", main = "Principais Tópicos (Modelo STM)")
 Continuando com o mesmo modelo, podemos invesgitar os textos mais pertinentes a cada tópico:
 
 ```{r}
+library(stm)
 # Imprimir os 2 textos mais relevantes do tópico 5
 findThoughts(
   modelo_stm,
@@ -204,6 +205,7 @@ findThoughts(
 Estimando efeitos da variável dependente categórica (partidos) sobre um determinado tópico. O gráfico mostra proporção (e sua variância) que um tópico é coberto em cada partido.
 
 ```{r}
+library(quanteda)
 
 ee_partido <- estimateEffect(
   ~partido, 
@@ -235,6 +237,11 @@ plot.estimateEffect(
   xlab = "PT vs PL",
 )
 ```
+
+
+## BERTopic
+
+O estudo guiado está disponível no Google Colab em: <https://colab.research.google.com/drive/1ZhOSzNBMEZWP5MVLnginDWyPEYSnLbQl?usp=sharing>
 
 ## Escalonamento não-supervisionado (Wordfish)
 
