@@ -4,7 +4,7 @@
 
 Na LDA assumimos que os tópicos advém de uma mistura de palavras, mas não levamos em consideração outras informações que podem influenciar ou relevar determinados tópicos.
 
-Outra extensão dos modelos de tópicos LDA são os Modelos de Tópicos Estruturados (STM, do inglês *structured topic models*). Este método incorpora informações adicionais (metadados, `docvars`) do texto para orientar a análise.
+Outra extensão dos modelos de tópicos LDA são os Modelos de Tópicos Estruturados (STM, do inglês **structured topic models**). Este método incorpora informações adicionais (metadados, `docvars`) do texto para orientar a análise.
 
 ::: callout-tip
 Quais outras variáveis que influenciam os tópicos dos discursos políticos?
@@ -32,6 +32,35 @@ Algumas fragilidades do STM, e também do LDA, são:
 
 Assim como em outros modelos, o resultado mostra uma visão ampla dos dados, cabe ao pesquisador investigar a fundo os discursos relevantes.
 
+## BERTopic
+
+O **BERTopic** é um modelo de tópicos baseado em embeddings, que utiliza técnicas de aprendizado profundo para gerar representações vetoriais dos textos (*embeddings*).
+
+Embeddings podem capturar relações semânticas entre palavras e documentos, o que pode levar a uma melhor identificação de tópicos.
+
+Seu funcionamento é baseado em três etapas principais:
+
+1.  Geração de embeddings: os textos são convertidos em vetores de alta dimensão utilizando modelos pré-treinados, como BERT ou outros modelos de linguagem.
+2.  Redução de dimensionalidade: os embeddings são reduzidos para um espaço de menor dimensão utilizando técnicas como (UMAP), facilitando a visualização e a identificação de tópicos.
+3.  Agrupamento: os vetores reduzidos são agrupados utilizando algoritmos de clustering, como HDBSCAN, para identificar os tópicos presentes nos textos.
+
+![](images/clipboard-2403301694.png){fig-align="center"}
+
+As capacidades do BERTopic incluem:
+
+-   *Tópicos guiados*: permite incorporar palavras-chave ou rótulos para orientar a identificação de tópicos.
+-   *Tópicos supervisionados*: opermite incorporar rótulos de tópicos pré-definidos para orientar a análise. Por exemplo: partidos, onde o modelo constrói palavras pertinentes de acordo com os discursos.
+-   *Tópicos dinâmicos*: permite analisar a evolução dos tópicos ao longo do tempo, identificando como os temas mudam e se desenvolvem.
+-   *Tópicos hierárquicos*: permite identificar sub-tópicos dentro de tópicos maiores, criando uma estrutura hierárquica de temas.
+-   *Tópicos multimodais*: permite incorporar diferentes tipos de dados (texto, imagens, etc) para identificar tópicos que abrangem múltiplas modalidades.
+
+Desvantagens de modelos de tópicos baseados em embeddings incluem:
+
+-  menor interpretabilidade: os tópicos gerados podem ser mais difíceis de interpretar, especialmente se os embeddings não capturam bem as nuances semânticas dos textos.
+-  maior complexidade computacional: requer mais recursos computacionais para gerar embeddings e realizar clustering.
+-  configuração mais complexa: a escolha do modelo de linguagem, técnicas de redução de dimensionalidade e algoritmos de clustering pode ser mais complexa e exigir mais experimentação.
+- geralmente requerem mais dados para treinar adequadamente, o que pode ser um desafio em conjuntos de dados menores.
+
 ## Escalonamento de texto
 
 **Escalonamento de texto** (text scalling) é a tarefa de derivar posições para textos ou autores ao longo de um contínuo ideológico ou temático.
@@ -50,21 +79,21 @@ Existem diversos métodos de estimar posicionamentos a partir de textos.
 
 ### Wordscore
 
-O modelo *wordscore* é um método de escalonamento *supervisionado* de texto que atribui uma pontuação a cada palavra com base em sua frequência em um conjunto de textos de referência (seed).
+O modelo **wordscore** é um método de escalonamento **supervisionado** de texto que atribui uma pontuação a cada palavra com base em sua frequência em um conjunto de textos de referência (seed).
 
-O conjuto de referência possui uma pontuação (score) definido _a priori_ pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.
+O conjuto de referência possui uma pontuação (score) definido *a priori* pelo pesquisador. O modelo então estima a pontuação de outros textos não-pontuados (virgin), com base nas palavras contidas.
 
 As pontuações de cada palavra são estimadas com probabilidade condicional Bayesiana simples. Cada texto é estimado com a média ponderada da pontuação de cada palavra.
 
 ### Wordfish
 
-Modelos *wordfish* são *não-supervisionados*, ou seja, não necessitam de um conjunto de referência. Eles estimam a posição ideológica dos textos com base na frequência das palavras, assumindo que as palavras mais frequentes em um texto são mais representativas do seu conteúdo.
+Modelos **wordfish** são **não-supervisionados**, ou seja, não necessitam de um conjunto de referência. Eles estimam a posição ideológica dos textos com base na frequência das palavras, assumindo que as palavras mais frequentes em um texto são mais representativas do seu conteúdo.
 
 O modelo estatístico do wordfish é baseado em um modelo de Poisson mais sofisticado, onde a frequência de cada palavra em um texto é modelada como uma função da posição ideológica do texto e da importância da palavra.
 
 ### Análise de correspondência
 
-A *análise de correspondência* (CA, do inglês _correspondence analysis_) é uma técnica para redução de dimensionalidade que funciona com variáveis categóricas (tabela de contingência).
+A **análise de correspondência** (CA, do inglês *correspondence analysis*) é uma técnica para redução de dimensionalidade que funciona com variáveis categóricas (tabela de contingência).
 
 caso de textos, podemos aplicar a análise de correspondência a uma matriz de frequência de palavras, onde as linhas representam os textos e as colunas representam as palavras (transposta da DFM).
 
@@ -72,7 +101,7 @@ A análise de correspondência pode ser utilizada para identificar padrões de c
 
 ## Similaridade textual
 
-Uma tarefa comum em análise de conteúdo é medir a similaridade entre textos, ou seja, o quão semelhantes são dois ou mais textos em termos de conteúdo.
+Uma tarefa comum em análise de conteúdo é medir a **similaridade entre textos**, ou seja, o quão semelhantes são dois ou mais textos em termos de conteúdo.
 
 Existem diversas métricas para medir a similaridade textual, como:
 
@@ -88,7 +117,7 @@ $$
 J(A, B) = \frac{|A \cap B|}{|A \cup B|}
 $$
 
--   *Distância *euclidiana: medae  distância entre dois vetores de palavras, calculando a raiz quadrada da soma das diferenças ao quadrado.
+-   *Distância* euclidiana: medae distância entre dois vetores de palavras, calculando a raiz quadrada da soma das diferenças ao quadrado.
 
 $$
 E(A, B) = \sqrt{\sum_{i=1}^{n} (A_i - B_i)^2}
@@ -100,13 +129,13 @@ $$
 S(A, B) = cos(A,B) = \frac{A \cdot B}{\|A \| \|B\|}
 $$
 
-A similaridade de cosseno é muito utilizada em análise de conteúdo, especialmente quando os textos são representados como vetores de palavras (por exemplo, usando contagens, TF-IDF ou embeddings). Ela é útil para identificar textos que são semanticamente semelhantes, mesmo que não compartilhem muitas palavras em comum.
+A **similaridade de cosseno** é muito utilizada em análise de conteúdo, especialmente quando os textos são representados como vetores de palavras (por exemplo, usando contagens, TF-IDF ou embeddings). Ela é útil para identificar textos que são semanticamente semelhantes, mesmo que não compartilhem muitas palavras em comum.
 
 O resultado da similaridade textual pode ser utilizado para diversas análises, como:
 
-- Agrupamento de textos: textos similares podem ser agrupados para identificar temas ou tópicos comuns.
-- Análise de redes: textos similares podem ser conectados em uma rede para visualizar as relações entre eles.
-- Busca de documentos: textos similares podem ser utilizados para encontrar documentos relevantes em um grande conjunto de dados.
+-   Agrupamento de textos: textos similares podem ser agrupados para identificar temas ou tópicos comuns.
+-   Análise de redes: textos similares podem ser conectados em uma rede para visualizar as relações entre eles.
+-   Busca de documentos: textos similares podem ser utilizados para encontrar documentos relevantes em um grande conjunto de dados.
 
 # Estudos guiados
 
@@ -161,6 +190,7 @@ plot(modelo_stm, type = "summary", main = "Principais Tópicos (Modelo STM)")
 ```
 
 Continuando com o mesmo modelo, podemos invesgitar os textos mais pertinentes a cada tópico:
+
 ```{r}
 # Imprimir os 2 textos mais relevantes do tópico 5
 findThoughts(
@@ -172,6 +202,7 @@ findThoughts(
 ```
 
 Estimando efeitos da variável dependente categórica (partidos) sobre um determinado tópico. O gráfico mostra proporção (e sua variância) que um tópico é coberto em cada partido.
+
 ```{r}
 
 ee_partido <- estimateEffect(
@@ -190,6 +221,7 @@ plot.estimateEffect(
 ```
 
 Também podemos analisar a diferença entre dois polos (ex PT vs PL) em relação a cada tópico. Intervalos próximos de 0 (zero) são temas citados por ambos.
+
 ```{r}
 plot.estimateEffect(
   ee_partido,
@@ -347,7 +379,9 @@ textplot_scale1d(modelo_ca) +
   labs(title = "Análise de Correspondência: 1ª Dimensão",
        subtitle = "Agrupamento por partido")
 ```
+
 CA permite extrair outras dimensões do modelo:
+
 ```{r}
 coefs_ca_2d <- data_frame(
   partido = modelo_ca$rownames,
@@ -402,6 +436,7 @@ matriz_simil
 ```
 
 A matriz de distâncias pode ser apresentada como um dendograma:
+
 ```{r fig.height=5}
 # Construir agrupamentos
 agrupamentos <- hclust(as.dist(matriz_simil))
