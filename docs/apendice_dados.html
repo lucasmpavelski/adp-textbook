@@ -175,7 +175,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./aula5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de tópicos estruturada e modelos de escala</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Análise de Tópicos Estruturada e Modelos de Escalonamento</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aula6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Aprendizado Supervisionado e Modelos de Linguagem</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -257,40 +263,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"tidyverse"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>()) {</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.0     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.2     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"httr2"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>()) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"httr2"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="st">"httr2"</span> <span class="sc">%in%</span> <span class="fu">installed.packages</span>()) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"httr2"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="images/clipboard-894913952.png" class="img-fluid" style="width:100.0%"></p>
 <p>Primeiro, vamos montar uma requisição (função <code>request</code>) para obter dados dos deputados na legislatura 57 (atual):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>url_api <span class="ot">&lt;-</span> <span class="st">"https://dadosabertos.camara.leg.br/"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>requisicao_deputados <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_query</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">idLegislatura =</span> <span class="dv">57</span>, <span class="co"># número da legislatura</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nome =</span> <span class="st">""</span>,          <span class="co"># parte do nome</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaUF =</span> <span class="st">""</span>,       <span class="co"># sigla UF eleito</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaPartido =</span> <span class="st">""</span>,  <span class="co"># sigla do partido</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaSexo =</span> <span class="st">""</span>,     <span class="co"># sexo (M ou F)</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(requisicao_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>url_api <span class="ot">&lt;-</span> <span class="st">"https://dadosabertos.camara.leg.br/"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>requisicao_deputados <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_url_query</span>(</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">idLegislatura =</span> <span class="dv">57</span>, <span class="co"># número da legislatura</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nome =</span> <span class="st">""</span>,          <span class="co"># parte do nome</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaUF =</span> <span class="st">""</span>,       <span class="co"># sigla UF eleito</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaPartido =</span> <span class="st">""</span>,  <span class="co"># sigla do partido</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">siglaSexo =</span> <span class="st">""</span>,     <span class="co"># sexo (M ou F)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(requisicao_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;httr2_request&gt;
 GET https://dadosabertos.camara.leg.br/api/v2/deputados?idLegislatura=57&amp;nome=&amp;siglaUF=&amp;siglaPartido=&amp;siglaSexo=
@@ -299,9 +294,9 @@ Body: empty</code></pre>
 </div>
 <p>Executamos a requisição (<code>req_perform</code>) para obter a resposta do serviço de dados abertos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>resp_deputados <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(requisicao_deputados)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resp_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>resp_deputados <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(requisicao_deputados)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resp_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;httr2_response&gt;
 GET https://dadosabertos.camara.leg.br/api/v2/deputados?idLegislatura=57&amp;nome=&amp;siglaUF=&amp;siglaPartido=&amp;siglaSexo=
@@ -312,14 +307,14 @@ Body: In memory (248328 bytes)</code></pre>
 </div>
 <p>Os dados retornados estão no formato JSON, que é representado no R como uma lista aninhada (lista com elementos de lista).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dados_resposta <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp_deputados)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dados_resposta <span class="ot">&lt;-</span> dados_resposta<span class="sc">$</span>dados   <span class="co"># acessa elemento "dados" da lista</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(dados_resposta))     <span class="co"># número de elementos</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dados_resposta <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp_deputados)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dados_resposta <span class="ot">&lt;-</span> dados_resposta<span class="sc">$</span>dados   <span class="co"># acessa elemento "dados" da lista</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">length</span>(dados_resposta))     <span class="co"># número de elementos</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 722</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dados_resposta[[<span class="dv">1</span>]])  <span class="co"># primeiro elemento</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dados_resposta[[<span class="dv">1</span>]])  <span class="co"># primeiro elemento</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$id
 [1] 220593
@@ -354,18 +349,18 @@ NULL</code></pre>
 </ul>
 <p>Transformamos a lista em dataframe com o código comentado abaixo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_deputados_partido <span class="ot">&lt;-</span> dados_resposta <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() <span class="sc">|&gt;</span>                               <span class="co"># transformar em dataframe</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(<span class="st">"dados_resposta"</span>) <span class="sc">|&gt;</span>         <span class="co"># desaninhar em colunas</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(                                   <span class="co"># seleciona colunas relevantes</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    id,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    nome,</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">uf =</span> siglaUf,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">partido =</span> siglaPartido,</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    uri</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados_partido) <span class="co"># head mostra as primeiras linhas do data frame</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_deputados_partido <span class="ot">&lt;-</span> dados_resposta <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>() <span class="sc">|&gt;</span>                               <span class="co"># transformar em dataframe</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(<span class="st">"dados_resposta"</span>) <span class="sc">|&gt;</span>         <span class="co"># desaninhar em colunas</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(                                   <span class="co"># seleciona colunas relevantes</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    id,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    nome,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">uf =</span> siglaUf,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">partido =</span> siglaPartido,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    uri</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados_partido) <span class="co"># head mostra as primeiras linhas do data frame</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
       id nome            uf    partido      uri                                 
@@ -380,11 +375,11 @@ NULL</code></pre>
 </div>
 <p>Note que existem repetições, quando um deputado pertenceu a mais de um partido:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>deputados_multiplos_partidos <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nome) <span class="sc">|&gt;</span>  <span class="co"># agrupar por nome</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>)    <span class="co"># filtrar grupos com mais de um elemento</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(deputados_multiplos_partidos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>deputados_multiplos_partidos <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nome) <span class="sc">|&gt;</span>  <span class="co"># agrupar por nome</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">n</span>() <span class="sc">&gt;</span> <span class="dv">1</span>)    <span class="co"># filtrar grupos com mais de um elemento</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(deputados_multiplos_partidos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 5
 # Groups:   nome [3]
@@ -401,9 +396,9 @@ NULL</code></pre>
 <p>A coluna <code>uri</code> contém o endereço para buscarmos detalhes sobre o deputado, como sexo, data de nascimento, situação atual, etc.</p>
 <p>Para cada deputado, vamos fazer a requisição que retorna os detalhes. Para isso, vamos mapear cada elemento da coluna <code>uri</code> em uma requisição:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_deputados_detalhes <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">req_detalhes =</span> <span class="fu">map</span>(uri, request)) <span class="sc">|&gt;</span>                <span class="co"># montar requisições</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resp_detalhes =</span> <span class="fu">req_perform_parallel</span>(req_detalhes)) <span class="co"># buscar detalhes e armazena a resposta na coluna resp_detalhes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_deputados_detalhes <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">req_detalhes =</span> <span class="fu">map</span>(uri, request)) <span class="sc">|&gt;</span>                <span class="co"># montar requisições</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resp_detalhes =</span> <span class="fu">req_perform_parallel</span>(req_detalhes)) <span class="co"># buscar detalhes e armazena a resposta na coluna resp_detalhes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>[working] (700 + 0) -&gt; 10 -&gt; 12 | ■                                  2%</code></pre>
 </div>
@@ -492,7 +487,7 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 [working] (5 + 3) -&gt; 10 -&gt; 707 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    98%
 [working] (0 + 3) -&gt; 0 -&gt; 722 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100%</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados_detalhes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados_detalhes)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
       id nome            uf    partido      uri       req_detalhes resp_detalhes
@@ -510,30 +505,30 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 </ul>
 <p>Vamos extrair os detalhes da coluna <code>resp_detalhes</code> e organizar os dados na tabela.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df_deputados <span class="ot">&lt;-</span> df_deputados_detalhes <span class="sc">|&gt;</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_detalhes, resp_body_json)) <span class="sc">|&gt;</span>            <span class="co"># ler dados da resposta</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(detalhes) <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(<span class="st">"dados"</span>, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar coluna "dados" (novas colunas são nomeadas dados_)</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(<span class="st">"dados_ultimoStatus"</span>, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span>              <span class="co"># desaninhar ultimoStatus</span></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(                                                             <span class="co"># selecionar colunas</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># colunas antigas</span></span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(df_deputados_partido),</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># novas colunas</span></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">nome_civil =</span> dados_nomeCivil,</span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">sexo =</span> dados_sexo,</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cpf =</span> dados_cpf,</span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_nascimento =</span> dados_dataNascimento,</span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_falecimento =</span> dados_dataFalecimento,</span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">uf_nascimento =</span> dados_ufNascimento,</span>
-<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">municipio_nascimento =</span> dados_municipioNascimento,</span>
-<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">escolaridade =</span> dados_escolaridade,</span>
-<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">situacao =</span> dados_ultimoStatus_situacao,</span>
-<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_situacao =</span> dados_ultimoStatus_data,</span>
-<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ultimo_partido =</span> dados_ultimoStatus_siglaPartido</span>
-<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">==</span> ultimo_partido) <span class="sc">|&gt;</span>   <span class="co"># considerar apenas último partido</span></span>
-<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()                             <span class="co"># filtrar dados duplicados</span></span>
-<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_deputados <span class="ot">&lt;-</span> df_deputados_detalhes <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_detalhes, resp_body_json)) <span class="sc">|&gt;</span>            <span class="co"># ler dados da resposta</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(detalhes) <span class="sc">|&gt;</span> <span class="fu">unnest_wider</span>(<span class="st">"dados"</span>, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar coluna "dados" (novas colunas são nomeadas dados_)</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(<span class="st">"dados_ultimoStatus"</span>, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span>              <span class="co"># desaninhar ultimoStatus</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(                                                             <span class="co"># selecionar colunas</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># colunas antigas</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(df_deputados_partido),</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># novas colunas</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">nome_civil =</span> dados_nomeCivil,</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">sexo =</span> dados_sexo,</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">cpf =</span> dados_cpf,</span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_nascimento =</span> dados_dataNascimento,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_falecimento =</span> dados_dataFalecimento,</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">uf_nascimento =</span> dados_ufNascimento,</span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">municipio_nascimento =</span> dados_municipioNascimento,</span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">escolaridade =</span> dados_escolaridade,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">situacao =</span> dados_ultimoStatus_situacao,</span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">data_situacao =</span> dados_ultimoStatus_data,</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">ultimo_partido =</span> dados_ultimoStatus_siglaPartido</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">==</span> ultimo_partido) <span class="sc">|&gt;</span>   <span class="co"># considerar apenas último partido</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()                             <span class="co"># filtrar dados duplicados</span></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_deputados)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 16
       id nome         uf    partido uri   nome_civil sexo  cpf   data_nascimento
@@ -551,18 +546,18 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 </div>
 <p>Para obter os discursos, vamos definir uma função que monta a requisição para um deputado (por número identificador):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>req_discursos_deputado <span class="ot">&lt;-</span> <span class="cf">function</span>(id_deputado) {</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>, id_deputado, <span class="st">"discursos"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_query</span>(</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataInicio =</span> <span class="st">"2025-04-01"</span>,</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataFim =</span> <span class="st">"2025-04-30"</span>,</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">itens=</span><span class="dv">100</span></span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(req)</span>
-<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">req_discursos_deputado</span>(<span class="dv">160575</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>req_discursos_deputado <span class="ot">&lt;-</span> <span class="cf">function</span>(id_deputado) {</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>, id_deputado, <span class="st">"discursos"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_query</span>(</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataInicio =</span> <span class="st">"2025-04-01"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">dataFim =</span> <span class="st">"2025-04-30"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">itens=</span><span class="dv">100</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(req)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">req_discursos_deputado</span>(<span class="dv">160575</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;httr2_request&gt;
 GET https://dadosabertos.camara.leg.br/api/v2/deputados/160575/discursos?dataInicio=2025-04-01&amp;dataFim=2025-04-30&amp;itens=100
@@ -571,10 +566,10 @@ Body: empty</code></pre>
 </div>
 <p>Da mesma forma que obtemos os dados dos deputados, vamos fazer requisições para obter discursos de cada deputado:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="ot">&lt;-</span> df_deputados <span class="sc">|&gt;</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">req_discursos =</span> <span class="fu">map</span>(id, req_discursos_deputado)) <span class="sc">|&gt;</span>      <span class="co"># montar a requisição chamando req_discursos_deputado para cada id</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resp_discursos =</span> <span class="fu">req_perform_parallel</span>(req_discursos)) <span class="sc">|&gt;</span> <span class="co"># executar requisições em paralelo</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dados_discursos =</span> <span class="fu">map</span>(resp_discursos, resp_body_json))   <span class="co"># ler dados das respostas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="ot">&lt;-</span> df_deputados <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">req_discursos =</span> <span class="fu">map</span>(id, req_discursos_deputado)) <span class="sc">|&gt;</span>      <span class="co"># montar a requisição chamando req_discursos_deputado para cada id</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">resp_discursos =</span> <span class="fu">req_perform_parallel</span>(req_discursos)) <span class="sc">|&gt;</span> <span class="co"># executar requisições em paralelo</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dados_discursos =</span> <span class="fu">map</span>(resp_discursos, resp_body_json))   <span class="co"># ler dados das respostas</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>[working] (624 + 0) -&gt; 10 -&gt; 11 | ■■                                 2%</code></pre>
 </div>
@@ -626,7 +621,7 @@ Body: empty</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code>[working] (0 + 0) -&gt; 0 -&gt; 645 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100%</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_discursos<span class="sc">$</span>dados_discursos[[<span class="dv">2</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_discursos<span class="sc">$</span>dados_discursos[[<span class="dv">2</span>]])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$dados
 $dados[[1]]
@@ -786,24 +781,24 @@ $links[[3]]$href
 </div>
 <p>Por fim, vamos extrair dos dados em colunas:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="ot">&lt;-</span> df_discursos <span class="sc">|&gt;</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(dados_discursos) <span class="sc">|&gt;</span>             <span class="co"># desaninhar resposta em colunas (dados e links)</span></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(dados) <span class="sc">|&gt;</span>                             <span class="co"># desaninhar dados de discursos em linha (um discurso por linha)</span></span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(dados) <span class="sc">|&gt;</span>                       <span class="co"># desaninhar dados em colunas</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(faseEvento, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar "faseEvento"</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># colunas anteriores</span></span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(df_deputados),</span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># novas colunas</span></span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">hora_inicio =</span> dataHoraInicio,</span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fase_evento =</span> faseEvento_titulo,</span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">tipo_discurso =</span> tipoDiscurso,</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    keywords,</span>
-<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    sumario,</span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>    transcricao</span>
-<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="ot">&lt;-</span> df_discursos <span class="sc">|&gt;</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(dados_discursos) <span class="sc">|&gt;</span>             <span class="co"># desaninhar resposta em colunas (dados e links)</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(dados) <span class="sc">|&gt;</span>                             <span class="co"># desaninhar dados de discursos em linha (um discurso por linha)</span></span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(dados) <span class="sc">|&gt;</span>                       <span class="co"># desaninhar dados em colunas</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(faseEvento, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar "faseEvento"</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># colunas anteriores</span></span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">colnames</span>(df_deputados),</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># novas colunas</span></span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">hora_inicio =</span> dataHoraInicio,</span>
+<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">fase_evento =</span> faseEvento_titulo,</span>
+<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">tipo_discurso =</span> tipoDiscurso,</span>
+<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    keywords,</span>
+<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>    sumario,</span>
+<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>    transcricao</span>
+<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_discursos)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 22
       id nome         uf    partido uri   nome_civil sexo  cpf   data_nascimento
@@ -823,28 +818,28 @@ $links[[3]]$href
 </div>
 <p>Por fim, podemos extrair estatísticas sobre os oradores e salvar os dados em uma planilha CSV para usos futuros.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de discursos: "</span>, <span class="fu">nrow</span>(df_discursos)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de discursos: "</span>, <span class="fu">nrow</span>(df_discursos)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Número total de discursos: 1849"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de oradores: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(nome) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de oradores: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(nome) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Número total de oradores: 317"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de partidos: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(partido) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de partidos: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(partido) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Número total de partidos: 21"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de estados: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(uf) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">str_c</span>(<span class="st">"Número total de estados: "</span>, df_discursos <span class="sc">|&gt;</span> <span class="fu">select</span>(uf) <span class="sc">|&gt;</span> <span class="fu">n_distinct</span>()))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Número total de estados: 27"</code></pre>
 </div>
 </div>
 <p>Principais oradores:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nome) <span class="sc">|&gt;</span>  <span class="co"># agrupar por nome do orador</span></span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contar e ordenar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="sc">|&gt;</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nome) <span class="sc">|&gt;</span>  <span class="co"># agrupar por nome do orador</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="co"># contar e ordenar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 317 × 2
 # Groups:   nome [317]
@@ -865,9 +860,9 @@ $links[[3]]$href
 </div>
 <p>Principais partidos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(partido) <span class="sc">|&gt;</span>  <span class="co"># agrupar por partido do orador</span></span>
-<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">sort =</span> <span class="cn">TRUE</span>)    <span class="co"># contar e ordenar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>df_discursos <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(partido) <span class="sc">|&gt;</span>  <span class="co"># agrupar por partido do orador</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">sort =</span> <span class="cn">TRUE</span>)    <span class="co"># contar e ordenar</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 21 × 2
 # Groups:   partido [21]
@@ -888,109 +883,109 @@ $links[[3]]$href
 </div>
 <p>Para facilitar novos processamentos, podemos salvar os dados em formato CSV:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_discursos, <span class="st">"discursos.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_discursos, <span class="st">"discursos.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Unindo todo o processo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>obter_discursos_camara <span class="ot">&lt;-</span> <span class="cf">function</span>(data_inicio, data_fim, <span class="at">id_legislatura =</span> <span class="dv">57</span>) {</span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"1/3 - Buscando lista de deputados"</span>)</span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a>  url_api <span class="ot">&lt;-</span> <span class="st">"https://dadosabertos.camara.leg.br/"</span></span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a>  extrair_dados_resposta <span class="ot">&lt;-</span> <span class="cf">function</span>(resp) {</span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a>    resposta <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp, <span class="at">simplifyDataFrame =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(resposta<span class="sc">$</span>dados)</span>
-<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a>  df_deputados_partido <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
-<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_query</span>(</span>
-<span id="cb75-16"><a href="#cb75-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">idLegislatura =</span> id_legislatura, <span class="co"># número da legislatura</span></span>
-<span id="cb75-17"><a href="#cb75-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome =</span> <span class="st">""</span>,                      <span class="co"># parte do nome</span></span>
-<span id="cb75-18"><a href="#cb75-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaUF =</span> <span class="st">""</span>,                   <span class="co"># sigla UF eleito</span></span>
-<span id="cb75-19"><a href="#cb75-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaPartido =</span> <span class="st">""</span>,              <span class="co"># sigla do partido</span></span>
-<span id="cb75-20"><a href="#cb75-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaSexo =</span> <span class="st">""</span>,                 <span class="co"># sexo (M ou F)</span></span>
-<span id="cb75-21"><a href="#cb75-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb75-22"><a href="#cb75-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_perform</span>() <span class="sc">|&gt;</span>              <span class="co"># executa a requisição</span></span>
-<span id="cb75-23"><a href="#cb75-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extrair_dados_resposta</span>() <span class="sc">|&gt;</span>   <span class="co"># extrai item "dados"</span></span>
-<span id="cb75-24"><a href="#cb75-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                       <span class="co"># seleciona colunas relevantes</span></span>
-<span id="cb75-25"><a href="#cb75-25" aria-hidden="true" tabindex="-1"></a>      id,</span>
-<span id="cb75-26"><a href="#cb75-26" aria-hidden="true" tabindex="-1"></a>      nome,</span>
-<span id="cb75-27"><a href="#cb75-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf =</span> siglaUf, </span>
-<span id="cb75-28"><a href="#cb75-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">partido =</span> siglaPartido,</span>
-<span id="cb75-29"><a href="#cb75-29" aria-hidden="true" tabindex="-1"></a>      uri</span>
-<span id="cb75-30"><a href="#cb75-30" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb75-31"><a href="#cb75-31" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-32"><a href="#cb75-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"2/3 - Buscando detalhes de cada deputado"</span>)</span>
-<span id="cb75-33"><a href="#cb75-33" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-34"><a href="#cb75-34" aria-hidden="true" tabindex="-1"></a>  df_deputados <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
-<span id="cb75-35"><a href="#cb75-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_detalhes =</span> <span class="fu">map</span>(uri, request)) <span class="sc">|&gt;</span>                   <span class="co"># montar requisições</span></span>
-<span id="cb75-36"><a href="#cb75-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_detalhes =</span> <span class="fu">req_perform_parallel</span>(req_detalhes)) <span class="sc">|&gt;</span> <span class="co"># buscar detalhes</span></span>
-<span id="cb75-37"><a href="#cb75-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_detalhes, extrair_dados_resposta)) <span class="sc">|&gt;</span> <span class="co"># extrair detalhes das respostas</span></span>
-<span id="cb75-38"><a href="#cb75-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span>              <span class="co"># desaninhar detalhes</span></span>
-<span id="cb75-39"><a href="#cb75-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes_ultimoStatus, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar último status</span></span>
-<span id="cb75-40"><a href="#cb75-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                                 <span class="co"># selecionar colunas</span></span>
-<span id="cb75-41"><a href="#cb75-41" aria-hidden="true" tabindex="-1"></a>      <span class="co"># colunas antigas</span></span>
-<span id="cb75-42"><a href="#cb75-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">colnames</span>(df_deputados_partido),</span>
-<span id="cb75-43"><a href="#cb75-43" aria-hidden="true" tabindex="-1"></a>      <span class="co"># novas colunas</span></span>
-<span id="cb75-44"><a href="#cb75-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome_civil =</span> detalhes_nomeCivil,</span>
-<span id="cb75-45"><a href="#cb75-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">sexo =</span> detalhes_sexo,</span>
-<span id="cb75-46"><a href="#cb75-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_nascimento =</span> detalhes_dataNascimento,</span>
-<span id="cb75-47"><a href="#cb75-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_falecimento =</span> detalhes_dataFalecimento,</span>
-<span id="cb75-48"><a href="#cb75-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf_nascimento =</span> detalhes_ufNascimento,</span>
-<span id="cb75-49"><a href="#cb75-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">municipio_nascimento =</span> detalhes_municipioNascimento,</span>
-<span id="cb75-50"><a href="#cb75-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">escolaridade =</span> detalhes_escolaridade,</span>
-<span id="cb75-51"><a href="#cb75-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">situacao =</span> detalhes_ultimoStatus_situacao,</span>
-<span id="cb75-52"><a href="#cb75-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_situacao =</span> detalhes_ultimoStatus_data,</span>
-<span id="cb75-53"><a href="#cb75-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">ultimo_partido =</span> detalhes_ultimoStatus_siglaPartido</span>
-<span id="cb75-54"><a href="#cb75-54" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
-<span id="cb75-55"><a href="#cb75-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(partido <span class="sc">==</span> ultimo_partido) <span class="sc">|&gt;</span>   <span class="co"># considerar apenas último partido</span></span>
-<span id="cb75-56"><a href="#cb75-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>()                             <span class="co"># filtrar dados duplicados</span></span>
-<span id="cb75-57"><a href="#cb75-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-58"><a href="#cb75-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"3/3 - Buscando discursos de cada deputado"</span>)</span>
-<span id="cb75-59"><a href="#cb75-59" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-60"><a href="#cb75-60" aria-hidden="true" tabindex="-1"></a>  req_discursos_deputado <span class="ot">&lt;-</span> <span class="cf">function</span>(id_deputado) {</span>
-<span id="cb75-61"><a href="#cb75-61" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
-<span id="cb75-62"><a href="#cb75-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>, id_deputado, <span class="st">"discursos"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb75-63"><a href="#cb75-63" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_query</span>(</span>
-<span id="cb75-64"><a href="#cb75-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">dataInicio =</span> data_inicio,</span>
-<span id="cb75-65"><a href="#cb75-65" aria-hidden="true" tabindex="-1"></a>        <span class="at">dataFim =</span> data_fim,</span>
-<span id="cb75-66"><a href="#cb75-66" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb75-67"><a href="#cb75-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(req)</span>
-<span id="cb75-68"><a href="#cb75-68" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb75-69"><a href="#cb75-69" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-70"><a href="#cb75-70" aria-hidden="true" tabindex="-1"></a>  resp_discursos_deputados <span class="ot">&lt;-</span> df_deputados <span class="sc">|&gt;</span></span>
-<span id="cb75-71"><a href="#cb75-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_discursos =</span> <span class="fu">map</span>(id, req_discursos_deputado)) <span class="sc">|&gt;</span></span>
-<span id="cb75-72"><a href="#cb75-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_discursos =</span> <span class="fu">req_perform_parallel</span>(req_discursos))</span>
-<span id="cb75-73"><a href="#cb75-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-74"><a href="#cb75-74" aria-hidden="true" tabindex="-1"></a>  df_discursos <span class="ot">&lt;-</span> resp_discursos_deputados <span class="sc">|&gt;</span></span>
-<span id="cb75-75"><a href="#cb75-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">discursos =</span> <span class="fu">map</span>(resp_discursos, extrair_dados_resposta)) <span class="sc">|&gt;</span> <span class="co"># respostas</span></span>
-<span id="cb75-76"><a href="#cb75-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">lengths</span>(discursos) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># filtrar linhas sem discurso</span></span>
-<span id="cb75-77"><a href="#cb75-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(discursos) <span class="sc">|&gt;</span>              <span class="co"># desaninhar dados de discursos</span></span>
-<span id="cb75-78"><a href="#cb75-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(faseEvento, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar dados de evento</span></span>
-<span id="cb75-79"><a href="#cb75-79" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                      <span class="co"># selecionar colunas relevantes</span></span>
-<span id="cb75-80"><a href="#cb75-80" aria-hidden="true" tabindex="-1"></a>      <span class="co"># colunas anteriores</span></span>
-<span id="cb75-81"><a href="#cb75-81" aria-hidden="true" tabindex="-1"></a>      <span class="fu">colnames</span>(df_deputados),</span>
-<span id="cb75-82"><a href="#cb75-82" aria-hidden="true" tabindex="-1"></a>      <span class="co"># novas colunas</span></span>
-<span id="cb75-83"><a href="#cb75-83" aria-hidden="true" tabindex="-1"></a>      <span class="at">hora_inicio =</span> dataHoraInicio,</span>
-<span id="cb75-84"><a href="#cb75-84" aria-hidden="true" tabindex="-1"></a>      <span class="at">fase_evento =</span> faseEvento_titulo,</span>
-<span id="cb75-85"><a href="#cb75-85" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_discurso =</span> tipoDiscurso,</span>
-<span id="cb75-86"><a href="#cb75-86" aria-hidden="true" tabindex="-1"></a>      keywords,</span>
-<span id="cb75-87"><a href="#cb75-87" aria-hidden="true" tabindex="-1"></a>      sumario,</span>
-<span id="cb75-88"><a href="#cb75-88" aria-hidden="true" tabindex="-1"></a>      transcricao</span>
-<span id="cb75-89"><a href="#cb75-89" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb75-90"><a href="#cb75-90" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb75-91"><a href="#cb75-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df_discursos)</span>
-<span id="cb75-92"><a href="#cb75-92" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>obter_discursos_camara <span class="ot">&lt;-</span> <span class="cf">function</span>(data_inicio, data_fim, <span class="at">id_legislatura =</span> <span class="dv">57</span>) {</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"1/3 - Buscando lista de deputados"</span>)</span>
+<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a>  url_api <span class="ot">&lt;-</span> <span class="st">"https://dadosabertos.camara.leg.br/"</span></span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a>  extrair_dados_resposta <span class="ot">&lt;-</span> <span class="cf">function</span>(resp) {</span>
+<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>    resposta <span class="ot">&lt;-</span> <span class="fu">resp_body_json</span>(resp, <span class="at">simplifyDataFrame =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(resposta<span class="sc">$</span>dados)</span>
+<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>  df_deputados_partido <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
+<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_query</span>(</span>
+<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a>      <span class="at">idLegislatura =</span> id_legislatura, <span class="co"># número da legislatura</span></span>
+<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome =</span> <span class="st">""</span>,                      <span class="co"># parte do nome</span></span>
+<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaUF =</span> <span class="st">""</span>,                   <span class="co"># sigla UF eleito</span></span>
+<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaPartido =</span> <span class="st">""</span>,              <span class="co"># sigla do partido</span></span>
+<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">siglaSexo =</span> <span class="st">""</span>,                 <span class="co"># sexo (M ou F)</span></span>
+<span id="cb73-21"><a href="#cb73-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb73-22"><a href="#cb73-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_perform</span>() <span class="sc">|&gt;</span>              <span class="co"># executa a requisição</span></span>
+<span id="cb73-23"><a href="#cb73-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">extrair_dados_resposta</span>() <span class="sc">|&gt;</span>   <span class="co"># extrai item "dados"</span></span>
+<span id="cb73-24"><a href="#cb73-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                       <span class="co"># seleciona colunas relevantes</span></span>
+<span id="cb73-25"><a href="#cb73-25" aria-hidden="true" tabindex="-1"></a>      id,</span>
+<span id="cb73-26"><a href="#cb73-26" aria-hidden="true" tabindex="-1"></a>      nome,</span>
+<span id="cb73-27"><a href="#cb73-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf =</span> siglaUf, </span>
+<span id="cb73-28"><a href="#cb73-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">partido =</span> siglaPartido,</span>
+<span id="cb73-29"><a href="#cb73-29" aria-hidden="true" tabindex="-1"></a>      uri</span>
+<span id="cb73-30"><a href="#cb73-30" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb73-31"><a href="#cb73-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-32"><a href="#cb73-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"2/3 - Buscando detalhes de cada deputado"</span>)</span>
+<span id="cb73-33"><a href="#cb73-33" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-34"><a href="#cb73-34" aria-hidden="true" tabindex="-1"></a>  df_deputados <span class="ot">&lt;-</span> df_deputados_partido <span class="sc">|&gt;</span></span>
+<span id="cb73-35"><a href="#cb73-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_detalhes =</span> <span class="fu">map</span>(uri, request)) <span class="sc">|&gt;</span>                   <span class="co"># montar requisições</span></span>
+<span id="cb73-36"><a href="#cb73-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_detalhes =</span> <span class="fu">req_perform_parallel</span>(req_detalhes)) <span class="sc">|&gt;</span> <span class="co"># buscar detalhes</span></span>
+<span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_detalhes, extrair_dados_resposta)) <span class="sc">|&gt;</span> <span class="co"># extrair detalhes das respostas</span></span>
+<span id="cb73-38"><a href="#cb73-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span>              <span class="co"># desaninhar detalhes</span></span>
+<span id="cb73-39"><a href="#cb73-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes_ultimoStatus, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar último status</span></span>
+<span id="cb73-40"><a href="#cb73-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                                 <span class="co"># selecionar colunas</span></span>
+<span id="cb73-41"><a href="#cb73-41" aria-hidden="true" tabindex="-1"></a>      <span class="co"># colunas antigas</span></span>
+<span id="cb73-42"><a href="#cb73-42" aria-hidden="true" tabindex="-1"></a>      <span class="fu">colnames</span>(df_deputados_partido),</span>
+<span id="cb73-43"><a href="#cb73-43" aria-hidden="true" tabindex="-1"></a>      <span class="co"># novas colunas</span></span>
+<span id="cb73-44"><a href="#cb73-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome_civil =</span> detalhes_nomeCivil,</span>
+<span id="cb73-45"><a href="#cb73-45" aria-hidden="true" tabindex="-1"></a>      <span class="at">sexo =</span> detalhes_sexo,</span>
+<span id="cb73-46"><a href="#cb73-46" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_nascimento =</span> detalhes_dataNascimento,</span>
+<span id="cb73-47"><a href="#cb73-47" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_falecimento =</span> detalhes_dataFalecimento,</span>
+<span id="cb73-48"><a href="#cb73-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf_nascimento =</span> detalhes_ufNascimento,</span>
+<span id="cb73-49"><a href="#cb73-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">municipio_nascimento =</span> detalhes_municipioNascimento,</span>
+<span id="cb73-50"><a href="#cb73-50" aria-hidden="true" tabindex="-1"></a>      <span class="at">escolaridade =</span> detalhes_escolaridade,</span>
+<span id="cb73-51"><a href="#cb73-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">situacao =</span> detalhes_ultimoStatus_situacao,</span>
+<span id="cb73-52"><a href="#cb73-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_situacao =</span> detalhes_ultimoStatus_data,</span>
+<span id="cb73-53"><a href="#cb73-53" aria-hidden="true" tabindex="-1"></a>      <span class="at">ultimo_partido =</span> detalhes_ultimoStatus_siglaPartido</span>
+<span id="cb73-54"><a href="#cb73-54" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb73-55"><a href="#cb73-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(partido <span class="sc">==</span> ultimo_partido) <span class="sc">|&gt;</span>   <span class="co"># considerar apenas último partido</span></span>
+<span id="cb73-56"><a href="#cb73-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>()                             <span class="co"># filtrar dados duplicados</span></span>
+<span id="cb73-57"><a href="#cb73-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-58"><a href="#cb73-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"3/3 - Buscando discursos de cada deputado"</span>)</span>
+<span id="cb73-59"><a href="#cb73-59" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-60"><a href="#cb73-60" aria-hidden="true" tabindex="-1"></a>  req_discursos_deputado <span class="ot">&lt;-</span> <span class="cf">function</span>(id_deputado) {</span>
+<span id="cb73-61"><a href="#cb73-61" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_api) <span class="sc">|&gt;</span></span>
+<span id="cb73-62"><a href="#cb73-62" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_path</span>(<span class="st">"api"</span>, <span class="st">"v2"</span>, <span class="st">"deputados"</span>, id_deputado, <span class="st">"discursos"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb73-63"><a href="#cb73-63" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_query</span>(</span>
+<span id="cb73-64"><a href="#cb73-64" aria-hidden="true" tabindex="-1"></a>        <span class="at">dataInicio =</span> data_inicio,</span>
+<span id="cb73-65"><a href="#cb73-65" aria-hidden="true" tabindex="-1"></a>        <span class="at">dataFim =</span> data_fim,</span>
+<span id="cb73-66"><a href="#cb73-66" aria-hidden="true" tabindex="-1"></a>      )</span>
+<span id="cb73-67"><a href="#cb73-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(req)</span>
+<span id="cb73-68"><a href="#cb73-68" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb73-69"><a href="#cb73-69" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-70"><a href="#cb73-70" aria-hidden="true" tabindex="-1"></a>  resp_discursos_deputados <span class="ot">&lt;-</span> df_deputados <span class="sc">|&gt;</span></span>
+<span id="cb73-71"><a href="#cb73-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_discursos =</span> <span class="fu">map</span>(id, req_discursos_deputado)) <span class="sc">|&gt;</span></span>
+<span id="cb73-72"><a href="#cb73-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_discursos =</span> <span class="fu">req_perform_parallel</span>(req_discursos))</span>
+<span id="cb73-73"><a href="#cb73-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb73-74"><a href="#cb73-74" aria-hidden="true" tabindex="-1"></a>  df_discursos <span class="ot">&lt;-</span> resp_discursos_deputados <span class="sc">|&gt;</span></span>
+<span id="cb73-75"><a href="#cb73-75" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">discursos =</span> <span class="fu">map</span>(resp_discursos, extrair_dados_resposta)) <span class="sc">|&gt;</span> <span class="co"># respostas</span></span>
+<span id="cb73-76"><a href="#cb73-76" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">lengths</span>(discursos) <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> <span class="co"># filtrar linhas sem discurso</span></span>
+<span id="cb73-77"><a href="#cb73-77" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(discursos) <span class="sc">|&gt;</span>              <span class="co"># desaninhar dados de discursos</span></span>
+<span id="cb73-78"><a href="#cb73-78" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(faseEvento, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar dados de evento</span></span>
+<span id="cb73-79"><a href="#cb73-79" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                      <span class="co"># selecionar colunas relevantes</span></span>
+<span id="cb73-80"><a href="#cb73-80" aria-hidden="true" tabindex="-1"></a>      <span class="co"># colunas anteriores</span></span>
+<span id="cb73-81"><a href="#cb73-81" aria-hidden="true" tabindex="-1"></a>      <span class="fu">colnames</span>(df_deputados),</span>
+<span id="cb73-82"><a href="#cb73-82" aria-hidden="true" tabindex="-1"></a>      <span class="co"># novas colunas</span></span>
+<span id="cb73-83"><a href="#cb73-83" aria-hidden="true" tabindex="-1"></a>      <span class="at">hora_inicio =</span> dataHoraInicio,</span>
+<span id="cb73-84"><a href="#cb73-84" aria-hidden="true" tabindex="-1"></a>      <span class="at">fase_evento =</span> faseEvento_titulo,</span>
+<span id="cb73-85"><a href="#cb73-85" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_discurso =</span> tipoDiscurso,</span>
+<span id="cb73-86"><a href="#cb73-86" aria-hidden="true" tabindex="-1"></a>      keywords,</span>
+<span id="cb73-87"><a href="#cb73-87" aria-hidden="true" tabindex="-1"></a>      sumario,</span>
+<span id="cb73-88"><a href="#cb73-88" aria-hidden="true" tabindex="-1"></a>      transcricao</span>
+<span id="cb73-89"><a href="#cb73-89" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb73-90"><a href="#cb73-90" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb73-91"><a href="#cb73-91" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(df_discursos)</span>
+<span id="cb73-92"><a href="#cb73-92" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>dt_discursos_camara <span class="ot">&lt;-</span> <span class="fu">obter_discursos_camara</span>(</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id_legislatura =</span> <span class="dv">57</span>, </span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_inicio =</span> <span class="st">"2025-04-01"</span>,</span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_fim =</span> <span class="st">"2025-04-30"</span></span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>dt_discursos_camara <span class="ot">&lt;-</span> <span class="fu">obter_discursos_camara</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id_legislatura =</span> <span class="dv">57</span>, </span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_inicio =</span> <span class="st">"2025-04-01"</span>,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_fim =</span> <span class="st">"2025-04-30"</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1/3 - Buscando lista de deputados"
 [1] "2/3 - Buscando detalhes de cada deputado"</code></pre>
@@ -1102,7 +1097,7 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 [working] (0 + 0) -&gt; 6 -&gt; 639 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■   99%
 [working] (0 + 0) -&gt; 0 -&gt; 645 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100%</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_discursos_camara)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dt_discursos_camara)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 21
       id nome            uf    partido    uri   nome_civil sexo  data_nascimento
@@ -1121,95 +1116,95 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(dt_discursos_camara, <span class="st">"discursos_camara_abril_2025.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(dt_discursos_camara, <span class="st">"discursos_camara_abril_2025.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="coletando-dados-da-api-do-senado" class="level2" data-number="A.2">
 <h2 data-number="A.2" class="anchored" data-anchor-id="coletando-dados-da-api-do-senado"><span class="header-section-number">A.2</span> Coletando dados da API do Senado</h2>
 <p>De maneira análoga, podemos definir uma função para obter dados de discursos do senado:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>obter_discursos_senado <span class="ot">&lt;-</span> <span class="cf">function</span>(data_inicio, data_fim) {</span>
-<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a>  url_discursos <span class="ot">&lt;-</span> <span class="st">"https://legis.senado.leg.br/dadosabertos/plenario/lista/discursos/"</span></span>
-<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>  req_discursos <span class="ot">&lt;-</span> <span class="fu">request</span>(url_discursos) <span class="sc">|&gt;</span></span>
-<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path_append</span>(data_inicio, data_fim) <span class="sc">|&gt;</span></span>
-<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_headers</span>(<span class="st">"Accept"</span> <span class="ot">=</span> <span class="st">"application/json"</span>)</span>
-<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>  resp_discursos <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req_discursos)</span>
-<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"1/3 - Obtendo dados de discursos"</span>)</span>
-<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-11"><a href="#cb97-11" aria-hidden="true" tabindex="-1"></a>  dt_discursos <span class="ot">&lt;-</span> resp_discursos <span class="sc">|&gt;</span></span>
-<span id="cb97-12"><a href="#cb97-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">resp_body_json</span>() <span class="sc">|&gt;</span>                              <span class="co"># extrair dados da resposta em JSON</span></span>
-<span id="cb97-13"><a href="#cb97-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pluck</span>(<span class="st">"DiscursosSessao"</span>, <span class="st">"Sessoes"</span>) <span class="sc">|&gt;</span>           <span class="co"># acessar dados dentro de DiscursosSessa/Sessoes</span></span>
-<span id="cb97-14"><a href="#cb97-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span>                                   <span class="co"># transformar em tabela</span></span>
-<span id="cb97-15"><a href="#cb97-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Sessao) <span class="sc">|&gt;</span>                          <span class="co"># desaninhar dados das sessões</span></span>
-<span id="cb97-16"><a href="#cb97-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(Pronunciamentos) <span class="sc">|&gt;</span>                       <span class="co"># desaninhar pronunciamentos</span></span>
-<span id="cb97-17"><a href="#cb97-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_longer</span>(Pronunciamentos) <span class="sc">|&gt;</span>                <span class="co"># desaninhar pronunciamentos da sessão</span></span>
-<span id="cb97-18"><a href="#cb97-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Pronunciamentos) <span class="sc">|&gt;</span>                 <span class="co"># desaninhar dados do pronunciamento</span></span>
-<span id="cb97-19"><a href="#cb97-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(TipoUsoPalavra, <span class="at">names_sep =</span> <span class="st">'_'</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar tipo de uso da palavra</span></span>
-<span id="cb97-20"><a href="#cb97-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(CodigoParlamentar)) <span class="sc">|&gt;</span>             <span class="co"># filtrar discursos de não-parlamentares</span></span>
-<span id="cb97-21"><a href="#cb97-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                          <span class="co"># selecionar colunas</span></span>
-<span id="cb97-22"><a href="#cb97-22" aria-hidden="true" tabindex="-1"></a>      id,</span>
-<span id="cb97-23"><a href="#cb97-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">codigo_parlamentar =</span> CodigoParlamentar,</span>
-<span id="cb97-24"><a href="#cb97-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome =</span> NomeAutor,</span>
-<span id="cb97-25"><a href="#cb97-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">partido =</span> Partido,</span>
-<span id="cb97-26"><a href="#cb97-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf =</span> UF,</span>
-<span id="cb97-27"><a href="#cb97-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_sessao =</span> DescricaoSessao,</span>
-<span id="cb97-28"><a href="#cb97-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_uso_palavra =</span> TipoUsoPalavra_Descricao,</span>
-<span id="cb97-29"><a href="#cb97-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> Data,</span>
-<span id="cb97-30"><a href="#cb97-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">sumario =</span> Resumo,</span>
-<span id="cb97-31"><a href="#cb97-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">keywords =</span> Indexacao,</span>
-<span id="cb97-32"><a href="#cb97-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">transcricao =</span> TextoIntegralTxt</span>
-<span id="cb97-33"><a href="#cb97-33" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb97-34"><a href="#cb97-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-35"><a href="#cb97-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"2/3 - Obtendo inteiro teor"</span>)</span>
-<span id="cb97-36"><a href="#cb97-36" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-37"><a href="#cb97-37" aria-hidden="true" tabindex="-1"></a>  dt_discursos_inteiro <span class="ot">&lt;-</span> dt_discursos <span class="sc">|&gt;</span></span>
-<span id="cb97-38"><a href="#cb97-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">map</span>(transcricao, request)) <span class="sc">|&gt;</span>         <span class="co"># requisição da transcrição</span></span>
-<span id="cb97-39"><a href="#cb97-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">req_perform_parallel</span>(transcricao)) <span class="sc">|&gt;</span> <span class="co"># buscar transcrições</span></span>
-<span id="cb97-40"><a href="#cb97-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">map</span>(transcricao, resp_body_string))   <span class="co"># ler transcrições das respostas</span></span>
-<span id="cb97-41"><a href="#cb97-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-42"><a href="#cb97-42" aria-hidden="true" tabindex="-1"></a>  req_detalhes_senador <span class="ot">&lt;-</span> <span class="cf">function</span>(codigo_parlamentar) {</span>
-<span id="cb97-43"><a href="#cb97-43" aria-hidden="true" tabindex="-1"></a>    url_senadores <span class="ot">&lt;-</span> <span class="st">"https://legis.senado.leg.br/dadosabertos/senador/"</span></span>
-<span id="cb97-44"><a href="#cb97-44" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_senadores) <span class="sc">|&gt;</span></span>
-<span id="cb97-45"><a href="#cb97-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_path_append</span>(codigo_parlamentar) <span class="sc">|&gt;</span></span>
-<span id="cb97-46"><a href="#cb97-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_headers</span>(<span class="at">Accept =</span> <span class="st">"application/json"</span>)</span>
-<span id="cb97-47"><a href="#cb97-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(req)</span>
-<span id="cb97-48"><a href="#cb97-48" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb97-49"><a href="#cb97-49" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-50"><a href="#cb97-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"3/3 - Obtendo detalhes dos senadores"</span>)</span>
-<span id="cb97-51"><a href="#cb97-51" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-52"><a href="#cb97-52" aria-hidden="true" tabindex="-1"></a>  dt_detalhes_senadores <span class="ot">&lt;-</span> dt_discursos_inteiro <span class="sc">|&gt;</span></span>
-<span id="cb97-53"><a href="#cb97-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(codigo_parlamentar) <span class="sc">|&gt;</span></span>
-<span id="cb97-54"><a href="#cb97-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
-<span id="cb97-55"><a href="#cb97-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_senador =</span> <span class="fu">map</span>(codigo_parlamentar, req_detalhes_senador)) <span class="sc">|&gt;</span></span>
-<span id="cb97-56"><a href="#cb97-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_senador =</span> <span class="fu">req_perform_parallel</span>(req_senador)) <span class="sc">|&gt;</span></span>
-<span id="cb97-57"><a href="#cb97-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_senador, resp_body_json)) <span class="sc">|&gt;</span></span>
-<span id="cb97-58"><a href="#cb97-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(detalhes) <span class="sc">|&gt;</span>                        <span class="co"># desaninhar detalhes</span></span>
-<span id="cb97-59"><a href="#cb97-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes) <span class="sc">|&gt;</span>                  <span class="co"># desaninhar dados de detalhes</span></span>
-<span id="cb97-60"><a href="#cb97-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Parlamentar) <span class="sc">|&gt;</span>               <span class="co"># desaninhar dados do parlamentar</span></span>
-<span id="cb97-61"><a href="#cb97-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(DadosBasicosParlamentar) <span class="sc">|&gt;</span>   <span class="co"># desaninhar dados básicos</span></span>
-<span id="cb97-62"><a href="#cb97-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(IdentificacaoParlamentar) <span class="sc">|&gt;</span>  <span class="co"># desaninhar identificação</span></span>
-<span id="cb97-63"><a href="#cb97-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                    <span class="co"># selecionar colunas</span></span>
-<span id="cb97-64"><a href="#cb97-64" aria-hidden="true" tabindex="-1"></a>      codigo_parlamentar,</span>
-<span id="cb97-65"><a href="#cb97-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome_civil =</span> NomeCompletoParlamentar,</span>
-<span id="cb97-66"><a href="#cb97-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">sexo =</span> SexoParlamentar,</span>
-<span id="cb97-67"><a href="#cb97-67" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_nascimento =</span> DataNascimento,</span>
-<span id="cb97-68"><a href="#cb97-68" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf_nascimento =</span> UfNaturalidade,</span>
-<span id="cb97-69"><a href="#cb97-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">municipio_nascimento =</span> Naturalidade</span>
-<span id="cb97-70"><a href="#cb97-70" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb97-71"><a href="#cb97-71" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-72"><a href="#cb97-72" aria-hidden="true" tabindex="-1"></a>  dt_discursos_senado <span class="ot">&lt;-</span> dt_discursos_inteiro <span class="sc">|&gt;</span></span>
-<span id="cb97-73"><a href="#cb97-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(dt_detalhes_senadores, <span class="at">by =</span> <span class="fu">join_by</span>(codigo_parlamentar))</span>
-<span id="cb97-74"><a href="#cb97-74" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb97-75"><a href="#cb97-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dt_discursos_senado)</span>
-<span id="cb97-76"><a href="#cb97-76" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>obter_discursos_senado <span class="ot">&lt;-</span> <span class="cf">function</span>(data_inicio, data_fim) {</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  url_discursos <span class="ot">&lt;-</span> <span class="st">"https://legis.senado.leg.br/dadosabertos/plenario/lista/discursos/"</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  req_discursos <span class="ot">&lt;-</span> <span class="fu">request</span>(url_discursos) <span class="sc">|&gt;</span></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_url_path_append</span>(data_inicio, data_fim) <span class="sc">|&gt;</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">req_headers</span>(<span class="st">"Accept"</span> <span class="ot">=</span> <span class="st">"application/json"</span>)</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>  resp_discursos <span class="ot">&lt;-</span> <span class="fu">req_perform</span>(req_discursos)</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"1/3 - Obtendo dados de discursos"</span>)</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>  dt_discursos <span class="ot">&lt;-</span> resp_discursos <span class="sc">|&gt;</span></span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">resp_body_json</span>() <span class="sc">|&gt;</span>                              <span class="co"># extrair dados da resposta em JSON</span></span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pluck</span>(<span class="st">"DiscursosSessao"</span>, <span class="st">"Sessoes"</span>) <span class="sc">|&gt;</span>           <span class="co"># acessar dados dentro de DiscursosSessa/Sessoes</span></span>
+<span id="cb95-14"><a href="#cb95-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span>                                   <span class="co"># transformar em tabela</span></span>
+<span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Sessao) <span class="sc">|&gt;</span>                          <span class="co"># desaninhar dados das sessões</span></span>
+<span id="cb95-16"><a href="#cb95-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(Pronunciamentos) <span class="sc">|&gt;</span>                       <span class="co"># desaninhar pronunciamentos</span></span>
+<span id="cb95-17"><a href="#cb95-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_longer</span>(Pronunciamentos) <span class="sc">|&gt;</span>                <span class="co"># desaninhar pronunciamentos da sessão</span></span>
+<span id="cb95-18"><a href="#cb95-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Pronunciamentos) <span class="sc">|&gt;</span>                 <span class="co"># desaninhar dados do pronunciamento</span></span>
+<span id="cb95-19"><a href="#cb95-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(TipoUsoPalavra, <span class="at">names_sep =</span> <span class="st">'_'</span>) <span class="sc">|&gt;</span> <span class="co"># desaninhar tipo de uso da palavra</span></span>
+<span id="cb95-20"><a href="#cb95-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(CodigoParlamentar)) <span class="sc">|&gt;</span>             <span class="co"># filtrar discursos de não-parlamentares</span></span>
+<span id="cb95-21"><a href="#cb95-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                          <span class="co"># selecionar colunas</span></span>
+<span id="cb95-22"><a href="#cb95-22" aria-hidden="true" tabindex="-1"></a>      id,</span>
+<span id="cb95-23"><a href="#cb95-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">codigo_parlamentar =</span> CodigoParlamentar,</span>
+<span id="cb95-24"><a href="#cb95-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome =</span> NomeAutor,</span>
+<span id="cb95-25"><a href="#cb95-25" aria-hidden="true" tabindex="-1"></a>      <span class="at">partido =</span> Partido,</span>
+<span id="cb95-26"><a href="#cb95-26" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf =</span> UF,</span>
+<span id="cb95-27"><a href="#cb95-27" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_sessao =</span> DescricaoSessao,</span>
+<span id="cb95-28"><a href="#cb95-28" aria-hidden="true" tabindex="-1"></a>      <span class="at">tipo_uso_palavra =</span> TipoUsoPalavra_Descricao,</span>
+<span id="cb95-29"><a href="#cb95-29" aria-hidden="true" tabindex="-1"></a>      <span class="at">data =</span> Data,</span>
+<span id="cb95-30"><a href="#cb95-30" aria-hidden="true" tabindex="-1"></a>      <span class="at">sumario =</span> Resumo,</span>
+<span id="cb95-31"><a href="#cb95-31" aria-hidden="true" tabindex="-1"></a>      <span class="at">keywords =</span> Indexacao,</span>
+<span id="cb95-32"><a href="#cb95-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">transcricao =</span> TextoIntegralTxt</span>
+<span id="cb95-33"><a href="#cb95-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb95-34"><a href="#cb95-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-35"><a href="#cb95-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"2/3 - Obtendo inteiro teor"</span>)</span>
+<span id="cb95-36"><a href="#cb95-36" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-37"><a href="#cb95-37" aria-hidden="true" tabindex="-1"></a>  dt_discursos_inteiro <span class="ot">&lt;-</span> dt_discursos <span class="sc">|&gt;</span></span>
+<span id="cb95-38"><a href="#cb95-38" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">map</span>(transcricao, request)) <span class="sc">|&gt;</span>         <span class="co"># requisição da transcrição</span></span>
+<span id="cb95-39"><a href="#cb95-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">req_perform_parallel</span>(transcricao)) <span class="sc">|&gt;</span> <span class="co"># buscar transcrições</span></span>
+<span id="cb95-40"><a href="#cb95-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">transcricao =</span> <span class="fu">map</span>(transcricao, resp_body_string))   <span class="co"># ler transcrições das respostas</span></span>
+<span id="cb95-41"><a href="#cb95-41" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-42"><a href="#cb95-42" aria-hidden="true" tabindex="-1"></a>  req_detalhes_senador <span class="ot">&lt;-</span> <span class="cf">function</span>(codigo_parlamentar) {</span>
+<span id="cb95-43"><a href="#cb95-43" aria-hidden="true" tabindex="-1"></a>    url_senadores <span class="ot">&lt;-</span> <span class="st">"https://legis.senado.leg.br/dadosabertos/senador/"</span></span>
+<span id="cb95-44"><a href="#cb95-44" aria-hidden="true" tabindex="-1"></a>    req <span class="ot">&lt;-</span> <span class="fu">request</span>(url_senadores) <span class="sc">|&gt;</span></span>
+<span id="cb95-45"><a href="#cb95-45" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_url_path_append</span>(codigo_parlamentar) <span class="sc">|&gt;</span></span>
+<span id="cb95-46"><a href="#cb95-46" aria-hidden="true" tabindex="-1"></a>      <span class="fu">req_headers</span>(<span class="at">Accept =</span> <span class="st">"application/json"</span>)</span>
+<span id="cb95-47"><a href="#cb95-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(req)</span>
+<span id="cb95-48"><a href="#cb95-48" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb95-49"><a href="#cb95-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-50"><a href="#cb95-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"3/3 - Obtendo detalhes dos senadores"</span>)</span>
+<span id="cb95-51"><a href="#cb95-51" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-52"><a href="#cb95-52" aria-hidden="true" tabindex="-1"></a>  dt_detalhes_senadores <span class="ot">&lt;-</span> dt_discursos_inteiro <span class="sc">|&gt;</span></span>
+<span id="cb95-53"><a href="#cb95-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(codigo_parlamentar) <span class="sc">|&gt;</span></span>
+<span id="cb95-54"><a href="#cb95-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>() <span class="sc">|&gt;</span></span>
+<span id="cb95-55"><a href="#cb95-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">req_senador =</span> <span class="fu">map</span>(codigo_parlamentar, req_detalhes_senador)) <span class="sc">|&gt;</span></span>
+<span id="cb95-56"><a href="#cb95-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">resp_senador =</span> <span class="fu">req_perform_parallel</span>(req_senador)) <span class="sc">|&gt;</span></span>
+<span id="cb95-57"><a href="#cb95-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">detalhes =</span> <span class="fu">map</span>(resp_senador, resp_body_json)) <span class="sc">|&gt;</span></span>
+<span id="cb95-58"><a href="#cb95-58" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(detalhes) <span class="sc">|&gt;</span>                        <span class="co"># desaninhar detalhes</span></span>
+<span id="cb95-59"><a href="#cb95-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(detalhes) <span class="sc">|&gt;</span>                  <span class="co"># desaninhar dados de detalhes</span></span>
+<span id="cb95-60"><a href="#cb95-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(Parlamentar) <span class="sc">|&gt;</span>               <span class="co"># desaninhar dados do parlamentar</span></span>
+<span id="cb95-61"><a href="#cb95-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(DadosBasicosParlamentar) <span class="sc">|&gt;</span>   <span class="co"># desaninhar dados básicos</span></span>
+<span id="cb95-62"><a href="#cb95-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(IdentificacaoParlamentar) <span class="sc">|&gt;</span>  <span class="co"># desaninhar identificação</span></span>
+<span id="cb95-63"><a href="#cb95-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(                                    <span class="co"># selecionar colunas</span></span>
+<span id="cb95-64"><a href="#cb95-64" aria-hidden="true" tabindex="-1"></a>      codigo_parlamentar,</span>
+<span id="cb95-65"><a href="#cb95-65" aria-hidden="true" tabindex="-1"></a>      <span class="at">nome_civil =</span> NomeCompletoParlamentar,</span>
+<span id="cb95-66"><a href="#cb95-66" aria-hidden="true" tabindex="-1"></a>      <span class="at">sexo =</span> SexoParlamentar,</span>
+<span id="cb95-67"><a href="#cb95-67" aria-hidden="true" tabindex="-1"></a>      <span class="at">data_nascimento =</span> DataNascimento,</span>
+<span id="cb95-68"><a href="#cb95-68" aria-hidden="true" tabindex="-1"></a>      <span class="at">uf_nascimento =</span> UfNaturalidade,</span>
+<span id="cb95-69"><a href="#cb95-69" aria-hidden="true" tabindex="-1"></a>      <span class="at">municipio_nascimento =</span> Naturalidade</span>
+<span id="cb95-70"><a href="#cb95-70" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb95-71"><a href="#cb95-71" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-72"><a href="#cb95-72" aria-hidden="true" tabindex="-1"></a>  dt_discursos_senado <span class="ot">&lt;-</span> dt_discursos_inteiro <span class="sc">|&gt;</span></span>
+<span id="cb95-73"><a href="#cb95-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">inner_join</span>(dt_detalhes_senadores, <span class="at">by =</span> <span class="fu">join_by</span>(codigo_parlamentar))</span>
+<span id="cb95-74"><a href="#cb95-74" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb95-75"><a href="#cb95-75" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(dt_discursos_senado)</span>
+<span id="cb95-76"><a href="#cb95-76" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb98"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1" aria-hidden="true" tabindex="-1"></a>df_discursos_senado <span class="ot">&lt;-</span> <span class="fu">obter_discursos_senado</span>(</span>
-<span id="cb98-2"><a href="#cb98-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_inicio =</span> <span class="st">"20250401"</span>,</span>
-<span id="cb98-3"><a href="#cb98-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_fim =</span> <span class="st">"20250430"</span></span>
-<span id="cb98-4"><a href="#cb98-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>df_discursos_senado <span class="ot">&lt;-</span> <span class="fu">obter_discursos_senado</span>(</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_inicio =</span> <span class="st">"20250401"</span>,</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data_fim =</span> <span class="st">"20250430"</span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1/3 - Obtendo dados de discursos"
 [1] "2/3 - Obtendo inteiro teor"</code></pre>
@@ -1223,7 +1218,7 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "3/3 - Obtendo detalhes dos senadores"</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_discursos_senado)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_discursos_senado)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 16
   id     codigo_parlamentar nome      partido uf    tipo_sessao tipo_uso_palavra
@@ -1240,7 +1235,7 @@ Waiting 28s for rate limit ■■■■■■■■■■■■■■■■■�
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_discursos_senado, <span class="st">"discursos_senado_abril_2025.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_discursos_senado, <span class="st">"discursos_senado_abril_2025.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 
 

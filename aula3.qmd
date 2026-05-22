@@ -1,6 +1,9 @@
 ---
 title: N-gramas, Collocations e TF-IDF
-format: ipynb
+bibliography: "references.bib"
+execute:
+  results: hold
+  cache: true
 ---
 
 ::: callout-note

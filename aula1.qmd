@@ -1,6 +1,8 @@
 ---
 title: "Linguagem R"
 bibliography: "references.bib"
+execution:
+  results: hold
 ---
 
 ::: callout-note

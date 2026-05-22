@@ -13,3 +13,4 @@ stm
 stopwords
 quanteda.textmodels
 quanteda.textplots
+quanteda.textstats

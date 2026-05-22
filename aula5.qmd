@@ -1,4 +1,10 @@
-# Análise de tópicos estruturada e modelos de escala
+---
+title: "Análise de Tópicos Estruturada e Modelos de Escalonamento"
+bibliography: "references.bib"
+execute:
+  results: hold
+  cache: true
+---
 
 ## Análise de tópicos estruturada
 
@@ -56,10 +62,10 @@ As capacidades do BERTopic incluem:
 
 Desvantagens de modelos de tópicos baseados em embeddings incluem:
 
--  menor interpretabilidade: os tópicos gerados podem ser mais difíceis de interpretar, especialmente se os embeddings não capturam bem as nuances semânticas dos textos.
--  maior complexidade computacional: requer mais recursos computacionais para gerar embeddings e realizar clustering.
--  configuração mais complexa: a escolha do modelo de linguagem, técnicas de redução de dimensionalidade e algoritmos de clustering pode ser mais complexa e exigir mais experimentação.
-- geralmente requerem mais dados para treinar adequadamente, o que pode ser um desafio em conjuntos de dados menores.
+-   menor interpretabilidade: os tópicos gerados podem ser mais difíceis de interpretar, especialmente se os embeddings não capturam bem as nuances semânticas dos textos.
+-   maior complexidade computacional: requer mais recursos computacionais para gerar embeddings e realizar clustering.
+-   configuração mais complexa: a escolha do modelo de linguagem, técnicas de redução de dimensionalidade e algoritmos de clustering pode ser mais complexa e exigir mais experimentação.
+-   geralmente requerem mais dados para treinar adequadamente, o que pode ser um desafio em conjuntos de dados menores.
 
 ## Escalonamento de texto
 
@@ -237,7 +243,6 @@ plot.estimateEffect(
   xlab = "PT vs PL",
 )
 ```
-
 
 ## BERTopic
 

@@ -15,6 +15,7 @@ book:
     - aula3.qmd
     - aula4.qmd
     - aula5.qmd
+    - aula6.qmd
     - glossario.qmd
     - references.qmd
   appendices: 
@@ -32,3 +33,5 @@ format:
 
 editor: visual
 
+execute: 
+  cache: true

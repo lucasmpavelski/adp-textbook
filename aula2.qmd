@@ -1,4 +1,10 @@
-# Palavras, morfemas e tokens
+---
+title: "Palavras, morfemas e tokens"
+bibliography: "references.bib"
+execute:
+  results: hold
+  cache: true
+---
 
 ::: callout-note
 ## Nesta aula
@@ -351,7 +357,8 @@ library(quanteda)
 
 # Ler arquivo discursos_camara_abril_2025.csv (planilha) em uma tabela do R
 # Imprimindo detalhes sobre a leitura do arquivo (show_col_types)
-tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = TRUE)
+tabela_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = FALSE)
+# utilize show_col_types = TRUE para ver os tipos de cada coluna lida
 
 # Criar coluna identificador do texto "doc_id", contendo o nome e partido do discurso
 tabela_discursos <- tabela_discursos |>

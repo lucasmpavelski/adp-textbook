@@ -1,6 +1,9 @@
 ---
 title: "Análise Sintática e Modelos de Tópicos"
 bibliography: "references.bib"
+execute:
+  results: hold
+  cache: true
 ---
 
 ::: callout-note
@@ -191,9 +194,8 @@ A configuração padrão que vamos utilizar é o *pipeline* para língua portugu
 
 O código abaixo baixa e inicializa os componentes:
 
-```{r}
-spacy_install()
-spacy_download_langmodel("pt_core_news_sm")
+```{r eval=FALSE}
+spacy_install(langmodels = "pt_core_news_sm")
 spacy_initialize("pt_core_news_sm")
 ```
 
@@ -202,6 +204,8 @@ Para mais detalhes sobre a pipeline: <https://spacy.io/models/pt>
 Com a biblioteca carregada, podemos processar os textos com a função `spacy_parse`:
 
 ```{r}
+spacy_initialize("pt_core_news_sm")
+
 texto <- "O gato subiu no telhado." 
 
 spacy_parse(texto)
