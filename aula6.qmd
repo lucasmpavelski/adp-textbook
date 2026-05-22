@@ -15,7 +15,7 @@ Modelos de **aprendizado supervisionado** são aqueles em que o modelo é treina
 
 ![](images/clipboard-3145556631.png)
 
-O trainamento **supervisionado** requer um conjunto de dados rotulado, também chamados de exemplos, onde cada exemplo de treinamento tem um rótulo associado. O modelo aprende a partir desses exemplos e é capaz de fazer previsões em novos dados.
+O treinamento **supervisionado** requer um conjunto de dados rotulados, também chamados de exemplos, onde cada exemplo de treinamento tem um rótulo associado. O modelo aprende a partir desses exemplos e é capaz de fazer previsões em novos dados.
 
 ![](images/clipboard-220460977.png)
 
@@ -37,7 +37,7 @@ Além da classificação de textos completos, podemos também realizar a classif
 
 Já vimos uma aplicação de classificação de tokens em aulas anteriores: a análise sintática.
 
-Modelos de classificação/regressão de sequências pode utilizar informações como:
+Modelos de classificação/regressão de sequências podem utilizar informações como:
 
 -   **Contexto**: a classificação de um token pode depender do contexto em que ele aparece. Por exemplo, a palavra "banco" pode se referir a uma instituição financeira ou a um objeto para sentar, dependendo do contexto.
 -   **Características do token**: características morfológicas, sua posição na frase, ou se é uma palavra maiúscula podem ser úteis para a classificação.
@@ -47,7 +47,7 @@ Modelos de classificação/regressão de sequências pode utilizar informações
 
 Modelos de aprendizado supervisionado de textos podem ser aplicados em diversas tarefas de análise de discurso, como:
 
--   **Análise de Sentimentos**: medir hostilidade, otimismo, teor populista adversários ou instituições.
+-   **Análise de Sentimentos**: medir hostilidade, otimismo, teor populista, adversários ou instituições.
 
 -   **Enquadramentos ideológicos**: identificar como determinado assunto é tratado no discurso. Por exemplo, discursos sobre a Amazônia enquadrados como "Soberania Nacional", "Preservação Ambiental" ou "Exploração Econômica".
 
@@ -59,7 +59,7 @@ Modelos de aprendizado supervisionado de textos podem ser aplicados em diversas 
 
 Assim como em outros métodos vistos nas aulas anteriores, é importante perceber como as ferramentas ajudariam na análise cuidadosa dos discursos.
 
-A anotação prévia dos dados geralmente é complexa e exige esforço humano. Modelos de aprendizado ajudam a escalonar a análise para corpus maiores.
+A anotação prévia dos dados geralmente é complexa e exige esforço humano. Modelos de aprendizado ajudam a escalar a análise para corpora maiores.
 
 ![](images/clipboard-2587364764.png)
 
@@ -72,11 +72,11 @@ Existem diversos algoritmos de aprendizado supervisionado que podem ser usados p
 -   **Árvores de Decisão**: modelos que dividem os dados em ramos com base em condições sobre as features.
 -   **Redes Neurais**: modelos inspirados no funcionamento do cérebro humano, que podem capturar relações complexas entre as features.
 
-Cada algoritmo possui características que influenciam o aprendizado. Um fator importante é a **interpretabilidade**. Em modelos como regressão linear e árvores de decisão, as predições podem ser explicadas a partir de dados do modelo (ex: por quê o discurso X foi classificado como "neutro"?). Redes Neurais, por exemplo, geram boas métricas mas não são facilmente interpretadas.
+Cada algoritmo possui características que influenciam o aprendizado. Um fator importante é a **interpretabilidade**. Em modelos como regressão linear e árvores de decisão, as predições podem ser explicadas a partir de dados do modelo (ex: por que o discurso X foi classificado como "neutro"?). Redes Neurais, por exemplo, geram boas métricas mas não são facilmente interpretadas.
 
 ### Treinamento, teste e validação
 
-Para aprendizado supervisionado, é boa prática separar um conjunto dos dados rotulados para teste. A ideia é utilizar dados que não foram utilizados durante o treinamento para avaliar a generalização do modelo (ie: como o modelo se comportaria com novos dados).
+Para aprendizado supervisionado, é boa prática separar um conjunto dos dados rotulados para teste. A ideia é utilizar dados que não foram utilizados durante o treinamento para avaliar a generalização do modelo (isto é: como o modelo se comportaria com novos dados).
 
 ![](images/clipboard-4230883517.png){fig-align="center" width="63%"}
 
@@ -112,7 +112,7 @@ O treinamento também pode envolver esquemas de **validação cruzada (CV, do in
 
 ## Modelos de linguagem
 
-**Modelos de Linguagem** são treinados para , dada uma sequência de palavras, prever a próxima palavra ou preencher lacunas em um texto. Eles aprendem a partir de grandes corpora de texto e capturam padrões linguísticos, semânticos e contextuais.
+**Modelos de Linguagem** são treinados para, dada uma sequência de palavras, prever a próxima palavra ou preencher lacunas em um texto. Eles aprendem a partir de grandes corpora de texto e capturam padrões linguísticos, semânticos e contextuais.
 
 **Modelos de Linguagem Grandes (LLMs, do inglês Large Language Models)** são modelos de linguagem com um grande número de parâmetros (bilhões) e treinados em grandes quantidades de dados (trilhões). Estes modelos possuem capacidades para auxiliar em diversas tarefas relacionadas à linguagem.
 
@@ -136,11 +136,11 @@ Para análise de discurso, os LLMs podem ser usados para:
 
 **Fine-tuning**: é possível ajustar um modelo pré-treinado para uma tarefa específica, como classificação de sentimentos ou análise de discurso, usando um conjunto de dados rotulado.
 
-LLMs de uso geral e ajustadas são oferecidas como serviços em nuvem por empresas como OpenAI, Google, Microsoft, entre outras. Eles podem ser acessados por meio de bibliotecas, como ellmer e mall do R. Uma relação de modelos, custos e tamanhos de contexto está disponível em: <https://models.litellm.ai/>.
+LLMs de uso geral e ajustados são oferecidos como serviços em nuvem por empresas como OpenAI, Google, Microsoft, entre outras. Eles podem ser acessados por meio de bibliotecas, como ellmer e mall do R. Uma relação de modelos, custos e tamanhos de contexto está disponível em: <https://models.litellm.ai/>.
 
 ### Configuração e construção de prompts
 
-**Temperatura e alucionações**: a temperatura é um parâmetro que controla a aleatoriedade das respostas geradas pelo modelo. Valores mais baixos resultam em respostas mais conservadoras e valores mais altos podem gerar respostas mais criativas, mas também mais propensas a \*\*alucinações\* (informações incorretas ou inventadas).
+**Temperatura e alucinações**: a temperatura é um parâmetro que controla a aleatoriedade das respostas geradas pelo modelo. Valores mais baixos resultam em respostas mais conservadoras e valores mais altos podem gerar respostas mais criativas, mas também mais propensas a **alucinações** (informações incorretas ou inventadas).
 
 **Prompting**: a forma como a entrada é formulada pode influenciar significativamente as respostas do modelo. Prompts bem elaborados podem melhorar a qualidade das respostas.
 
@@ -148,7 +148,7 @@ Algumas boas práticas para construção de prompts incluem:
 
 -   Enunciar ordens específicas (ex: "liste as principais ideias do discurso em até 3 itens").
 
--   Utilizar de linguagem imperativa (ex: "responda com 'sim' ou 'não'", "não cite nomes de pessoas ou empresas").
+-   Utilizar linguagem imperativa (ex: "responda com 'sim' ou 'não'", "não cite nomes de pessoas ou empresas").
 
 -   Prover exemplos (ex: "busque por frases que indiquem sarcasmo, como 'claro, isso é ótimo' ou 'nossa, que surpresa'.").
 
@@ -166,7 +166,7 @@ O RAG permite que o modelo acesse uma base de dados externa ao invés de assumir
 
 Algumas vantagens do RAG são:
 
--   *Volume de dados*: a base de dados pode ser grande, pois não é necessário incluir toda a informação no contexto (prompt de entrada). Por exemplo, o modelo poderia ter acesso a base intera de discursos, notícias, propostas, etc.
+-   *Volume de dados*: a base de dados pode ser grande, pois não é necessário incluir toda a informação no contexto (prompt de entrada). Por exemplo, o modelo poderia ter acesso à base inteira de discursos, notícias, propostas, etc.
 -   *Dados atualizados*: o modelo pode acessar informações atualizadas, o que é especialmente útil para perguntas sobre eventos recentes ou dados em constante mudança.
 -   *Sigilos e informações específicas*: o modelo pode recuperar informações específicas, como estatísticas, datas ou nomes, que podem não estar presentes no conhecimento pré-treinado do modelo.
 -   *Contexto específico*: o modelo pode acessar informações contextuais específicas e referenciadas para a tarefa em questão, melhorando a relevância e precisão das respostas. Isso reduz a chance de alucinações.
@@ -197,7 +197,7 @@ dados_discursos <- read_csv("discursos_camara_abril_2025.csv", show_col_types = 
 padrao_inicio_discursos <- "(Sem revisão d[oa] oradora?\\.\\)|SEM REGISTRO TAQUIGRÁFICO\\)\\. |O SR\\. PRESIDENTE.* - | - [A-Z][A-Z]\\))(.*)"
 dados_discursos <- mutate(dados_discursos, transcricao = str_extract(transcricao, padrao_inicio_discursos, group = 2))
 
-# Criar do corpus
+# Criar o corpus
 corpus_discursos <- corpus(dados_discursos, text_field = "transcricao")
 
 # Criar tokens de discursos, removendo pontuações, símbolos, números e stopwords
@@ -213,7 +213,7 @@ dfm_discursos <- tokens_discursos |>
     max_docfreq = 0.5, docfreq_type = "prop" # palavras aparecem no máximo em 50% dos discursos 
   )
 
-# Separar conjuntos de entre treinamento e teste
+# Separar conjuntos entre treinamento e teste
 set.seed(42) # semente do gerador de números aleatórios para reprodutibilidade
 indices_treinamento <- createDataPartition(dfm_discursos$partido, p = 0.8, list = FALSE) |> as.vector()
 dfm_treinamento <- dfm_discursos[indices_treinamento, ] # 80% exemplos aleatórios para treinamento
@@ -240,14 +240,14 @@ predicoes_teste <- predict(modelo_linear, newdata = features_teste)
 rotulos_saida_teste <- as.factor(dfm_teste$partido)
 confusionMatrix(predicoes_teste, reference = rotulos_saida_teste)
 
-# Calcular importâncias de cada features (palavras)
+# Calcular importância de cada feature (palavras)
 importancia <- varImp(modelo_linear)
 
 # Desenhar gráfico com as 10 features mais importantes
 plot(importancia, top = 10)
 ```
 
-### Classificação textual com árvores de decisão
+### Classificação Textual com Árvores de Decisão
 
 Modelo para classificar discursos do PT ou PL.
 
@@ -286,7 +286,7 @@ dfm_discursos <- tokens_discursos |>
     max_docfreq = 0.5, docfreq_type = "prop" # aparecem no máximo em 50% dos discursos 
   )
 
-# Separar conjuntos de entre treinamento e teste
+# Separar conjuntos entre treinamento e teste
 set.seed(42) # semente do gerador de números aleatórios para reprodutibilidade
 indices_treinamento <- createDataPartition(dfm_discursos$partido, p = 0.8, list = FALSE) |> as.vector()
 dfm_treinamento <- dfm_discursos[indices_treinamento, ] # 80% exemplos aleatórios para treinamento
@@ -370,7 +370,7 @@ library(ellmer)
 # Adicionar chave para serviço de LLM (gemini da Google)
 # Sys.setenv(GEMINI_API_KEY = "<insira a chave aqui>")
 
-# Configurar do serviço de LLM
+# Configurar o serviço de LLM
 chat <- chat_google_gemini(model = "gemini-2.5-flash")
 llm_use(chat, .cache = "gemini_cache")
 
@@ -443,7 +443,7 @@ ragnar_register_tool_retrieve(
 )
 
 # Enviar prompt para LLM
-resposta <- cliente_chat$chat("O que o partido PSOL está falando sobre o papa francisco?")
+resposta <- cliente_chat$chat("O que o partido PSOL está falando sobre o Papa Francisco?")
 
 # Escrever resposta
 print(resposta)

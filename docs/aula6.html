@@ -269,7 +269,7 @@ window.Quarto = {
   <li><a href="#estudos-guiados" id="toc-estudos-guiados" class="nav-link" data-scroll-target="#estudos-guiados"><span class="header-section-number">6.3</span> Estudos guiados</a>
   <ul class="collapse">
   <li><a href="#classificação-textual-com-regressão-logística" id="toc-classificação-textual-com-regressão-logística" class="nav-link" data-scroll-target="#classificação-textual-com-regressão-logística"><span class="header-section-number">6.3.1</span> Classificação Textual com Regressão Logística</a></li>
-  <li><a href="#classificação-textual-com-árvores-de-decisão" id="toc-classificação-textual-com-árvores-de-decisão" class="nav-link" data-scroll-target="#classificação-textual-com-árvores-de-decisão"><span class="header-section-number">6.3.2</span> Classificação textual com árvores de decisão</a></li>
+  <li><a href="#classificação-textual-com-árvores-de-decisão" id="toc-classificação-textual-com-árvores-de-decisão" class="nav-link" data-scroll-target="#classificação-textual-com-árvores-de-decisão"><span class="header-section-number">6.3.2</span> Classificação Textual com Árvores de Decisão</a></li>
   <li><a href="#reconhecimento-de-entidades-nomeadas-com-spacyr" id="toc-reconhecimento-de-entidades-nomeadas-com-spacyr" class="nav-link" data-scroll-target="#reconhecimento-de-entidades-nomeadas-com-spacyr"><span class="header-section-number">6.3.3</span> Reconhecimento de entidades nomeadas com Spacyr</a></li>
   <li><a href="#classificação-com-modelos-de-linguagem" id="toc-classificação-com-modelos-de-linguagem" class="nav-link" data-scroll-target="#classificação-com-modelos-de-linguagem"><span class="header-section-number">6.3.4</span> Classificação com modelos de linguagem</a></li>
   <li><a href="#rag" id="toc-rag" class="nav-link" data-scroll-target="#rag"><span class="header-section-number">6.3.5</span> RAG</a></li>
@@ -307,7 +307,7 @@ window.Quarto = {
 <li><strong>Regressão</strong>: prever um valor numérico a partir de um texto. Exemplo: prever a popularidade de um discurso com base em seu conteúdo.</li>
 </ul>
 <p><img src="images/clipboard-3145556631.png" class="img-fluid"></p>
-<p>O trainamento <strong>supervisionado</strong> requer um conjunto de dados rotulado, também chamados de exemplos, onde cada exemplo de treinamento tem um rótulo associado. O modelo aprende a partir desses exemplos e é capaz de fazer previsões em novos dados.</p>
+<p>O treinamento <strong>supervisionado</strong> requer um conjunto de dados rotulados, também chamados de exemplos, onde cada exemplo de treinamento tem um rótulo associado. O modelo aprende a partir desses exemplos e é capaz de fazer previsões em novos dados.</p>
 <p><img src="images/clipboard-220460977.png" class="img-fluid"></p>
 <p>Dependendo do modelo, os dados de texto precisam ser convertidos em uma representação numérica, como vetores de características (features) ou embeddings, para que o modelo possa processá-los.</p>
 <p><img src="images/clipboard-1187778201.png" class="img-fluid"></p>
@@ -319,7 +319,7 @@ window.Quarto = {
 <p>Além da classificação de textos completos, podemos também realizar a classificação de tokens individuais ou trechos do texto.</p>
 <p><img src="images/clipboard-3415508905.png" class="img-fluid"></p>
 <p>Já vimos uma aplicação de classificação de tokens em aulas anteriores: a análise sintática.</p>
-<p>Modelos de classificação/regressão de sequências pode utilizar informações como:</p>
+<p>Modelos de classificação/regressão de sequências podem utilizar informações como:</p>
 <ul>
 <li><strong>Contexto</strong>: a classificação de um token pode depender do contexto em que ele aparece. Por exemplo, a palavra “banco” pode se referir a uma instituição financeira ou a um objeto para sentar, dependendo do contexto.</li>
 <li><strong>Características do token</strong>: características morfológicas, sua posição na frase, ou se é uma palavra maiúscula podem ser úteis para a classificação.</li>
@@ -330,14 +330,14 @@ window.Quarto = {
 <h3 data-number="6.1.2" class="anchored" data-anchor-id="aplicações-para-análise-de-discurso"><span class="header-section-number">6.1.2</span> Aplicações para Análise de Discurso</h3>
 <p>Modelos de aprendizado supervisionado de textos podem ser aplicados em diversas tarefas de análise de discurso, como:</p>
 <ul>
-<li><p><strong>Análise de Sentimentos</strong>: medir hostilidade, otimismo, teor populista adversários ou instituições.</p></li>
+<li><p><strong>Análise de Sentimentos</strong>: medir hostilidade, otimismo, teor populista, adversários ou instituições.</p></li>
 <li><p><strong>Enquadramentos ideológicos</strong>: identificar como determinado assunto é tratado no discurso. Por exemplo, discursos sobre a Amazônia enquadrados como “Soberania Nacional”, “Preservação Ambiental” ou “Exploração Econômica”.</p></li>
 <li><p><strong>Detectar discurso de ódio</strong>: mapear textos contendo intolerância, preconceito ou violência ao longo do tempo.</p></li>
 <li><p><strong>Temática</strong>: classificar discursos em temas como economia, meio ambiente, saúde, etc.</p></li>
 <li><p><strong>Extração de informações</strong>: identificar entidades, eventos ou relações mencionados em um discurso.</p></li>
 </ul>
 <p>Assim como em outros métodos vistos nas aulas anteriores, é importante perceber como as ferramentas ajudariam na análise cuidadosa dos discursos.</p>
-<p>A anotação prévia dos dados geralmente é complexa e exige esforço humano. Modelos de aprendizado ajudam a escalonar a análise para corpus maiores.</p>
+<p>A anotação prévia dos dados geralmente é complexa e exige esforço humano. Modelos de aprendizado ajudam a escalar a análise para corpora maiores.</p>
 <p><img src="images/clipboard-2587364764.png" class="img-fluid"></p>
 </section>
 <section id="algoritmos-de-aprendizado" class="level3" data-number="6.1.3">
@@ -349,11 +349,11 @@ window.Quarto = {
 <li><strong>Árvores de Decisão</strong>: modelos que dividem os dados em ramos com base em condições sobre as features.</li>
 <li><strong>Redes Neurais</strong>: modelos inspirados no funcionamento do cérebro humano, que podem capturar relações complexas entre as features.</li>
 </ul>
-<p>Cada algoritmo possui características que influenciam o aprendizado. Um fator importante é a <strong>interpretabilidade</strong>. Em modelos como regressão linear e árvores de decisão, as predições podem ser explicadas a partir de dados do modelo (ex: por quê o discurso X foi classificado como “neutro”?). Redes Neurais, por exemplo, geram boas métricas mas não são facilmente interpretadas.</p>
+<p>Cada algoritmo possui características que influenciam o aprendizado. Um fator importante é a <strong>interpretabilidade</strong>. Em modelos como regressão linear e árvores de decisão, as predições podem ser explicadas a partir de dados do modelo (ex: por que o discurso X foi classificado como “neutro”?). Redes Neurais, por exemplo, geram boas métricas mas não são facilmente interpretadas.</p>
 </section>
 <section id="treinamento-teste-e-validação" class="level3" data-number="6.1.4">
 <h3 data-number="6.1.4" class="anchored" data-anchor-id="treinamento-teste-e-validação"><span class="header-section-number">6.1.4</span> Treinamento, teste e validação</h3>
-<p>Para aprendizado supervisionado, é boa prática separar um conjunto dos dados rotulados para teste. A ideia é utilizar dados que não foram utilizados durante o treinamento para avaliar a generalização do modelo (ie: como o modelo se comportaria com novos dados).</p>
+<p>Para aprendizado supervisionado, é boa prática separar um conjunto dos dados rotulados para teste. A ideia é utilizar dados que não foram utilizados durante o treinamento para avaliar a generalização do modelo (isto é: como o modelo se comportaria com novos dados).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/clipboard-4230883517.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:63.0%"></p>
@@ -386,7 +386,7 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 </section>
 <section id="modelos-de-linguagem" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="modelos-de-linguagem"><span class="header-section-number">6.2</span> Modelos de linguagem</h2>
-<p><strong>Modelos de Linguagem</strong> são treinados para , dada uma sequência de palavras, prever a próxima palavra ou preencher lacunas em um texto. Eles aprendem a partir de grandes corpora de texto e capturam padrões linguísticos, semânticos e contextuais.</p>
+<p><strong>Modelos de Linguagem</strong> são treinados para, dada uma sequência de palavras, prever a próxima palavra ou preencher lacunas em um texto. Eles aprendem a partir de grandes corpora de texto e capturam padrões linguísticos, semânticos e contextuais.</p>
 <p><strong>Modelos de Linguagem Grandes (LLMs, do inglês Large Language Models)</strong> são modelos de linguagem com um grande número de parâmetros (bilhões) e treinados em grandes quantidades de dados (trilhões). Estes modelos possuem capacidades para auxiliar em diversas tarefas relacionadas à linguagem.</p>
 <p>Para análise de discurso, os LLMs podem ser usados para:</p>
 <ul>
@@ -405,16 +405,16 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 <p><strong>Tamanho do modelo</strong>: modelos maiores geralmente têm melhor desempenho, mas exigem mais recursos computacionais e custo.</p>
 <p><strong>Tamanho do contexto</strong>: o contexto é a entrada que o modelo recebe para gerar uma resposta. Modelos com maior capacidade de contexto podem entender textos maiores.</p>
 <p><strong>Fine-tuning</strong>: é possível ajustar um modelo pré-treinado para uma tarefa específica, como classificação de sentimentos ou análise de discurso, usando um conjunto de dados rotulado.</p>
-<p>LLMs de uso geral e ajustadas são oferecidas como serviços em nuvem por empresas como OpenAI, Google, Microsoft, entre outras. Eles podem ser acessados por meio de bibliotecas, como ellmer e mall do R. Uma relação de modelos, custos e tamanhos de contexto está disponível em: <a href="https://models.litellm.ai/" class="uri">https://models.litellm.ai/</a>.</p>
+<p>LLMs de uso geral e ajustados são oferecidos como serviços em nuvem por empresas como OpenAI, Google, Microsoft, entre outras. Eles podem ser acessados por meio de bibliotecas, como ellmer e mall do R. Uma relação de modelos, custos e tamanhos de contexto está disponível em: <a href="https://models.litellm.ai/" class="uri">https://models.litellm.ai/</a>.</p>
 </section>
 <section id="configuração-e-construção-de-prompts" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="configuração-e-construção-de-prompts"><span class="header-section-number">6.2.2</span> Configuração e construção de prompts</h3>
-<p><strong>Temperatura e alucionações</strong>: a temperatura é um parâmetro que controla a aleatoriedade das respostas geradas pelo modelo. Valores mais baixos resultam em respostas mais conservadoras e valores mais altos podem gerar respostas mais criativas, mas também mais propensas a **alucinações* (informações incorretas ou inventadas).</p>
+<p><strong>Temperatura e alucinações</strong>: a temperatura é um parâmetro que controla a aleatoriedade das respostas geradas pelo modelo. Valores mais baixos resultam em respostas mais conservadoras e valores mais altos podem gerar respostas mais criativas, mas também mais propensas a <strong>alucinações</strong> (informações incorretas ou inventadas).</p>
 <p><strong>Prompting</strong>: a forma como a entrada é formulada pode influenciar significativamente as respostas do modelo. Prompts bem elaborados podem melhorar a qualidade das respostas.</p>
 <p>Algumas boas práticas para construção de prompts incluem:</p>
 <ul>
 <li><p>Enunciar ordens específicas (ex: “liste as principais ideias do discurso em até 3 itens”).</p></li>
-<li><p>Utilizar de linguagem imperativa (ex: “responda com ‘sim’ ou ‘não’”, “não cite nomes de pessoas ou empresas”).</p></li>
+<li><p>Utilizar linguagem imperativa (ex: “responda com ‘sim’ ou ‘não’”, “não cite nomes de pessoas ou empresas”).</p></li>
 <li><p>Prover exemplos (ex: “busque por frases que indiquem sarcasmo, como ‘claro, isso é ótimo’ ou ‘nossa, que surpresa’.”).</p></li>
 <li><p><em>Chain-of-Thought (CoT)</em> é uma técnica que envolve a geração de uma cadeia de raciocínio para chegar a uma resposta. Em vez de fornecer uma resposta direta, o modelo é incentivado a pensar passo a passo. (ex: para responder “O discurso de um orador é otimista?”, primeiro prompt seria “identifique palavras ou expressões positivas”, depois “avalie o tom geral do discurso”, então “o discurso é otimista? Responda com ‘sim’ ou ‘não’”).</p></li>
 </ul>
@@ -431,7 +431,7 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 </div>
 <p>Algumas vantagens do RAG são:</p>
 <ul>
-<li><em>Volume de dados</em>: a base de dados pode ser grande, pois não é necessário incluir toda a informação no contexto (prompt de entrada). Por exemplo, o modelo poderia ter acesso a base intera de discursos, notícias, propostas, etc.</li>
+<li><em>Volume de dados</em>: a base de dados pode ser grande, pois não é necessário incluir toda a informação no contexto (prompt de entrada). Por exemplo, o modelo poderia ter acesso à base inteira de discursos, notícias, propostas, etc.</li>
 <li><em>Dados atualizados</em>: o modelo pode acessar informações atualizadas, o que é especialmente útil para perguntas sobre eventos recentes ou dados em constante mudança.</li>
 <li><em>Sigilos e informações específicas</em>: o modelo pode recuperar informações específicas, como estatísticas, datas ou nomes, que podem não estar presentes no conhecimento pré-treinado do modelo.</li>
 <li><em>Contexto específico</em>: o modelo pode acessar informações contextuais específicas e referenciadas para a tarefa em questão, melhorando a relevância e precisão das respostas. Isso reduz a chance de alucinações.</li>
@@ -459,7 +459,7 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>padrao_inicio_discursos <span class="ot">&lt;-</span> <span class="st">"(Sem revisão d[oa] oradora?</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">)|SEM REGISTRO TAQUIGRÁFICO</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">. |O SR</span><span class="sc">\\</span><span class="st">. PRESIDENTE.* - | - [A-Z][A-Z]</span><span class="sc">\\</span><span class="st">))(.*)"</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dados_discursos, <span class="at">transcricao =</span> <span class="fu">str_extract</span>(transcricao, padrao_inicio_discursos, <span class="at">group =</span> <span class="dv">2</span>))</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar do corpus</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar o corpus</span></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>corpus_discursos <span class="ot">&lt;-</span> <span class="fu">corpus</span>(dados_discursos, <span class="at">text_field =</span> <span class="st">"transcricao"</span>)</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tokens de discursos, removendo pontuações, símbolos, números e stopwords</span></span>
@@ -475,7 +475,7 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 <span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.5</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span> <span class="co"># palavras aparecem no máximo em 50% dos discursos </span></span>
 <span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar conjuntos de entre treinamento e teste</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar conjuntos entre treinamento e teste</span></span>
 <span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># semente do gerador de números aleatórios para reprodutibilidade</span></span>
 <span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>indices_treinamento <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(dfm_discursos<span class="sc">$</span>partido, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">as.vector</span>()</span>
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>dfm_treinamento <span class="ot">&lt;-</span> dfm_discursos[indices_treinamento, ] <span class="co"># 80% exemplos aleatórios para treinamento</span></span>
@@ -502,7 +502,7 @@ R^2 = \frac{\text{Variância explicada}}{\text{Variância total}}
 <span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>rotulos_saida_teste <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(dfm_teste<span class="sc">$</span>partido)</span>
 <span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a><span class="fu">confusionMatrix</span>(predicoes_teste, <span class="at">reference =</span> rotulos_saida_teste)</span>
 <span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular importâncias de cada features (palavras)</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular importância de cada feature (palavras)</span></span>
 <span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>importancia <span class="ot">&lt;-</span> <span class="fu">varImp</span>(modelo_linear)</span>
 <span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="co"># Desenhar gráfico com as 10 features mais importantes</span></span>
@@ -546,7 +546,7 @@ Prediction PL PT
 </div>
 </section>
 <section id="classificação-textual-com-árvores-de-decisão" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="classificação-textual-com-árvores-de-decisão"><span class="header-section-number">6.3.2</span> Classificação textual com árvores de decisão</h3>
+<h3 data-number="6.3.2" class="anchored" data-anchor-id="classificação-textual-com-árvores-de-decisão"><span class="header-section-number">6.3.2</span> Classificação Textual com Árvores de Decisão</h3>
 <p>Modelo para classificar discursos do PT ou PL.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("tidyverse", "quanteda", "caret", "rpart.plot")) # instalar pacotes</span></span>
@@ -579,7 +579,7 @@ Prediction PL PT
 <span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">max_docfreq =</span> <span class="fl">0.5</span>, <span class="at">docfreq_type =</span> <span class="st">"prop"</span> <span class="co"># aparecem no máximo em 50% dos discursos </span></span>
 <span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  )</span>
 <span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar conjuntos de entre treinamento e teste</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Separar conjuntos entre treinamento e teste</span></span>
 <span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>) <span class="co"># semente do gerador de números aleatórios para reprodutibilidade</span></span>
 <span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>indices_treinamento <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(dfm_discursos<span class="sc">$</span>partido, <span class="at">p =</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span> <span class="fu">as.vector</span>()</span>
 <span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>dfm_treinamento <span class="ot">&lt;-</span> dfm_discursos[indices_treinamento, ] <span class="co"># 80% exemplos aleatórios para treinamento</span></span>
@@ -715,7 +715,7 @@ properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar chave para serviço de LLM (gemini da Google)</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sys.setenv(GEMINI_API_KEY = "&lt;insira a chave aqui&gt;")</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar do serviço de LLM</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar o serviço de LLM</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-2.5-flash"</span>)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">llm_use</span>(chat, <span class="at">.cache =</span> <span class="st">"gemini_cache"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -805,58 +805,58 @@ R session: cache_folder:gemini_cache</code></pre>
 <pre><code> ■■                                 4% |  ETA:  1m</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■                                8% |  ETA:  1m</code></pre>
+<pre><code> ■■■■                               9% |  ETA:  1m</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■                             12% |  ETA:  1m</code></pre>
+<pre><code> ■■■■■                             14% |  ETA:  1m</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■                            17% |  ETA:  1m</code></pre>
+<pre><code> ■■■■■■                            18% |  ETA:  1m</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code> ■■■■■■■■                          22% |  ETA:  1m</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■                         26% |  ETA: 49s</code></pre>
+<pre><code> ■■■■■■■■■                         27% |  ETA: 48s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■                        30% |  ETA: 47s</code></pre>
+<pre><code> ■■■■■■■■■■                        31% |  ETA: 45s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■                      36% |  ETA: 41s</code></pre>
+<pre><code> ■■■■■■■■■■■■                      38% |  ETA: 39s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■                     42% |  ETA: 37s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■                    43% |  ETA: 36s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■                   47% |  ETA: 34s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■                   47% |  ETA: 33s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■                  50% |  ETA: 33s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■                  51% |  ETA: 31s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■                55% |  ETA: 30s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■                55% |  ETA: 29s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■               59% |  ETA: 27s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■               59% |  ETA: 26s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code> ■■■■■■■■■■■■■■■■■■■■              65% |  ETA: 23s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■■■■            70% |  ETA: 19s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■            71% |  ETA: 18s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■           75% |  ETA: 16s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■          76% |  ETA: 15s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■         81% |  ETA: 12s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■■■■      89% |  ETA:  7s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■■■       86% |  ETA:  8s</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■    96% |  ETA:  2s</code></pre>
+<pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     94% |  ETA:  4s</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ragnar_store_build_index</span>(banco_discursos)</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -872,9 +872,9 @@ R session: cache_folder:gemini_cache</code></pre>
 <span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enviar prompt para LLM</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>resposta <span class="ot">&lt;-</span> cliente_chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"O que o partido PSOL está falando sobre o papa francisco?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>resposta <span class="ot">&lt;-</span> cliente_chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"O que o partido PSOL está falando sobre o Papa Francisco?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>◯ [tool call] retriever_discursos(text = "PSOL Papa Francisco")</code></pre>
+<pre><code>◯ [tool call] retriever_discursos(text = "Papa Francisco")</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>● #&gt; [</code></pre>
@@ -889,78 +889,68 @@ R session: cache_folder:gemini_cache</code></pre>
 <pre><code>  #&gt; "doc_id": 9,</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>  #&gt; "chunk_id": [18, 19],</code></pre>
+<pre><code>  #&gt; "chunk_id": 18,</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>  #&gt; …</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>O partido PSOL expressa grande admiração e alinhamento com as ideias do Papa 
-Francisco. Em diversas ocasiões, membros do PSOL:
+<pre><code>O PSOL tem manifestado grande admiração pelo Papa Francisco. A bancada do PSOL 
+na Câmara dos Deputados apresentou uma moção de pesar pelo falecimento do Papa 
+Francisco, descrevendo-o como uma figura "antenada com a modernidade" e a "fé 
+atualizada".
 
-*   Apresentaram uma moção de pesar pelo falecimento do Papa, elogiando-o como 
-alguém "sempre antenado com a modernidade, com a fé atualizada".
-*   Destacaram sua visão de uma "igreja sinodal" (participativa e não 
-hierárquica) e "em saída" (aberta ao mundo, que enfrenta opressões).
-*   Enfatizaram sua crítica à "tragédia ecológica produzida por um sistema de 
-ganância e de lucro" e seu respeito a todas as denominações religiosas.
-*   Louvaram sua postura como líder religioso que "acolhe e ama", em vez de 
-julgar ou impor padrões morais.
-*   Referiram-se à "Sabedoria de Papa Francisco" como algo que "orienta e 
-ilumina".
-*   Ressaltaram sua defesa dos mais pobres, sua rejeição a uma chefia 
-"imperial" da Igreja e seu incentivo aos jovens para "irem contra a corrente", 
-inspirados em Jesus Cristo como um revolucionário.
-*   Reconheceram que o Papa foi rejeitado por ultraconservadores.
-*   Citaram frases do Papa como "nenhuma família sem casa, nenhum camponês sem 
-terra, nenhum trabalhador sem direitos, nenhuma pessoa sem a dignidade que o 
-trabalho dá", e "É preciso mudar esse sistema que coloca o lucro acima dos 
-seres humanos, o lucro acima da vida".
-*   Admitiram que, embora o Papa não se considerasse comunista, muitas de suas 
-ideias são "próximas, similares e adotadas por nós comunistas", especialmente 
-no que diz respeito à construção do bem comum, à vida acima do lucro e à 
-crítica à lógica capitalista.
-*   Expressaram conexão com suas palavras e ações, ligando-as à teologia da 
-libertação.
+O partido ressalta que o Papa Francisco defendia uma igreja sinodal 
+(participativa, não hierárquica) e "em saída" (aberta para o mundo), que 
+enfrenta as opressões e a "tragédia ecológica produzida por um sistema de 
+ganância e de lucro", além de promover o respeito a todas as denominações 
+religiosas e ao direito de crença e não crença. Ele era visto como um líder 
+religioso que acolhe e ama, em vez de julgar e impor padrões morais.
 
-Em suma, o PSOL vê o Papa Francisco como uma figura progressista, cujas ideias 
-sobre justiça social, meio ambiente e crítica ao capitalismo se alinham 
-significativamente com os princípios do partido.</code></pre>
+Além disso, o PSOL destaca a "Sabedoria de Papa Francisco" como algo que os 
+orienta e ilumina, valorizando sua inspiração em São Francisco de Assis, o 
+santo da pobreza e da opção preferencial pelos mais pobres. O partido elogia 
+sua liderança não imperial, mas colegiada, e sua visão de uma igreja aberta ao 
+mundo, mencionando suas viagens internacionais e a mensagem aos jovens para que
+se inspirassem em Jesus Cristo como um revolucionário.
+
+O PSOL também aponta que, apesar de o Papa Francisco não ser comunista, muitas 
+de suas ideias sobre a construção do bem comum, a prioridade da vida sobre o 
+lucro, e a necessidade de mudar o consumismo e a lógica capitalista são 
+próximas e compartilhadas pela esquerda. Mencionam ainda o contentamento com 
+suas palavras e ações, especialmente por aqueles com contato com a teologia da 
+libertação, e a importância de suas encíclicas "Laudato Si'" (sobre o cuidado 
+com a Casa Comum) e "Fratelli Tutti" (sobre a amizade social).</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escrever resposta</span></span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resposta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>O partido PSOL expressa grande admiração e alinhamento com as ideias do Papa 
-Francisco. Em diversas ocasiões, membros do PSOL:
+<pre><code>O PSOL tem manifestado grande admiração pelo Papa Francisco. A bancada do PSOL 
+na Câmara dos Deputados apresentou uma moção de pesar pelo falecimento do Papa 
+Francisco, descrevendo-o como uma figura "antenada com a modernidade" e a "fé 
+atualizada".
 
-*   Apresentaram uma moção de pesar pelo falecimento do Papa, elogiando-o como 
-alguém "sempre antenado com a modernidade, com a fé atualizada".
-*   Destacaram sua visão de uma "igreja sinodal" (participativa e não 
-hierárquica) e "em saída" (aberta ao mundo, que enfrenta opressões).
-*   Enfatizaram sua crítica à "tragédia ecológica produzida por um sistema de 
-ganância e de lucro" e seu respeito a todas as denominações religiosas.
-*   Louvaram sua postura como líder religioso que "acolhe e ama", em vez de 
-julgar ou impor padrões morais.
-*   Referiram-se à "Sabedoria de Papa Francisco" como algo que "orienta e 
-ilumina".
-*   Ressaltaram sua defesa dos mais pobres, sua rejeição a uma chefia 
-"imperial" da Igreja e seu incentivo aos jovens para "irem contra a corrente", 
-inspirados em Jesus Cristo como um revolucionário.
-*   Reconheceram que o Papa foi rejeitado por ultraconservadores.
-*   Citaram frases do Papa como "nenhuma família sem casa, nenhum camponês sem 
-terra, nenhum trabalhador sem direitos, nenhuma pessoa sem a dignidade que o 
-trabalho dá", e "É preciso mudar esse sistema que coloca o lucro acima dos 
-seres humanos, o lucro acima da vida".
-*   Admitiram que, embora o Papa não se considerasse comunista, muitas de suas 
-ideias são "próximas, similares e adotadas por nós comunistas", especialmente 
-no que diz respeito à construção do bem comum, à vida acima do lucro e à 
-crítica à lógica capitalista.
-*   Expressaram conexão com suas palavras e ações, ligando-as à teologia da 
-libertação.
+O partido ressalta que o Papa Francisco defendia uma igreja sinodal 
+(participativa, não hierárquica) e "em saída" (aberta para o mundo), que 
+enfrenta as opressões e a "tragédia ecológica produzida por um sistema de 
+ganância e de lucro", além de promover o respeito a todas as denominações 
+religiosas e ao direito de crença e não crença. Ele era visto como um líder 
+religioso que acolhe e ama, em vez de julgar e impor padrões morais.
 
-Em suma, o PSOL vê o Papa Francisco como uma figura progressista, cujas ideias 
-sobre justiça social, meio ambiente e crítica ao capitalismo se alinham 
-significativamente com os princípios do partido.</code></pre>
+Além disso, o PSOL destaca a "Sabedoria de Papa Francisco" como algo que os 
+orienta e ilumina, valorizando sua inspiração em São Francisco de Assis, o 
+santo da pobreza e da opção preferencial pelos mais pobres. O partido elogia 
+sua liderança não imperial, mas colegiada, e sua visão de uma igreja aberta ao 
+mundo, mencionando suas viagens internacionais e a mensagem aos jovens para que
+se inspirassem em Jesus Cristo como um revolucionário.
+
+O PSOL também aponta que, apesar de o Papa Francisco não ser comunista, muitas 
+de suas ideias sobre a construção do bem comum, a prioridade da vida sobre o 
+lucro, e a necessidade de mudar o consumismo e a lógica capitalista são 
+próximas e compartilhadas pela esquerda. Mencionam ainda o contentamento com 
+suas palavras e ações, especialmente por aqueles com contato com a teologia da 
+libertação, e a importância de suas encíclicas "Laudato Si'" (sobre o cuidado 
+com a Casa Comum) e "Fratelli Tutti" (sobre a amizade social).</code></pre>
 </div>
 </div>
 
