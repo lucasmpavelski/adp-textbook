@@ -717,90 +717,82 @@ properly in model 'pt_core_news_sm'</code></pre>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar o serviço de LLM</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-2.5-flash"</span>)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">llm_use</span>(chat, <span class="at">.cache =</span> <span class="st">"gemini_cache"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── mall session object </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Backend: ellmer
-LLM session: model:gemini-2.5-flash
-R session: cache_folder:gemini_cache</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados dos discursos</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover padrão de texto no início dos discursos</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>padrao_inicio_discursos <span class="ot">&lt;-</span> <span class="st">"(Sem revisão d[oa] oradora?</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">)|SEM REGISTRO TAQUIGRÁFICO</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">. |O SR</span><span class="sc">\\</span><span class="st">. PRESIDENTE.* - | - [A-Z][A-Z]</span><span class="sc">\\</span><span class="st">))(.*)"</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dados_discursos, <span class="at">transcricao =</span> <span class="fu">str_extract</span>(transcricao, padrao_inicio_discursos, <span class="at">group =</span> <span class="dv">2</span>))</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Classificar discursos com LLM</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>dados_analisados <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">llm_classify</span>(</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> transcricao, <span class="co"># A coluna que a LLM vai ler</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Economia"</span>, <span class="st">"Saúde"</span>, <span class="st">"Meio ambiente"</span>, <span class="st">"Religião"</span>, <span class="st">"Democracia"</span>, <span class="st">"Segurança"</span>), <span class="co"># categorias</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred_name =</span> <span class="st">"tema"</span> <span class="co"># nome da nova coluna que será criada</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>! There were 1274 predictions with invalid output, they were coerced to NA</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Amostrar 10 discursos classificados</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>amostra_classificacao <span class="ot">&lt;-</span> dados_analisados <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(tema)) <span class="sc">|&gt;</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sumario, tema) <span class="sc">|&gt;</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(amostra_classificacao)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">llm_use</span>(chat, <span class="at">.cache =</span> <span class="st">"gemini_cache"</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados dos discursos</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Remover padrão de texto no início dos discursos</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>padrao_inicio_discursos <span class="ot">&lt;-</span> <span class="st">"(Sem revisão d[oa] oradora?</span><span class="sc">\\</span><span class="st">.</span><span class="sc">\\</span><span class="st">)|SEM REGISTRO TAQUIGRÁFICO</span><span class="sc">\\</span><span class="st">)</span><span class="sc">\\</span><span class="st">. |O SR</span><span class="sc">\\</span><span class="st">. PRESIDENTE.* - | - [A-Z][A-Z]</span><span class="sc">\\</span><span class="st">))(.*)"</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">mutate</span>(dados_discursos, <span class="at">transcricao =</span> <span class="fu">str_extract</span>(transcricao, padrao_inicio_discursos, <span class="at">group =</span> <span class="dv">2</span>))</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Classificar discursos com LLM</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>dados_analisados <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">llm_classify</span>(</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> transcricao, <span class="co"># A coluna que a LLM vai ler</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Economia"</span>, <span class="st">"Saúde"</span>, <span class="st">"Meio ambiente"</span>, <span class="st">"Religião"</span>, <span class="st">"Democracia"</span>, <span class="st">"Segurança"</span>), <span class="co"># categorias</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred_name =</span> <span class="st">"tema"</span>, <span class="co"># nome da nova coluna que será criada</span></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">additional_prompt =</span> <span class="st">"Escolha apenas uma categoria para cada discurso, com base no tema principal do discurso."</span> <span class="co"># instrução adicional para a LLM</span></span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Salvar dados em arquivo CSV</span></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(dados_analisados, <span class="st">"dados_analisados.csv"</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Amostrar 10 discursos classificados</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a>amostra_classificacao <span class="ot">&lt;-</span> dados_analisados <span class="sc">|&gt;</span></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(tema)) <span class="sc">|&gt;</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(sumario, tema) <span class="sc">|&gt;</span></span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">10</span>)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(amostra_classificacao)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    sumario                                                                 tema 
    &lt;chr&gt;                                                                   &lt;chr&gt;
- 1 "A Deputada encaminhou a votação do Projeto de Decreto Legislativo nº … Demo…
- 2 "O Deputado prestou homenagem à comitiva de Bento Gonçalves (RS) prese… Econ…
- 3 "O Deputado orientou a bancada na votação do requerimento de urgência … Segu…
- 4 "O Deputado orientou a bancada na votação do requerimento de encerrame… Econ…
- 5 "O Deputado destacou a situação das rodovias federais BR-230 (Transama… Econ…
- 6 "O Deputado discursou na Comissão Geral para debater a relevância dos … Demo…
- 7 "O Deputado anunciou, ao lado de Ricardo Oliveira, dirigente esportivo… Econ…
- 8 "O Deputado orientou a bancada na votação do substitutivo ao Projeto d… Econ…
- 9 "O Deputado criticou a mudança do segundo uniforme da Seleção Brasilei… Demo…
-10 "O Deputado manifestou-se contra a Proposta de Emenda à Constituição d… Segu…</code></pre>
+ 1 O Deputado relatou sua participação em missão oficial à China, realiza… Econ…
+ 2 O Deputado celebrou os avanços do Programa Casa Macapá, vinculado ao P… Econ…
+ 3 A Deputada celebrou o Dia Internacional da Dança, homenageando o Festi… Econ…
+ 4 A Deputada celebrou a entrada do Deputado Luiz Lima na bancada do part… Demo…
+ 5 A Deputada criticou a condução econômica e política do Governo Federal… Demo…
+ 6 A Deputada encaminhou a votação do Projeto de Lei nº 2.809, de 2023, q… Econ…
+ 7 A Deputada criticou a falta de respeito ao teto constitucional de salá… Demo…
+ 8 A Deputada criticou a condução da política educacional no Brasil, dest… Demo…
+ 9 A Deputada encaminhou a votação do Projeto de Decreto Legislativo nº 2… Demo…
+10 A Deputada criticou a inclusão de Projetos de Decreto Legislativo polê… Demo…</code></pre>
 </div>
 </div>
 </section>
 <section id="rag" class="level3" data-number="6.3.5">
 <h3 data-number="6.3.5" class="anchored" data-anchor-id="rag"><span class="header-section-number">6.3.5</span> RAG</h3>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("tidyverse", "mall", "ellmer", "httpuv"))</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragnar)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar chave para serviço de LLM (gemini da Google)</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sys.setenv(GEMINI_API_KEY = "&lt;insira a chave aqui&gt;")</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados do PSOL</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">==</span> <span class="st">"PSOL"</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar arquivo com banco de discursos</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="co"># arquivo_banco_discursos &lt;- "discursos.ragnar.duckdb"</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Caso contrário, criar base de discursos</span></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>banco_discursos <span class="ot">&lt;-</span> <span class="fu">ragnar_store_create</span>(</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">embed =</span> \(x) <span class="fu">embed_google_gemini</span>(x, <span class="at">model =</span> <span class="st">"gemini-embedding-001"</span>)</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformar discursos no formato markdown (texto formatado para LLM)</span></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>chunks <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(transcricao) <span class="sc">|&gt;</span></span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(MarkdownDocument) <span class="sc">|&gt;</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(markdown_chunk)</span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Inserir discursos na base</span></span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(chunks, \(x) <span class="fu">ragnar_store_insert</span>(banco_discursos, x), <span class="at">.progress =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("tidyverse", "mall", "ellmer", "httpuv"))</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ragnar)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ellmer)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar chave para serviço de LLM (gemini da Google)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sys.setenv(GEMINI_API_KEY = "&lt;insira a chave aqui&gt;")</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar dados do PSOL</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>dados_discursos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"discursos_camara_abril_2025.csv"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(partido <span class="sc">==</span> <span class="st">"PSOL"</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar arquivo com banco de discursos</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># arquivo_banco_discursos &lt;- "discursos.ragnar.duckdb"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Caso contrário, criar base de discursos</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>banco_discursos <span class="ot">&lt;-</span> <span class="fu">ragnar_store_create</span>(</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">embed =</span> \(x) <span class="fu">embed_google_gemini</span>(x, <span class="at">model =</span> <span class="st">"gemini-embedding-001"</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformar discursos no formato markdown (texto formatado para LLM)</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>chunks <span class="ot">&lt;-</span> dados_discursos <span class="sc">|&gt;</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(transcricao) <span class="sc">|&gt;</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(MarkdownDocument) <span class="sc">|&gt;</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">map</span>(markdown_chunk)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Inserir discursos na base</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="fu">walk</span>(chunks, \(x) <span class="fu">ragnar_store_insert</span>(banco_discursos, x), <span class="at">.progress =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code> ■■                                 4% |  ETA:  1m</code></pre>
 </div>
@@ -858,21 +850,21 @@ R session: cache_folder:gemini_cache</code></pre>
 <div class="cell-output cell-output-stderr">
 <pre><code> ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■     94% |  ETA:  4s</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ragnar_store_build_index</span>(banco_discursos)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar chat LLM</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>cliente_chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-2.5-flash"</span>)</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar banco de discursos como ferramenta para LLM</span></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ragnar_register_tool_retrieve</span>(</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>  cliente_chat,</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  banco_discursos,</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"retriever_discursos"</span>,</span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">store_description =</span> <span class="st">"Recupera trechos de discursos da Câmara dos Deputados"</span></span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enviar prompt para LLM</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>resposta <span class="ot">&lt;-</span> cliente_chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"O que o partido PSOL está falando sobre o Papa Francisco?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ragnar_store_build_index</span>(banco_discursos)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar chat LLM</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cliente_chat <span class="ot">&lt;-</span> <span class="fu">chat_google_gemini</span>(<span class="at">model =</span> <span class="st">"gemini-2.5-flash"</span>)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar banco de discursos como ferramenta para LLM</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ragnar_register_tool_retrieve</span>(</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  cliente_chat,</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  banco_discursos,</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">name =</span> <span class="st">"retriever_discursos"</span>,</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">store_description =</span> <span class="st">"Recupera trechos de discursos da Câmara dos Deputados"</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Enviar prompt para LLM</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>resposta <span class="ot">&lt;-</span> cliente_chat<span class="sc">$</span><span class="fu">chat</span>(<span class="st">"O que o partido PSOL está falando sobre o Papa Francisco?"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>◯ [tool call] retriever_discursos(text = "Papa Francisco")</code></pre>
 </div>
@@ -922,8 +914,8 @@ suas palavras e ações, especialmente por aqueles com contato com a teologia da
 libertação, e a importância de suas encíclicas "Laudato Si'" (sobre o cuidado 
 com a Casa Comum) e "Fratelli Tutti" (sobre a amizade social).</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escrever resposta</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resposta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Escrever resposta</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resposta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>O PSOL tem manifestado grande admiração pelo Papa Francisco. A bancada do PSOL 
 na Câmara dos Deputados apresentou uma moção de pesar pelo falecimento do Papa 

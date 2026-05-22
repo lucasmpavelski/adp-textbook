@@ -362,6 +362,10 @@ dados_analise |>
 ### Classificação com modelos de linguagem
 
 ```{r llm, cache=TRUE}
+#| message: FALSE
+#| warning: FALSE
+#| results: hold
+
 # install.packages(c("tidyverse", "mall", "ellmer", "httpuv"))
 library(tidyverse)
 library(mall)
@@ -386,8 +390,12 @@ dados_analisados <- dados_discursos |>
   llm_classify(
     col = transcricao, # A coluna que a LLM vai ler
     labels = c("Economia", "Saúde", "Meio ambiente", "Religião", "Democracia", "Segurança"), # categorias
-    pred_name = "tema" # nome da nova coluna que será criada
+    pred_name = "tema", # nome da nova coluna que será criada
+    additional_prompt = "Escolha apenas uma categoria para cada discurso, com base no tema principal do discurso." # instrução adicional para a LLM
   )
+
+# Salvar dados em arquivo CSV
+write_csv(dados_analisados, "dados_analisados.csv")
 
 # Amostrar 10 discursos classificados
 amostra_classificacao <- dados_analisados |>
