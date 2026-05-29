@@ -1,0 +1,78 @@
+# Objetivo: investigar como o falecimento do Papa Francisco foi debatido na 
+# Câmara dos Deputados pelos partidos PT, PL, PSOL e REPUBLICANOS.
+
+# Bibliotecas
+library(tidyverse)
+library(quanteda)
+library(stm)
+library(stopwords)
+
+# Dados utilizados: discursos do mês de abril de 2025, que inclui data do
+# falecimento do Papa Francisco (21/04/2025)
+
+nome_arquivo <- "discursos_camara_abril_2025.csv"
+
+# Método: utilizar modelos de tópicos para identificar tópicos discutidos no
+# período. STM é utilizado para estimar a influência de diferentes partidos
+# (PT, PL, PSOL e REPUBLICANOS) sobre o tema relacionado ao Papa Francisco.
+
+# Carregar dados e criar corpus
+corpus_discursos <- read_csv(nome_arquivo, show_col_types = FALSE) |>
+  filter(partido %in% c("PT", "PL", "PSOL", "REPUBLICANOS")) |>
+  mutate(doc_id = str_c(row_number(), nome, partido, sep = "_")) |>
+  corpus(text_field = "transcricao")
+
+# Criar tokens
+tokens_discursos <- corpus_discursos |>
+  tokens(remove_punct = TRUE, remove_numbers = TRUE, remove_symbols = TRUE) |>
+  tokens_remove(stopwords("portuguese"))
+
+# Criar DFM, removendo palavras muito frequentes e muito raras 
+dfm_discursos <- tokens_discursos |>
+  dfm() |>
+  dfm_trim(
+    min_termfreq = 0.8, termfreq_type = "quantile",
+    max_docfreq = 0.1, docfreq_type = "prop"
+  )
+
+# Converter DFM do quanteda para o formato esperado pelo pacote STM
+set.seed(42)
+stm_data <- convert(dfm_discursos, to = "stm")
+
+# Treinar o modelo STM
+# K = 5 tópicos para este exemplo
+# prevalence =~ partido: indica que a escolha do tópico depende do partido
+modelo_stm <- stm(
+  documents = stm_data$documents, 
+  vocab = stm_data$vocab,
+  data = stm_data$meta, 
+  K = 5, 
+  prevalence = ~partido + fase_evento,
+  verbose = FALSE
+)
+
+# Visualizar resumo dos tópicos e sua frequência relativa
+plot(modelo_stm, type = "summary", main = "Principais Tópicos (Modelo STM)")
+
+# Calcular efeito estima dos partidos sobre os tópicos
+ee_partido <- estimateEffect(
+  ~partido, 
+  modelo_stm, 
+  documents = stm_data, 
+  metadata = docvars(corpus_discursos)
+)
+
+# Visualizar o efeito dos partidos 
+plot(
+  ee_partido,
+  covariate = "partido",
+  method = "pointestimate",
+  topics = 4
+)
+
+# Resultados:
+# - Os tópicos mais discutidos foram: aposentadoria (2), família (1), 
+#   Glauber (5), Papa Francisco (4) e economia (3)
+# - O tópico sobre o Papa Francisco foi mais dicutido pelo REPUBLICANOS. PT e PL
+#   não contribuiram tanto para o tema, mas são estatísticamente equivalentes ao
+#   REPUBLICANOS. PSOL contribuiu menos para o tema. 
